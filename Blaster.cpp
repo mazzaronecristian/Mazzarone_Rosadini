@@ -1,0 +1,12 @@
+//
+// Created by cristian on 28/02/21.
+//
+
+#include "Blaster.h"
+
+Blaster::Blaster(int ammo) : ammo(ammo) {}
+
+void Blaster::attack() {
+    Weapon::attack();
+}
+
