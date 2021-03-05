@@ -13,8 +13,8 @@ int main()
 {
     Player1 gino = Player1();
     Potion heal = Potion();
+    heal.setUseStrategy(HealUse());
+    heal.use(heal.getUseStrategy());
 
-    gino.setPotion(heal);
-    heal.use();
     return 0;
 }

@@ -6,5 +6,5 @@
 #include "Character.h"
 void HealUse::use() {
     UseStrategy::use();
-    Character::setHp(Character::getHp()+2);
+
 }
