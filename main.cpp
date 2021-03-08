@@ -1,3 +1,4 @@
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -9,12 +10,11 @@
 #include "Potion.h"
 #include "UseStrategy.h"
 #include "HealUse.h"
+#include "SpaceCadet.h"
 int main()
 {
-    Player1 gino = Player1();
-    Potion heal = Potion();
-    heal.setUseStrategy(HealUse());
-    heal.use(heal.getUseStrategy());
-
+    Character* hero;
+    hero = new Player1();
+    hero->setActionStrategy(SpaceCadet());
     return 0;
 }

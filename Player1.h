@@ -8,6 +8,7 @@
 #include "Character.h"
 #include "Weapon.h"
 #include "Potion.h"
+#include "AttackStrategy.h"
 class Player1 : public Character{
 public:
     explicit Player1(int hp = 10, int posX = 10, int posY = 10, int damage = 2);
@@ -16,20 +17,26 @@ public:
     virtual ~Player1();
 
     void move(int posX, int posY);
-    void fight(Character);
-    bool isLegalFight(Character);
+    virtual void attack(Character &enemy);
+    bool isLegalFight(Character &enemy);
+    void usePotion();
 
-    const Weapon &getWeapon() const;
+    //setter
+    void setWeapon(Weapon* weapon);
+    void setPotion(Potion* potion);
 
-    void setWeapon(const Weapon &weapon);
-
-    const Potion &getPotion() const;
-
-    void setPotion(const Potion &potion);
+    //getter
+    Potion* getPotion() const;
+    Weapon* getWeapon() const;
 
 private:
-    Weapon weapon;
-    Potion potion;
+    Weapon* weapon;
+    Potion* potion;
+    AttackStrategy* attackStrategy;
+public:
+    AttackStrategy *getAttackStrategy() const;
+
+    void setAttackStrategy(AttackStrategy *attackStrategy);
 };
 
 

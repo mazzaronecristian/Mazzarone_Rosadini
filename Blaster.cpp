@@ -6,7 +6,7 @@
 
 Blaster::Blaster(int ammo) : ammo(ammo) {}
 
-void Blaster::attack() {
+int Blaster::attack() {
     Weapon::attack();
 }
 

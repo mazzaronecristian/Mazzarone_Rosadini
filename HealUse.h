@@ -6,9 +6,11 @@
 #define MAZZARONE_ROSADINI_HEALUSE_H
 
 #include "UseStrategy.h"
+#include "Character.h"
+#include "Player1.h"
 class HealUse: public UseStrategy {
 public:
-    void use() override;
+    void use(Player1 hero) override;
 };
 
 

@@ -5,25 +5,28 @@
 #ifndef MAZZARONE_ROSADINI_POTION_H
 #define MAZZARONE_ROSADINI_POTION_H
 
+#include <iostream>
 #include "UseStrategy.h"
+#include "Character.h"
 class Potion {
 public:
     Potion();
 
-    Potion(const UseStrategy &useStrategy);
+    Potion(std::string description);
 
     virtual ~Potion();
 
-    virtual void use(UseStrategy useStrategy);
+    //virtual void use(UseStrategy useStrategy);
 
-    //setter
-    void setUseStrategy(const UseStrategy &useStrategy);
+    int use(int result);
 
     //getter
-    UseStrategy getUseStrategy() const;
+    const std::string &getDescription() const;
+
+    void setDescription(const std::string &description);
 
 private:
-    UseStrategy useStrategy;
+    std::string description;
 };
 
 

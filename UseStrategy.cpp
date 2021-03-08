@@ -4,6 +4,6 @@
 
 #include "UseStrategy.h"
 
-void UseStrategy::use() {
+int UseStrategy::use() {
 
 }

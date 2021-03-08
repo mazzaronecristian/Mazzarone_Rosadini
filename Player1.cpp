@@ -3,6 +3,10 @@
 //
 
 #include "Player1.h"
+
+Player1::Player1(int hp, int posX, int posY, int damage) : Character(hp, posX, posY, damage) {
+
+}
 Player1::~Player1() {
 
 }
@@ -11,32 +15,43 @@ void Player1::move(int posX, int posY) {
 
 }
 
-void Player1::fight(Character) {
-
+void Player1::attack(Character &enemy) {
+    this->attackStrategy->attack(enemy);
 }
 
-bool Player1::isLegalFight(Character) {
-    return false;
-}
-
-Player1::Player1(int hp, int posX, int posY, int damage) : Character(hp, posX, posY, damage) {
-
-}
-
-const Weapon &Player1::getWeapon() const {
+Weapon* Player1::getWeapon() const {
     return weapon;
 }
 
-void Player1::setWeapon(const Weapon &weapon) {
+void Player1::setWeapon(Weapon* weapon) {
     Player1::weapon = weapon;
 }
 
-const Potion &Player1::getPotion() const {
+Potion* Player1::getPotion() const {
     return potion;
 }
 
-void Player1::setPotion(const Potion &potion) {
+void Player1::setPotion(Potion* potion) {
     Player1::potion = potion;
+}
+
+void Player1::usePotion() {
+    if(potion->getDescription()=="heal")
+        setHp(potion->use(getHp()));
+    else
+        setDamage(potion->use(getDamage()));
+}
+
+bool Player1::isLegalFight(Character &enemy) {
+    return false;
+}
+
+AttackStrategy *Player1::getAttackStrategy() const {
+    return attackStrategy;
+}
+
+void Player1::setAttackStrategy(AttackStrategy *attackStrategy) {
+    Player1::attackStrategy = attackStrategy;
 }
 
 /*Player1::Player1(int hp, int posX, int posY, int damage) : Character(hp, posX, posY, damage) {

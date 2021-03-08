@@ -6,6 +6,6 @@
 
 Weapon::Weapon() {}
 
-void Weapon::attack() {
+int Weapon::attack() {
 
 }

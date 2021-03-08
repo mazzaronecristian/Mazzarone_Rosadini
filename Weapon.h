@@ -10,7 +10,7 @@ class Weapon {
 public:
     Weapon();
 
-    virtual void attack();
+    virtual int attack();
 };
 
 

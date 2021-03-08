@@ -4,4 +4,5 @@
 
 #include "Map.h"
 
-Map::Map() {}
+
+Map::Map(int width, int height, const Tile &tiles) : width(width), height(height), tiles(tiles) {}

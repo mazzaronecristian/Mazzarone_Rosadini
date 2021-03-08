@@ -4,6 +4,6 @@
 
 #include "Axe.h"
 
-void Axe::attack() {
+int Axe::attack() {
     Weapon::attack();
 }

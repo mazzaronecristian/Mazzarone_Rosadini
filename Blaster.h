@@ -8,7 +8,7 @@
 #include "Weapon.h"
 class Blaster: public Weapon {
 public:
-    void attack() override;
+    int attack() override;
 
     Blaster(int ammo);
 

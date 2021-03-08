@@ -1,5 +1,4 @@
 //
-Axe::Axe() {}
 // Created by cristian on 28/02/21.
 //
 
@@ -12,7 +11,7 @@ class Axe: public Weapon {
 public:
     Axe();
 
-    void attack() override;
+    int attack() override;
 
 };
 

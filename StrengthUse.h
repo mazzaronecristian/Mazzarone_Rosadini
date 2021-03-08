@@ -9,7 +9,7 @@
 #include "Character.h"
 class StrengthUse: public UseStrategy {
 public:
-    void use() override;
+    int use() override;
 };
 
 

@@ -5,10 +5,12 @@
 #ifndef MAZZARONE_ROSADINI_USESTRATEGY_H
 #define MAZZARONE_ROSADINI_USESTRATEGY_H
 
+#include "Character.h"
+#include "Player1.h"
 
 class UseStrategy {
 public:
-    virtual void use();
+    virtual int use();
 
 };
 

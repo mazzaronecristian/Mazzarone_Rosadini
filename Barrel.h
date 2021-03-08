@@ -15,7 +15,7 @@ public:
     void receiveDamage(int damage);
 private:
     int hp;
-    Potion potion;
+    Potion* potion;
 };
 
 

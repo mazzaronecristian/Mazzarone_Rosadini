@@ -4,7 +4,6 @@
 
 #include "StrengthUse.h"
 
-void StrengthUse::use() {
+int StrengthUse::use() {
     UseStrategy::use();
-    Character::setDamage(Character::getDamage()+2);
 }

@@ -6,19 +6,19 @@
 
 Character::Character(int hp, int posX, int posY, int damage) : hp(hp), posX(posX), posY(posY), damage(damage) {}
 
-int Character::getHp() const {
+int Character::getHp() const{
     return hp;
 }
 
-int Character::getPosX() const {
+int Character::getPosX() const{
     return posX;
 }
 
-int Character::getPosY() const {
+int Character::getPosY() const{
     return posY;
 }
 
-int Character::getDamage() const {
+int Character::getDamage() const{
     return damage;
 }
 
@@ -38,10 +38,18 @@ void Character::setDamage(int damage) {
     Character::damage = damage;
 }
 
-void Character::specialAction(ActionStrategy actionStrategy) {
-
+void Character::specialAction() {
+    this->actionStrategy.specialAction();
 }
 
 void Character::receiveDamage(int damage) {
     Character::hp -= damage;
+}
+
+const ActionStrategy &Character::getActionStrategy() const {
+    return actionStrategy;
+}
+
+void Character::setActionStrategy(const ActionStrategy &actionStrategy) {
+    Character::actionStrategy = actionStrategy;
 }

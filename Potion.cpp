@@ -3,6 +3,7 @@
 //
 
 #include "Potion.h"
+
 Potion::Potion() {}
 
 
@@ -10,17 +11,18 @@ Potion::~Potion() {
 
 }
 
-void Potion::use(UseStrategy useStrategy) {
+Potion::Potion(std::string description) : description(description) {}
 
+int Potion::use(int result) {
+    result += 5;
+    return result;
 }
 
-Potion::Potion(const UseStrategy &useStrategy) : useStrategy(useStrategy) {}
-
-void Potion::setUseStrategy(const UseStrategy &useStrategy) {
-    Potion::useStrategy = useStrategy;
+const std::string &Potion::getDescription() const {
+    return description;
 }
 
-const UseStrategy &Potion::getUseStrategy() const {
-    return useStrategy;
+void Potion::setDescription(const std::string &description) {
+    Potion::description = description;
 }
 

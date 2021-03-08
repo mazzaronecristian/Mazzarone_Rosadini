@@ -10,10 +10,6 @@ Enemy::~Enemy() {
 
 }
 
-void Enemy::receiveDamage(int damage) {
-
-}
-
 void Enemy::fight(FightStrategy fightStrategy) {
 
 }
