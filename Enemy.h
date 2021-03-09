@@ -11,10 +11,10 @@
 
 class Enemy: public Character {
 public:
-    Enemy(int hp, int posX, int posY, int damage);
+    explicit Enemy(int hp=5, int posX=5, int posY=5, int damage=5);
     virtual ~Enemy();
 
-    virtual void fight(FightStrategy fightStrategy);
+    virtual void fight(Character *hero);
     virtual void move(MoveStrategy moveStrategy);
 
 protected:

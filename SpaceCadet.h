@@ -9,7 +9,8 @@
 class SpaceCadet : public ActionStrategy{
 public:
     SpaceCadet();
-    void specialAction() override;
+    void specialAction(int posX, int posY) override;
+
 
 
 };

@@ -4,6 +4,7 @@
 
 #include "FightStrategy.h"
 
-void FightStrategy::fight() {
+void FightStrategy::fight(Character *hero, int damage) {
+    hero->setHp(hero->getHp()-damage);
 
 }

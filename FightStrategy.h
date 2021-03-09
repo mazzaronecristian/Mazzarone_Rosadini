@@ -5,10 +5,11 @@
 #ifndef MAZZARONE_ROSADINI_FIGHTSTRATEGY_H
 #define MAZZARONE_ROSADINI_FIGHTSTRATEGY_H
 
+#include "Character.h"
 
 class FightStrategy {
 public:
-    virtual void fight();
+    virtual void fight(Character *hero, int damage);
 };
 
 

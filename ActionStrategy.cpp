@@ -7,3 +7,6 @@
 void ActionStrategy::specialAction() {
 
 }
+void ActionStrategy::specialAction(int posX, int posY) {
+
+}

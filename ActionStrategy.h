@@ -9,7 +9,10 @@
 class ActionStrategy {
 public:
     virtual void specialAction();
+    virtual void specialAction(int posX, int posY);
 };
 
 
 #endif //MAZZARONE_ROSADINI_ACTIONSTRATEGY_H
+
+

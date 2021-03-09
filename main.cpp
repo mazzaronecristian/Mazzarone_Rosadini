@@ -11,10 +11,17 @@
 #include "UseStrategy.h"
 #include "HealUse.h"
 #include "SpaceCadet.h"
+#include "Enemy.h"
+
 int main()
 {
     Character* hero;
+    Enemy* enemy;
+    enemy = new Enemy();
     hero = new Player1();
     hero->setActionStrategy(SpaceCadet());
+    hero->specialAction();
+    enemy->fight(hero);
+
     return 0;
 }

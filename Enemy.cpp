@@ -10,8 +10,8 @@ Enemy::~Enemy() {
 
 }
 
-void Enemy::fight(FightStrategy fightStrategy) {
-
+void Enemy::fight(Character *hero) {
+    this->fightStrategy.fight(hero, this->getDamage());
 }
 
 void Enemy::move(MoveStrategy moveStrategy) {

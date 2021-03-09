@@ -22,10 +22,12 @@ public:
     void usePotion();
 
     //setter
+    void setAttackStrategy(AttackStrategy *attackStrategy);
     void setWeapon(Weapon* weapon);
     void setPotion(Potion* potion);
 
     //getter
+    AttackStrategy *getAttackStrategy() const;
     Potion* getPotion() const;
     Weapon* getWeapon() const;
 
@@ -33,10 +35,7 @@ private:
     Weapon* weapon;
     Potion* potion;
     AttackStrategy* attackStrategy;
-public:
-    AttackStrategy *getAttackStrategy() const;
 
-    void setAttackStrategy(AttackStrategy *attackStrategy);
 };
 
 
