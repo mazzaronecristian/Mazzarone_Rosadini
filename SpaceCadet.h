@@ -11,9 +11,6 @@ public:
     SpaceCadet();
     void specialAction(int posX, int posY) override;
 
-
-
 };
-
 
 #endif //MAZZARONE_ROSADINI_SPACECADET_H

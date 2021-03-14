@@ -4,11 +4,11 @@
 
 #ifndef MAZZARONE_ROSADINI_MOVESTRATEGY_H
 #define MAZZARONE_ROSADINI_MOVESTRATEGY_H
-
+#include "Character.h"
 
 class MoveStrategy {
 public:
-    virtual void move();
+    virtual void move(Character *hero, int *enemyX, int *enemyY);
 };
 
 

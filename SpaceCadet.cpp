@@ -12,7 +12,7 @@ SpaceCadet::SpaceCadet() {
 
 //Teletrasporto
 void SpaceCadet::specialAction(int posX, int posY) {
-    ActionStrategy::specialAction(posX,  posY);
+    ActionStrategy::specialAction(posX, posY);
     srand(time(NULL));
     posX += rand()%10-5;
     posY += rand()%10-5;

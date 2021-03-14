@@ -15,7 +15,7 @@ public:
     virtual ~Enemy();
 
     virtual void fight(Character *hero);
-    virtual void move(MoveStrategy moveStrategy);
+    virtual void move(Character *hero);
 
 protected:
     FightStrategy fightStrategy;
