@@ -9,6 +9,7 @@
 #include "Weapon.h"
 #include "Potion.h"
 #include "AttackStrategy.h"
+
 class Player1 : public Character{
 public:
     explicit Player1(int hp = 10, int posX = 10, int posY = 10, int damage = 2);
@@ -17,7 +18,7 @@ public:
     virtual ~Player1();
 
     void move(int posX, int posY);
-    virtual void attack(Character &enemy);
+    virtual void fight(Character &enemy);
     bool isLegalFight(Character &enemy);
     void usePotion();
 

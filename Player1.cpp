@@ -15,8 +15,8 @@ void Player1::move(int posX, int posY) {
 
 }
 
-void Player1::attack(Character &enemy) {
-    this->attackStrategy->attack(enemy);
+void Player1::fight(Character &enemy) {
+
 }
 
 Weapon* Player1::getWeapon() const {

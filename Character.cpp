@@ -38,18 +38,6 @@ void Character::setDamage(int damage) {
     Character::damage = damage;
 }
 
-void Character::specialAction() {
-    this->actionStrategy.specialAction();
-}
-
 void Character::receiveDamage(int damage) {
     Character::hp -= damage;
-}
-
-const ActionStrategy &Character::getActionStrategy() const {
-    return actionStrategy;
-}
-
-void Character::setActionStrategy(const ActionStrategy &actionStrategy) {
-    Character::actionStrategy = actionStrategy;
 }

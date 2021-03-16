@@ -15,14 +15,7 @@
 
 int main()
 {
-    Character* hero;
-    Enemy* enemy;
-    enemy = new Enemy();
-    hero = new Player1();
-    hero->setActionStrategy(SpaceCadet());
-    hero->specialAction();
-    enemy->fight(hero);
-    enemy->move();
+
 
     return 0;
 }

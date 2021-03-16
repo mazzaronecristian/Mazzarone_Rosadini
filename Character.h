@@ -5,7 +5,7 @@
 #ifndef MAZZARONE_ROSADINI_CHARACTER_H
 #define MAZZARONE_ROSADINI_CHARACTER_H
 
-#include "ActionStrategy.h"
+
 class Character {
 public:
     Character(int hp, int posX, int posY, int damage);
@@ -32,14 +32,10 @@ public:
 
     void setDamage(int damage);
 
-    const ActionStrategy &getActionStrategy() const;
-
-    void setActionStrategy(const ActionStrategy &actionStrategy);
 
 private:
     int hp, posX, posY, damage;
-protected:
-    ActionStrategy actionStrategy;
+
 };
 
 
