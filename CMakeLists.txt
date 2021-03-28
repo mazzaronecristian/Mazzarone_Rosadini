@@ -3,9 +3,9 @@ project(Mazzarone_Rosadini)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SFML_INCLUDE_DIR "/home/rewieer/Libraries/SFML-2.5.1/include")
-set(SFML_LIBRARY_DIR "/home/rewieer/Libraries/SFML-2.5.1/lib")
-set(SFML_DIR "/home/rewieer/Libraries/SFML-2.5.1/lib/cmake/SFML")
+set(SFML_INCLUDE_DIR "/home/reviewer/Libraries/SFML-2.5.1/include")
+set(SFML_LIBRARY_DIR "/home/reviewer/Libraries/SFML-2.5.1/lib")
+set(SFML_DIR "/home/reviewer/Libraries/SFML-2.5.1/lib/cmake/SFML")
 
 link_directories(SFML_LIBRARY_DIR)
 include_directories(SFML_INCLUDE_DIR)
@@ -18,5 +18,5 @@ if(SFML_FOUND)
     message(STATUS "SFML_VERSION: ${SFML_VERSION}")
 endif()
 
-add_executable(Mazzarone_Rosadini main.cpp Character.cpp Character.h Player1.cpp Player1.h Weapon.cpp Weapon.h Hammer.cpp Hammer.h Sword.cpp Sword.h Axe.cpp Axe.h Blaster.cpp Blaster.h Enemy.cpp Enemy.h MoveStrategy.cpp MoveStrategy.h FightStrategy.cpp FightStrategy.h Map.cpp Map.h Tile.cpp Tile.h Potion.cpp Potion.h UseStrategy.cpp UseStrategy.h HealUse.cpp HealUse.h StrengthUse.cpp StrengthUse.h Barrel.cpp Barrel.h TrapBarrel.cpp TrapBarrel.h AttackStrategy.cpp AttackStrategy.h RangedAttack.cpp RangedAttack.h meleeAttack.cpp meleeAttack.h SpaceCadet.cpp SpaceCadet.h Bullet.cpp Bullet.h)
+add_executable(Mazzarone_Rosadini cpp/main.cpp cpp/Character.cpp header/Character.h cpp/Player1.cpp header/Player1.h cpp/Enemy.cpp header/Enemy.h cpp/MoveStrategy.cpp header/MoveStrategy.h cpp/FightStrategy.cpp header/FightStrategy.h cpp/Map.cpp header/Map.h cpp/Tile.cpp header/Tile.h cpp/Potion.cpp header/Potion.h cpp/UseStrategy.cpp header/UseStrategy.h cpp/HealUse.cpp header/HealUse.h cpp/StrengthUse.cpp header/StrengthUse.h cpp/Barrel.cpp header/Barrel.h cpp/TrapBarrel.cpp header/TrapBarrel.h cpp/AttackStrategy.cpp header/AttackStrategy.h cpp/RangedAttack.cpp header/RangedAttack.h cpp/meleeAttack.cpp header/meleeAttack.h cpp/SpaceCadet.cpp header/SpaceCadet.h cpp/Bullet.cpp header/Bullet.h)
 target_link_libraries (Mazzarone_Rosadini sfml-graphics sfml-window sfml-system)
