@@ -19,6 +19,11 @@ public:
 
     virtual ~Player1();
 
+    void moveUp();
+    void moveDown();
+    void moveLeft();
+    void moveRight();
+
     virtual void fight(Character &enemy);
     bool isLegalFight(Character &enemy);
     //TODO RESOLVE POTION

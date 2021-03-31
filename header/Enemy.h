@@ -8,11 +8,12 @@
 #include "Character.h"
 #include "FightStrategy.h"
 #include "MoveStrategy.h"
+#include "Player1.h"
 
 class Enemy: public Character {
 public:
     Enemy();
-    virtual ~Enemy();
+    void movement(Player1 hero);
 
     virtual void fight(Character *hero);
 
