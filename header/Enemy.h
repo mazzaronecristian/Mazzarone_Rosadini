@@ -9,6 +9,7 @@
 #include "FightStrategy.h"
 #include "MoveStrategy.h"
 #include "Player1.h"
+#include <math.h>
 
 class Enemy: public Character {
 public:
