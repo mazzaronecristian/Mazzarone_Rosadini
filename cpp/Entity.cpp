@@ -63,10 +63,6 @@ void Entity::setAnimTime(const sf::Time &animTime) {
     AnimTime = animTime;
 }
 
-void Entity::movement(float x, float y) {
-    sprite.move(x, y);
-}
-
 void Entity::doAnimation() {
     if(AnimClock.getElapsedTime() > AnimTime){
         sprite.setTextureRect(sf::IntRect(source.x * 32, source.y * 32, 32, 32));

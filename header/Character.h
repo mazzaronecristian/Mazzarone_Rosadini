@@ -15,6 +15,8 @@ class Character: public Entity {
 public:
     explicit Character(int hp = 10, int damage = 5, float speed = 0.3);
 
+    virtual void movement(float x, float y) = 0;
+
     void receiveDamage(int damage);
 
     //getter
@@ -31,7 +33,7 @@ public:
 protected:
     int hp, damage;
     float speed;
-    enum action{stay, right, left, fight, die};
+    enum action{stay, right, left, attack, die};
 
 };
 

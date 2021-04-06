@@ -14,7 +14,8 @@
 class Enemy: public Character {
 public:
     Enemy();
-    void movement(Player1 hero);
+    void movement(float x, float y);
+
 
     virtual void fight(Character *hero);
 

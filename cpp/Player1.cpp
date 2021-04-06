@@ -9,33 +9,19 @@ Player1::Player1() {}
 Player1::~Player1() {}
 
 
-void Player1::moveUp() {
-    if(this->getSource().y == stay)
-        this->setSourceY(right);
-    this->movement(0, -speed);
+void Player1::movement(float x, float y) {
+    if(x==0){
+        if(this->getSource().y == stay)
+            this->setSourceY(right);
+    }
+    else{
+        if(x==1)
+            this->setSourceY(right);
+        else
+            this->setSourceY(left);
+    }
 
-    this->doAnimation();
-}
-
-void Player1::moveDown() {
-    if(this->getSource().y == stay)
-        this->setSourceY(right);
-    this->movement(0, speed);
-
-    this->doAnimation();
-}
-
-void Player1::moveLeft() {
-    this->setSourceY(left);
-    this->movement(-speed, 0);
-
-    this->doAnimation();
-}
-
-void Player1::moveRight() {
-    this->setSourceY(right);
-    this->movement(speed, 0);
-
+    sprite.move(x*speed, y*speed);
     this->doAnimation();
 }
 void Player1::fight(Character &enemy) {

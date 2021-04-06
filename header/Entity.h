@@ -15,8 +15,6 @@ public:
 
     bool load(const std::string &tileSet, sf::Vector2f position);
 
-    void movement(float x, float y);
-
     void doAnimation();
 
     //Getter and Setter
@@ -43,14 +41,16 @@ public:
 
     void setAnimTime(const sf::Time &animTime);
 
-private:
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
+protected:
     sf::Time AnimTime; //Player Animation Time
     sf::Texture tileSet;
     sf::Vector2i source;
     sf::Sprite sprite;
     sf::Clock AnimClock; //Player Animation Clock
+
+private:
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
 };
 
 

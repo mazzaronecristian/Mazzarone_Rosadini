@@ -19,10 +19,7 @@ public:
 
     virtual ~Player1();
 
-    void moveUp();
-    void moveDown();
-    void moveLeft();
-    void moveRight();
+    void movement(float x, float y);
 
     virtual void fight(Character &enemy);
     bool isLegalFight(Character &enemy);

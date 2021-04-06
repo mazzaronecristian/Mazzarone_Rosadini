@@ -6,33 +6,16 @@
 
 Enemy::Enemy(): Character(2,2,0.1){}
 
-
-void Enemy::movement(Player1 hero) {
-    if(abs(hero.getSprite().getPosition().y - this->getSprite().getPosition().y) > speed ||
-       abs(hero.getSprite().getPosition().x - this->getSprite().getPosition().x) > speed){
-
-        if(hero.getSprite().getPosition().y > this->getSprite().getPosition().y){
-            if(this->getSource().y == stay)
-                this->setSourceY(right);
-            this->Entity::movement(0,speed);
-            this->doAnimation();
-        }
-        if(hero.getSprite().getPosition().y < this->getSprite().getPosition().y){
-            if(this->getSource().y == stay)
-                this->setSourceY(right);
-            this->Entity::movement(0,-speed);
-            this->doAnimation();
-        }
-        if(hero.getSprite().getPosition().x > this->getSprite().getPosition().x){
-            this->setSourceY(right);
-            this->Entity::movement(speed, 0);
-            this->doAnimation();
-        }
-        if(hero.getSprite().getPosition().x < this->getSprite().getPosition().x){
-            this->setSourceY(left);
-            this->Entity::movement(-speed, 0);
-            this->doAnimation();
-        }
+void Enemy::movement(float x, float y) {
+    if(abs(y - sprite.getPosition().y) > speed ||
+       abs(x - sprite.getPosition().x) > speed) {
+        float directionX = (x - sprite.getPosition().x) / std::abs(x - sprite.getPosition().x);
+        float directionY = (y- sprite.getPosition().y)/std::abs(y- sprite.getPosition().y);
+        sprite.move(directionX*speed, directionY*speed);
+    }
+    else{
+        source.y = attack;
+        this->doAnimation();
     }
 }
 

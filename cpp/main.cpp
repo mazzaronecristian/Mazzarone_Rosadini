@@ -28,9 +28,9 @@ int main() {
     if (!hero.Entity::load("../sprites/spaceCadet.png", sf::Vector2f(100, 100)))
         return -1;
 
-    Enemy ghoul[5];
-    for(int i = 0; i<5; i++)
-    if (!ghoul[i].Entity::load("../sprites/ghoul.png", sf::Vector2f(rand()%750+100, rand()%450+100)))
+    srand(time(NULL));
+    Enemy ghoul;
+    if (!ghoul.Entity::load("../sprites/ghoul.png", sf::Vector2f(rand()%750+100, rand()%450+100)))
         return -1;
 
     //main loop
@@ -43,24 +43,28 @@ int main() {
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-            hero.moveUp();
+            hero.movement(0,-1);
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-            hero.moveLeft();
+            hero.movement(-1,0);
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-            hero.moveDown();
+            hero.movement(0,1);
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            hero.moveRight();
+            hero.movement(1,0);
         }
-        for(int i = 0; i<5; i++)
-            ghoul[i].movement(hero);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+            hero.fight(ghoul);
+        }
+
+        if(std::abs(hero.getSprite().getPosition().x - ghoul.getSprite().getPosition().x)<=400 && std::abs(hero.getSprite().getPosition().y - ghoul.getSprite().getPosition().y)<=400)
+            ghoul.movement(hero.getSprite().getPosition().x, hero.getSprite().getPosition().y);
+
         window.clear();
         window.draw(arena);
         window.draw(hero);
-        for(int i = 0; i<5; i++)
-            window.draw(ghoul[i]);
+        window.draw(ghoul);
 
         window.display();
     }
