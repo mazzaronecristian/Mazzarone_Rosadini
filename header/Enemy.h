@@ -9,20 +9,25 @@
 #include "FightStrategy.h"
 #include "MoveStrategy.h"
 #include "Player1.h"
+#include "Follow.h"
 #include <math.h>
+#include <memory.h>
 
 class Enemy: public Character {
 public:
-    Enemy();
+    explicit Enemy(MoveStrategy *moveStrategy = nullptr);
+
     void movement(float x, float y);
 
+    MoveStrategy *getMoveStrategy() const;
+
+    void setMoveStrategy(MoveStrategy *moveStrategy);
 
     virtual void fight(Character *hero);
 
-protected:
+private:
     FightStrategy fightStrategy;
-    MoveStrategy moveStrategy;
-
+    MoveStrategy *moveStrategy;
 };
 
 #endif //MAZZARONE_ROSADINI_ENEMY_H

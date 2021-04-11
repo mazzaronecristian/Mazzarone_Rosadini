@@ -8,22 +8,22 @@ Player1::Player1() {}
 
 Player1::~Player1() {}
 
-
 void Player1::movement(float x, float y) {
     if(x==0){
-        if(this->getSource().y == stay)
-            this->setSourceY(right);
+        if(source.y == stay)
+            source.y = right;
     }
     else{
         if(x==1)
-            this->setSourceY(right);
+            source.y = right;
         else
-            this->setSourceY(left);
+            source.y = left;
     }
 
     sprite.move(x*speed, y*speed);
-    this->doAnimation();
+    doAnimation();
 }
+
 void Player1::fight(Character &enemy) {
 
 }

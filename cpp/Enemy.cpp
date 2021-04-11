@@ -4,21 +4,23 @@
 
 #include "../header/Enemy.h"
 
-Enemy::Enemy(): Character(2,2,0.1){}
+Enemy::Enemy(MoveStrategy *moveStrategy): moveStrategy(moveStrategy), Character(2,2,0.1){}
 
 void Enemy::movement(float x, float y) {
-    if(abs(y - sprite.getPosition().y) > speed ||
-       abs(x - sprite.getPosition().x) > speed) {
-        float directionX = (x - sprite.getPosition().x) / std::abs(x - sprite.getPosition().x);
-        float directionY = (y- sprite.getPosition().y)/std::abs(y- sprite.getPosition().y);
-        sprite.move(directionX*speed, directionY*speed);
-    }
-    else{
-        source.y = attack;
-        this->doAnimation();
-    }
+    delete moveStrategy;
+    moveStrategy->movement(x, y, sprite, source, speed);
+    doAnimation();
 }
 
 void Enemy::fight(Character *hero) {
     this->fightStrategy.fight(hero, this->getDamage());
 }
+
+MoveStrategy *Enemy::getMoveStrategy() const {
+    return moveStrategy;
+}
+
+void Enemy::setMoveStrategy(MoveStrategy *moveStrategy) {
+    Enemy::moveStrategy = moveStrategy;
+}
+

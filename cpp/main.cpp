@@ -7,6 +7,7 @@
 #include "../header/Character.h"
 #include "../header/Player1.h"
 #include "../header/Enemy.h"
+#include "../header/Follow.h"
 
 #include <sstream>
 #include<fstream>
@@ -18,9 +19,7 @@ int main() {
 
     std::ifstream m_matrix("../matrix.txt");
     Map arena;
-    if (!arena.load("../sprites/map/background.png",
-                    "../sprites/map/map.png",
-                    sf::Vector2u(32, 32), m_matrix))
+    if (!arena.load("../sprites/map/background.png", "../sprites/map/map.png", sf::Vector2u(32, 32), m_matrix))
         return -1;
     m_matrix.close();
 
@@ -38,8 +37,9 @@ int main() {
     {
         sf::Event e;
         while (window.pollEvent(e)){
-            if (e.type == sf::Event::Closed)
+            if (e.type == sf::Event::Closed){
                 window.close();
+            }
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
@@ -59,13 +59,13 @@ int main() {
         }
 
         if(std::abs(hero.getSprite().getPosition().x - ghoul.getSprite().getPosition().x)<=400 && std::abs(hero.getSprite().getPosition().y - ghoul.getSprite().getPosition().y)<=400)
-            ghoul.movement(hero.getSprite().getPosition().x, hero.getSprite().getPosition().y);
+            ghoul.setMoveStrategy(new Follow());
+        ghoul.movement(hero.getSprite().getPosition().x, hero.getSprite().getPosition().y);
 
         window.clear();
         window.draw(arena);
         window.draw(hero);
         window.draw(ghoul);
-
         window.display();
     }
     return 0;

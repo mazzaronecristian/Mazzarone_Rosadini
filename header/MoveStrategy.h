@@ -8,7 +8,9 @@
 
 class MoveStrategy {
 public:
-    virtual void move(Character *hero, int *enemyX, int *enemyY);
+    virtual ~MoveStrategy();
+
+    virtual void movement(float x, float y, sf::Sprite& sprite, sf::Vector2i& source, float speed) = 0;
 };
 
 
