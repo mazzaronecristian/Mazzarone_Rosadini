@@ -6,6 +6,8 @@
 #define MAZZARONE_ROSADINI_FOLLOW_H
 
 #include "MoveStrategy.h"
+#include <cmath>
+
 class Follow: public MoveStrategy {
 public:
     void movement(float x, float y, sf::Sprite& sprite, sf::Vector2i& source, float speed) override;

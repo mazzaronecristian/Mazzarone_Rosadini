@@ -7,13 +7,9 @@
 Enemy::Enemy(MoveStrategy *moveStrategy): moveStrategy(moveStrategy), Character(2,2,0.1){}
 
 void Enemy::movement(float x, float y) {
-    delete moveStrategy;
     moveStrategy->movement(x, y, sprite, source, speed);
+    delete moveStrategy;
     doAnimation();
-}
-
-void Enemy::fight(Character *hero) {
-    this->fightStrategy.fight(hero, this->getDamage());
 }
 
 MoveStrategy *Enemy::getMoveStrategy() const {
@@ -22,5 +18,10 @@ MoveStrategy *Enemy::getMoveStrategy() const {
 
 void Enemy::setMoveStrategy(MoveStrategy *moveStrategy) {
     Enemy::moveStrategy = moveStrategy;
+}
+
+
+void Enemy::fight(Character *hero) {
+    this->fightStrategy.fight(hero, this->getDamage());
 }
 
