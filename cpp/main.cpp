@@ -10,7 +10,8 @@
 #include "../header/Follow.h"
 
 #include <sstream>
-#include<fstream>
+#include <fstream>
+#include <cmath>
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(960, 640), "GAME");
