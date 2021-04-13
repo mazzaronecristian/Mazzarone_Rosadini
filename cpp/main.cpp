@@ -8,6 +8,7 @@
 #include "../header/Player1.h"
 #include "../header/Enemy.h"
 #include "../header/Follow.h"
+#include "../header/Patrol.h"
 
 #include <sstream>
 #include <fstream>

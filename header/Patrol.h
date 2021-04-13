@@ -11,6 +11,7 @@ public:
     Patrol();
 
     void movement(float x, float y, sf::Sprite &sprite, sf::Vector2i &source, float speed) override;
+
 };
 
 

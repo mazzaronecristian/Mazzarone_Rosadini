@@ -8,7 +8,6 @@
 #include "Character.h"
 #include "FightStrategy.h"
 #include "MoveStrategy.h"
-#include "Patrol.h"
 #include <math.h>
 #include <memory.h>
 #include <memory>
@@ -17,6 +16,7 @@ class Enemy: public Character {
 public:
     explicit Enemy(std::shared_ptr<MoveStrategy> moveStrategy);
     void movement(float x, float y);
+
     void setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrategy);
 
 private:
