@@ -7,7 +7,6 @@
 
 #include "Character.h"
 #include "Potion.h"
-#include "AttackStrategy.h"
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 #include "SFML/System.hpp"

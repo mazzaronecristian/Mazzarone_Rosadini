@@ -4,4 +4,6 @@
 
 #include "../header/MoveStrategy.h"
 
-MoveStrategy::~MoveStrategy() {}
+MoveStrategy::~MoveStrategy() {
+
+}

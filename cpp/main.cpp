@@ -28,7 +28,7 @@ int main() {
         return -1;
 
     srand(time(NULL));
-    Enemy ghoul;
+    Enemy ghoul(std::make_shared<Patrol>());
     if (!ghoul.Entity::load("../sprites/ghoul.png", sf::Vector2f(rand()%750+100, rand()%450+100)))
         return -1;
 
@@ -59,7 +59,10 @@ int main() {
         }
 
         if(std::abs(hero.getSprite().getPosition().x - ghoul.getSprite().getPosition().x)<=400 && std::abs(hero.getSprite().getPosition().y - ghoul.getSprite().getPosition().y)<=400)
-            ghoul.setMoveStrategy(new Follow());
+            ghoul.setMoveStrategy(std::make_shared<Follow>());
+        else
+            ghoul.setMoveStrategy(std::make_shared<Patrol>());
+
         ghoul.movement(hero.getSprite().getPosition().x, hero.getSprite().getPosition().y);
 
         window.clear();

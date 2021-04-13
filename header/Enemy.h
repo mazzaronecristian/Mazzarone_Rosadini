@@ -8,26 +8,19 @@
 #include "Character.h"
 #include "FightStrategy.h"
 #include "MoveStrategy.h"
-#include "Player1.h"
-#include "Follow.h"
+#include "Patrol.h"
 #include <math.h>
 #include <memory.h>
+#include <memory>
 
 class Enemy: public Character {
 public:
-    explicit Enemy(MoveStrategy *moveStrategy = nullptr);
-
+    explicit Enemy(std::shared_ptr<MoveStrategy> moveStrategy);
     void movement(float x, float y);
-
-    MoveStrategy *getMoveStrategy() const;
-
-    void setMoveStrategy(MoveStrategy *moveStrategy);
-
-    virtual void fight(Character *hero);
+    void setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrategy);
 
 private:
-    FightStrategy fightStrategy;
-    MoveStrategy *moveStrategy;
+    std::shared_ptr<MoveStrategy> moveStrategy;
 };
 
 #endif //MAZZARONE_ROSADINI_ENEMY_H
