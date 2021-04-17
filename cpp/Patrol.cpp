@@ -6,6 +6,11 @@
 
 Patrol::Patrol() {}
 
-void Patrol::movement(float x, float y, sf::Sprite &sprite, sf::Vector2i &source, float speed) {
+int Patrol::movement(float x, float y, sf::Sprite &sprite, float speed) {
+
+    float e = 0.1;
+    int positionY = (int) (abs(sprite.getPosition().y - 500) / abs((sprite.getPosition().y - 500) + e));
+    sprite.move(0 * speed, positionY * speed);
+    return 1;
 
 }

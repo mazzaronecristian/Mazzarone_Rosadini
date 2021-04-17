@@ -7,7 +7,7 @@
 Enemy::Enemy(std::shared_ptr<MoveStrategy> moveStrategy): moveStrategy(moveStrategy), Character(2,2,0.1){}
 
 void Enemy::movement(float x, float y) {
-    moveStrategy->movement(x, y, sprite, source, speed);
+    source.y = moveStrategy->movement(x, y, sprite, speed);
     doAnimation();
 }
 

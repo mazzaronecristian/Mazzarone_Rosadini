@@ -9,19 +9,16 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 using namespace sf;
+
 class Tile {
 public:
 
-    Tile(const Sprite &sprite);
+    Tile();
     virtual ~Tile();
-    //getter
-    const Sprite &getSprite() const;
-    //setter
-    void setSprite(const Sprite &sprite);
 
 private:
-    Sprite sprite;
-
+    sf::VertexArray vertice;
+    sf::Texture texture;
 };
 
 

@@ -10,7 +10,7 @@ class MoveStrategy {
 public:
     virtual ~MoveStrategy();
 
-    virtual void movement(float x, float y, sf::Sprite& sprite, sf::Vector2i& source, float speed) = 0;
+    virtual int movement(float x, float y, sf::Sprite& sprite, float speed) = 0;
 };
 
 

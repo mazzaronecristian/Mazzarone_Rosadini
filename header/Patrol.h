@@ -6,11 +6,13 @@
 #define MAZZARONE_ROSADINI_PATROL_H
 
 #include "MoveStrategy.h"
+#include <cmath>
+
 class Patrol: public MoveStrategy{
 public:
     Patrol();
 
-    void movement(float x, float y, sf::Sprite &sprite, sf::Vector2i &source, float speed) override;
+    int movement(float x, float y, sf::Sprite &sprite, float speed) override;
 
 };
 

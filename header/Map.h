@@ -11,6 +11,7 @@
 
 #include <sstream>
 #include <fstream>
+#include "Tile.h"
 
 class Map: public sf::Drawable, public sf::Transformable{
 public:
@@ -22,6 +23,7 @@ private:
 
     int width, height;
     int *level;
+    std::vector<std::unique_ptr<Tile>> tiles;
     sf::Texture bg;
     sf::VertexArray m_vertices;
     sf::Texture m_tileset;

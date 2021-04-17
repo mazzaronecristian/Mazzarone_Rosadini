@@ -10,7 +10,7 @@
 
 class Follow: public MoveStrategy {
 public:
-    void movement(float x, float y, sf::Sprite& sprite, sf::Vector2i& source, float speed) override;
+    int movement(float x, float y, sf::Sprite& sprite, float speed) override;
 };
 
 

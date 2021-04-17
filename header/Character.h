@@ -24,11 +24,14 @@ public:
 
     int getDamage() const;
 
+    float getSpeed() const;
+
     //setter
     void setHp(int hp);
 
     void setDamage(int damage);
 
+    void setSpeed(float speed);
 
 protected:
     int hp, damage;
