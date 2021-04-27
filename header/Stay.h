@@ -8,7 +8,7 @@
 #include "MoveStrategy.h"
 
 class Stay: public MoveStrategy{
-    int movement(float x, float y, sf::Sprite &sprite, float speed) override;
+    sf::Vector2f movement(float x, float y, sf::Sprite &sprite) override;
 };
 
 

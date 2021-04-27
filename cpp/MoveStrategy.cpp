@@ -4,6 +4,3 @@
 
 #include "../header/MoveStrategy.h"
 
-MoveStrategy::~MoveStrategy() {
-
-}

@@ -8,9 +8,9 @@
 
 class MoveStrategy {
 public:
-    virtual ~MoveStrategy();
+    virtual ~MoveStrategy() = default;
 
-    virtual int movement(float x, float y, sf::Sprite& sprite, float speed) = 0;
+    virtual sf::Vector2f movement(float x, float y, sf::Sprite &sprite) = 0;
 };
 
 

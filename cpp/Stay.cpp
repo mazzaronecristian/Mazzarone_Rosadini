@@ -4,6 +4,7 @@
 
 #include "../header/Stay.h"
 
-int Stay::movement(float x, float y, sf::Sprite &sprite, float speed) {
-    return 0;
+sf::Vector2f Stay::movement(float x, float y, sf::Sprite &sprite) {
+    sf::Vector2f direction = {0,0};
+    return direction;
 }
