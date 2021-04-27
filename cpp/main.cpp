@@ -22,17 +22,17 @@ int main() {
 
     std::ifstream m_matrix("../matrix.txt");
     Map arena;
-    if (!arena.load("../sprites/map/background.png", "../sprites/map/map.png", sf::Vector2u(32, 32), m_matrix))
+    if (!arena.load("../tileSets/map/background.png", "../tileSets/map/map.png", sf::Vector2u(32, 32), m_matrix))
         return -1;
     m_matrix.close();
 
     Player1 hero;
-    if (!hero.Entity::load("../sprites/spaceCadet.png", sf::Vector2f(100, 100)))
+    if (!hero.Entity::load("../tileSets/spaceCadet.png", sf::Vector2f(100, 100)))
         return -1;
 
     srand(time(NULL));
     Enemy ghoul(std::make_shared<Patrol>());
-    if (!ghoul.Entity::load("../sprites/ghoul.png", sf::Vector2f(rand()%450+100, rand()%450+100)))
+    if (!ghoul.Entity::load("../tileSets/ghoul.png", sf::Vector2f(rand()%450+100, rand()%450+100)))
         return -1;
 
     //main loop
