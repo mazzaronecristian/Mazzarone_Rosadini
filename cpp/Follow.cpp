@@ -14,7 +14,6 @@ int Follow::movement(float x, float y, sf::Sprite& sprite, float speed) {
             return 2;
         else
             return 1;
-        return 100000;
     }
     return 0;
 }
