@@ -17,6 +17,8 @@ public:
 
     virtual void movement(float x, float y) = 0;
 
+    bool isLegalMove(sf::FloatRect bBox);
+
     void receiveDamage(int damage);
 
     //getter

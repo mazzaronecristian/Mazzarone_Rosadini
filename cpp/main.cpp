@@ -44,22 +44,25 @@ int main() {
                 window.close();
             }
         }
+        if(hero.isLegalMove(ghoul.getSprite().getGlobalBounds())){
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+                hero.movement(0,-1);
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+                hero.movement(-1,0);
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+                hero.movement(0,1);
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+                hero.movement(1,0);
+            }
+        }
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-            hero.movement(0,-1);
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-            hero.movement(-1,0);
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-            hero.movement(0,1);
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            hero.movement(1,0);
-        }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
             hero.fight(ghoul);
         }
+
 
         if(std::abs(hero.getSprite().getPosition().x - ghoul.getSprite().getPosition().x)<=300
             && std::abs(hero.getSprite().getPosition().y - ghoul.getSprite().getPosition().y)<=300)
@@ -68,7 +71,6 @@ int main() {
             ghoul.setMoveStrategy(std::make_shared<Stay>());
 
         ghoul.movement(hero.getSprite().getPosition().x, hero.getSprite().getPosition().y);
-
 
         window.clear();
         window.draw(arena);

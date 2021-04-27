@@ -28,8 +28,6 @@ void Character::setDamage(int damage) {
     Character::damage = damage;
 }
 
-
-
 void Character::receiveDamage(int damage) {
     Character::hp -= damage;
 }
@@ -37,4 +35,18 @@ void Character::receiveDamage(int damage) {
 void Character::setSpeed(float speed) {
     Character::speed = speed;
 }
+
+bool Character::isLegalMove(sf::FloatRect bBox) {
+    if(sprite.getGlobalBounds().intersects(bBox))
+        return false;
+    return true;
+}
+
+//bool Character::isLegalMove() {
+//    if(sprite.getPosition().y < 32 || sprite.getPosition().y > 560)
+//        return false;
+//    if(sprite.getPosition().x < 16 || sprite.getPosition().x > 905)
+//        return false;
+//    return true;
+//}
 
