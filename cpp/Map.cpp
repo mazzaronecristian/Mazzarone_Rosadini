@@ -5,11 +5,11 @@
 #include "../header/Map.h"
 
 Map::Map(int width, int height) : width(width), height(height){
-    level = new int[width*height];
+    tiles.reserve(width*height);
 }
 
 
-bool Map::load(const std::string &background, const std::string &tileSet, sf::Vector2u tileSize, std::ifstream& tile) {
+bool Map::load(const std::string &background, const std::string &tileSet, sf::Vector2u tileSize, std::ifstream& matrix) {
     //load background image
     if(!bg.loadFromFile(background))
         return false;
@@ -17,7 +17,15 @@ bool Map::load(const std::string &background, const std::string &tileSet, sf::Ve
     if (!m_tileset.loadFromFile(tileSet))
         return false;
 
-    int i=0;
+    int codeX, codeY, i = 0;
+
+    matrix>>codeX;
+    matrix>>codeY;
+    tiles[0].setCodeX(codeX);
+    tiles[0].setCodeY(codeY);
+    tiles[0].load(m_tileset, sf::Vector2f(0,0));
+
+    /*int i=0;
     level = new int[600];
     while(!tile.eof()){
         tile>>level[i];
@@ -53,7 +61,7 @@ bool Map::load(const std::string &background, const std::string &tileSet, sf::Ve
             quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x, tv * tileSize.y);
             quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x, (tv + 1) * tileSize.y);
             quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
-        }
+        }*/
     return true;
 }
 
@@ -63,13 +71,15 @@ void Map::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(background);
 
     // apply the transform
-    states.transform *= getTransform();
+    //states.transform *= getTransform();
 
     // apply the tileset texture
-    states.texture = &m_tileset;
+    //states.texture = &m_tileset;
+
+    target.draw(tiles[0]);
 
     // draw the vertex array
-    target.draw(m_vertices, states);
+    //target.draw(m_vertices, states);
 }
 
 

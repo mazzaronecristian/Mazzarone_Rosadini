@@ -20,7 +20,7 @@ int main() {
     sf::RenderWindow &app = window;
     sf::RenderTexture texture;
 
-    std::ifstream m_matrix("../matrix.txt");
+    std::ifstream m_matrix("../matrix2.txt");
     Map arena;
     if (!arena.load("../sprites/map/background.png", "../sprites/map/map.png", sf::Vector2u(32, 32), m_matrix))
         return -1;
