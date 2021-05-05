@@ -4,7 +4,7 @@
 
 #include "../header/Entity.h"
 
-Entity::Entity(const sf::Time &animTime, int sizeX, int sizeY) : AnimTime(animTime), source(sizeX, sizeY) {}
+Entity::Entity(const sf::Time &animTime) {}
 
 void Entity::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(sprite);
@@ -47,34 +47,6 @@ void Entity::setSprite(const sf::Sprite &sprite) {
     Entity::sprite = sprite;
 }
 
-const sf::Clock &Entity::getAnimClock() const {
-    return AnimClock;
-}
-
-void Entity::setAnimClock(const sf::Clock &animClock) {
-    AnimClock = animClock;
-}
-
-const sf::Time &Entity::getAnimTime() const {
-    return AnimTime;
-}
-
-void Entity::setAnimTime(const sf::Time &animTime) {
-    AnimTime = animTime;
-}
-
-void Entity::doAnimation() {
-    if(AnimClock.getElapsedTime() > AnimTime){
-        sprite.setTextureRect(sf::IntRect(source.x * 32, source.y * 32, 32, 32));
-
-        //Animation
-        source.x++;
-        if(source.x * 32 >= 256/*sprite.getTexture()->getSize().x*/)
-            source.x = 0;
-        AnimClock.restart();
-    }
-}
-
 void Entity::setSourceX(const int x) {
     Entity::source.x = x;
 }
@@ -82,4 +54,5 @@ void Entity::setSourceX(const int x) {
 void Entity::setSourceY(const int y) {
     Entity::source.y = y;
 }
+
 

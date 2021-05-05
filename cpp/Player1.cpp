@@ -20,7 +20,7 @@ void Player1::movement(float x, float y) {
             source.y = left;
     }
     sprite.move(x*speed, y*speed);
-    doAnimation();
+
 }
 
 void Player1::fight(Character &enemy) {

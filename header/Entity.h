@@ -9,13 +9,13 @@
 #include "SFML/Window.hpp"
 #include "SFML/System.hpp"
 
+#include "Animation.h"
+
 class Entity: public sf::Drawable, public sf::Transformable {
 public:
-    explicit Entity(const sf::Time &animTime = sf::milliseconds(60), int sizeX = 1, int sizeY=0);
+    explicit Entity(const sf::Time &animTime = sf::milliseconds(60));
 
     bool load(const std::string &tileSet, sf::Vector2f position);
-
-    void doAnimation();
 
     //Getter and Setter
     const sf::Texture &getTileSet() const;
@@ -41,15 +41,14 @@ public:
 
     void setAnimTime(const sf::Time &animTime);
 
-protected:
-    sf::Time AnimTime; //Player Animation Time
-    sf::Texture tileSet;
-    sf::Vector2i source;
-    sf::Sprite sprite;
-    sf::Clock AnimClock; //Player Animation Clock
-
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+protected:
+    sf::Texture tileSet;
+    sf::Vector2i source = {0,0};
+    sf::Sprite sprite;
+
 };
 
 

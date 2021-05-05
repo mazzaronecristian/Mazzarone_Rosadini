@@ -4,7 +4,9 @@
 
 #include "../header/Enemy.h"
 
-Enemy::Enemy(std::shared_ptr<MoveStrategy> moveStrategy): moveStrategy(moveStrategy), Character(2,2,0.1){}
+#include <utility>
+
+Enemy::Enemy(std::shared_ptr<MoveStrategy> moveStrategy): moveStrategy(std::move(moveStrategy)), Character(2,2,0.1){}
 
 void Enemy::movement(float x, float y) {
     if(abs(y - sprite.getPosition().y) > speed || abs(x - sprite.getPosition().x) > speed) {
@@ -18,8 +20,6 @@ void Enemy::movement(float x, float y) {
     }
     else
         source.y = stay;
-    doAnimation();
-
 }
 
 void Enemy::setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrategy) {
