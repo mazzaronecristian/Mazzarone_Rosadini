@@ -19,7 +19,6 @@
 int main() {
     sf::RenderWindow window(sf::VideoMode(960, 640), "GAME");
     sf::RenderWindow &app = window;
-    sf::RenderTexture texture;
 
     std::ifstream m_matrix("../matrix.txt");
     Map arena;
@@ -60,21 +59,23 @@ int main() {
             hero.movement(-1,0);
             animationHero.setNFrame(8);
             animationHero.setSwitchTime(0.06);
-
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
             hero.movement(0,1);
             animationHero.setNFrame(8);
             animationHero.setSwitchTime(0.06);
-
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             hero.movement(1,0);
             animationHero.setNFrame(8);
             animationHero.setSwitchTime(0.06);
         }
+
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-            hero.setSourceY(3);
+            if (hero.getSource().y % 2 == 0)
+                hero.setSourceY(4);
+            else
+                hero.setSourceY(5);
             animationHero.setNFrame(6);
             animationHero.setSwitchTime(0.06);
         }

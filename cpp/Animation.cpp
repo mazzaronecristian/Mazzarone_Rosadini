@@ -11,8 +11,12 @@ void Animation::update(sf::Vector2i &source, float deltaTime) {
     if (animTime >= switchTime) {
         animTime -= switchTime;
         source.x++;
-        if (source.x >= nFrame)
-            source.x = 0;
+        if (source.x >= nFrame){
+            if (source.y%2 == 0)
+                source = {0,0};
+            else
+                source = {0,1};
+        }
         rect.left = source.x*rect.width;
         rect.top = source.y*rect.height;
     }

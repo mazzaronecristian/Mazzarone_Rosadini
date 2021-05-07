@@ -10,7 +10,7 @@ Player1::~Player1() {}
 
 void Player1::movement(float x, float y) {
     if(x==0){
-        if(source.y == stay)
+        if(source.y == stayR)
             source.y = right;
     }
     else{

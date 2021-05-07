@@ -15,11 +15,11 @@ void Enemy::movement(float x, float y) {
         if(direction.x < 0)
             source.y = left;
         else if(direction.x== 0 && direction.y == 0)
-            source.y = stay;
+            source.y = stayR;
         else source.y = right;
     }
     else
-        source.y = stay;
+        source.y = stayL;
 }
 
 void Enemy::setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrategy) {

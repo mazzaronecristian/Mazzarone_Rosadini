@@ -38,7 +38,7 @@ public:
 protected:
     int hp, damage;
     float speed;
-    enum action{stay, right, left, attack, die};
+    enum action{stayR, stayL, right, left, attackR, attackL, die};
 
 };
 
