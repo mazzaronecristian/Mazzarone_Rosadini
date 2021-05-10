@@ -5,27 +5,19 @@
 #ifndef MAZZARONE_ROSADINI_BULLET_H
 #define MAZZARONE_ROSADINI_BULLET_H
 
+#include "Entity.h"
 
-class Bullet {
+class Bullet: public Entity{
 public:
-    Bullet(int posX, int posY);
+    explicit Bullet(bool bulletDirection, float speed = 0.9);
+
+    void movement();
 
     virtual ~Bullet();
 
-    //getter
-    int getPosX() const;
-
-    int getPosY() const;
-
-    //setter
-    void setPosX(int posX);
-
-    void setPosY(int posY);
-
-
 private:
-    int posX, posY;
-
+    float speed;
+    const bool bulletDirection;
 };
 
 

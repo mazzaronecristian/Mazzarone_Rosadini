@@ -33,13 +33,6 @@ public:
 
     void setSprite(const sf::Sprite &sprite);
 
-    const sf::Clock &getAnimClock() const;
-
-    void setAnimClock(const sf::Clock &animClock);
-
-    const sf::Time &getAnimTime() const;
-
-    void setAnimTime(const sf::Time &animTime);
 
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

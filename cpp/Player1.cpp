@@ -12,6 +12,8 @@ void Player1::movement(float x, float y) {
     if(x==0){
         if(source.y == stayR)
             source.y = right;
+        else
+            source.y = left;
     }
     else{
         if(x==1)
@@ -20,7 +22,6 @@ void Player1::movement(float x, float y) {
             source.y = left;
     }
     sprite.move(x*speed, y*speed);
-
 }
 
 void Player1::fight(Character &enemy) {

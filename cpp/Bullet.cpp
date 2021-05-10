@@ -6,22 +6,13 @@
 
 Bullet::~Bullet() = default;
 
-Bullet::Bullet(int posX, int posY) {
-
+Bullet::Bullet(bool bulletDirection, float speed):bulletDirection(bulletDirection), speed(speed) {
 }
 
-int Bullet::getPosX() const {
-    return posX;
+void Bullet::movement(){
+    if(bulletDirection)
+        sprite.move(speed,0);
+    else
+        sprite.move(-speed,0);
 }
 
-int Bullet::getPosY() const {
-    return posY;
-}
-
-void Bullet::setPosX(int posX) {
-    Bullet::posX = posX;
-}
-
-void Bullet::setPosY(int posY) {
-    Bullet::posY = posY;
-}

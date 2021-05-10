@@ -5,9 +5,6 @@
 #ifndef MAZZARONE_ROSADINI_CHARACTER_H
 #define MAZZARONE_ROSADINI_CHARACTER_H
 
-#include "SFML/Graphics.hpp"
-#include "SFML/Window.hpp"
-#include "SFML/System.hpp"
 
 #include "Entity.h"
 

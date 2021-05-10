@@ -11,6 +11,7 @@
 #include "../header/Patrol.h"
 #include "../header/Stay.h"
 #include "../header/Animation.h"
+#include "../header/Bullet.h"
 
 #include <sstream>
 #include <fstream>
@@ -38,6 +39,11 @@ int main() {
     float deltaTime;
     Animation animationHero;
     Animation animationGhoul;
+    Animation animationBullet;
+
+    std::vector<Entity> entities;
+    entities.push_back(hero);
+    entities.push_back(ghoul);
 
     //main loop
     while (window.isOpen())
@@ -72,13 +78,25 @@ int main() {
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-            if (hero.getSource().y % 2 == 0)
+            bool bulletDirection;
+            if (hero.getSource().y % 2 == 0) {
                 hero.setSourceY(4);
-            else
+                bulletDirection=true;
+            }else {
                 hero.setSourceY(5);
+                bulletDirection=false;
+            }
+            Bullet bullet(bulletDirection);
+            if (!bullet.Entity::load("../tileSets/bullet.png", sf::Vector2f(300,300)))
+                return -1;
             animationHero.setNFrame(6);
             animationHero.setSwitchTime(0.06);
-        }
+            animationBullet.setNFrame(3);
+            animationBullet.setSwitchTime(1);
+            animationBullet.update(const_cast<sf::Vector2i &>(bullet.getSource()),deltaTime);
+            animationBullet.applyToSprite(const_cast<sf::Sprite &>(bullet.getSprite()));
+            window.draw(bullet);
+            }
 
         if(std::abs(hero.getSprite().getPosition().x - ghoul.getSprite().getPosition().x)<=300
             && std::abs(hero.getSprite().getPosition().y - ghoul.getSprite().getPosition().y)<=300){
@@ -98,10 +116,11 @@ int main() {
         animationGhoul.applyToSprite(const_cast<sf::Sprite &>(ghoul.getSprite()));
 
         window.clear();
+        for(auto i=entities.begin(); i!=entities.end();)
         window.draw(arena);
         window.draw(hero);
         window.draw(ghoul);
         window.display();
-    }
+}
     return 0;
 };
