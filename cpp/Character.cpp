@@ -37,8 +37,8 @@ void Character::setSpeed(float speed) {
 }
 
 bool Character::isLegalMove(sf::FloatRect bBox) {
-    if(sprite.getGlobalBounds().intersects(bBox))
-        return false;
+    //if(sprite.getGlobalBounds().intersects(bBox))
+        //return false;
     return true;
 }
 

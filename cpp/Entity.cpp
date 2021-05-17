@@ -56,4 +56,19 @@ void Entity::setSourceY(const int y) {
     Entity::source.y = y;
 }
 
+const Animation &Entity::getAnim() const {
+    return anim;
+}
+
+void Entity::update(float deltaTime) {
+    anim.update(source, deltaTime);
+    anim.applyToSprite(sprite);
+    if(source.x == 0)
+        life = false;
+}
+
+bool Entity::isLife() const {
+    return life;
+}
+
 

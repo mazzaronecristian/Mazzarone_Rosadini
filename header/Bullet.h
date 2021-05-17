@@ -9,7 +9,7 @@
 
 class Bullet: public Entity{
 public:
-    explicit Bullet(bool bulletDirection, float speed = 0.9);
+    explicit Bullet(bool bulletDirection, float speed = 4);
 
     void movement();
 

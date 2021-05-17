@@ -17,7 +17,15 @@ public:
 
     bool load(const std::string &tileSet, sf::Vector2f position);
 
+    void update(float deltaTime);
+
+
     //Getter and Setter
+
+    const sf::Sprite &getSprite() const;
+
+    void setSprite(const sf::Sprite &sprite);
+
     const sf::Texture &getTileSet() const;
 
     void setTileSet(const sf::Texture &tileSet);
@@ -27,21 +35,23 @@ public:
     void setSourceX(const int x);
 
     void setSourceY(const int y);
+
     void setSource(const int x, const int y);
 
-    const sf::Sprite &getSprite() const;
+    const Animation &getAnim() const;
 
-    void setSprite(const sf::Sprite &sprite);
+    bool isLife() const;
 
+    Animation anim;
 
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 protected:
+    sf::Sprite sprite;
     sf::Texture tileSet;
     sf::Vector2i source = {0,0};
-    sf::Sprite sprite;
-
+    bool life;
 };
 
 

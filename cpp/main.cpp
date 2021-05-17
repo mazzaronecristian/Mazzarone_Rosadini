@@ -37,13 +37,8 @@ int main() {
         return -1;
     sf::Clock clock;
     float deltaTime;
-    Animation animationHero;
-    Animation animationGhoul;
     Animation animationBullet;
-
-    std::vector<Entity> entities;
-    entities.push_back(hero);
-    entities.push_back(ghoul);
+    std::vector<Bullet>bullet;
 
     //main loop
     while (window.isOpen())
@@ -58,23 +53,23 @@ int main() {
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
             hero.movement(0,-1);
-            animationHero.setNFrame(8);
-            animationHero.setSwitchTime(0.06);
+            hero.anim.setNFrame(8);
+            hero.anim.setSwitchTime(0.06);
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
             hero.movement(-1,0);
-            animationHero.setNFrame(8);
-            animationHero.setSwitchTime(0.06);
+            hero.anim.setNFrame(8);
+            hero.anim.setSwitchTime(0.06);
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
             hero.movement(0,1);
-            animationHero.setNFrame(8);
-            animationHero.setSwitchTime(0.06);
+            hero.anim.setNFrame(8);
+            hero.anim.setSwitchTime(0.06);
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             hero.movement(1,0);
-            animationHero.setNFrame(8);
-            animationHero.setSwitchTime(0.06);
+            hero.anim.setNFrame(8);
+            hero.anim.setSwitchTime(0.06);
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
@@ -86,40 +81,48 @@ int main() {
                 hero.setSourceY(5);
                 bulletDirection=false;
             }
-            Bullet bullet(bulletDirection);
-            if (!bullet.Entity::load("../tileSets/bullet.png", sf::Vector2f(300,300)))
+            Bullet shot(bulletDirection);
+            if (!shot.Entity::load("../tileSets/bullet.png", hero.getSprite().getPosition()))
                 return -1;
-            animationHero.setNFrame(6);
-            animationHero.setSwitchTime(0.06);
+            hero.anim.setNFrame(8);
+            hero.anim.setSwitchTime(0.06);
             animationBullet.setNFrame(3);
-            animationBullet.setSwitchTime(1);
-            animationBullet.update(const_cast<sf::Vector2i &>(bullet.getSource()),deltaTime);
-            animationBullet.applyToSprite(const_cast<sf::Sprite &>(bullet.getSprite()));
-            window.draw(bullet);
+            animationBullet.setSwitchTime(6);
+            //animationBullet.update(const_cast<sf::Vector2i &>(shot.getSource()),deltaTime);
+            //animationBullet.applyToSprite(const_cast<sf::Sprite &>(shot.getSprite()));
+            bullet.push_back(shot);
             }
 
         if(std::abs(hero.getSprite().getPosition().x - ghoul.getSprite().getPosition().x)<=300
             && std::abs(hero.getSprite().getPosition().y - ghoul.getSprite().getPosition().y)<=300){
             ghoul.setMoveStrategy(std::make_shared<Follow>());
-            animationGhoul.setNFrame(8);
-            animationGhoul.setSwitchTime(0.06);
+            ghoul.anim.setNFrame(8);
+            ghoul.anim.setSwitchTime(0.06);
         }
         else
             ghoul.setMoveStrategy(std::make_shared<Stay>());
 
         ghoul.movement(hero.getSprite().getPosition().x, hero.getSprite().getPosition().y);
 
-        animationHero.update(const_cast<sf::Vector2i &>(hero.getSource()), deltaTime);
-        animationHero.applyToSprite(const_cast<sf::Sprite &>(hero.getSprite()));
+        hero.anim.update(const_cast<sf::Vector2i &>(hero.getSource()), deltaTime);
+        hero.anim.applyToSprite(const_cast<sf::Sprite &>(hero.getSprite()));
 
-        animationGhoul.update(const_cast<sf::Vector2i &>(ghoul.getSource()), deltaTime);
-        animationGhoul.applyToSprite(const_cast<sf::Sprite &>(ghoul.getSprite()));
+        ghoul.anim.update(const_cast<sf::Vector2i &>(ghoul.getSource()), deltaTime);
+        ghoul.anim.applyToSprite(const_cast<sf::Sprite &>(ghoul.getSprite()));
 
+        for(auto i=bullet.begin(); i!=bullet.end(); i++){
+            i->movement();
+            i->update(deltaTime);
+            if(!i->isLife()){
+                Bullet b = bullet.pop_back(i);
+            }
+        }
         window.clear();
-        for(auto i=entities.begin(); i!=entities.end();)
         window.draw(arena);
         window.draw(hero);
         window.draw(ghoul);
+        for(auto i:bullet)
+            window.draw(i);
         window.display();
 }
     return 0;
