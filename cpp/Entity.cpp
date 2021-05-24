@@ -11,6 +11,7 @@ void Entity::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 }
 
 bool Entity::load(const std::string &tileSet, sf::Vector2f position) {
+    life = true;
     if(!Entity::tileSet.loadFromFile(tileSet))
         return false;
     sprite.setTexture(Entity::tileSet);
@@ -63,12 +64,17 @@ const Animation &Entity::getAnim() const {
 void Entity::update(float deltaTime) {
     anim.update(source, deltaTime);
     anim.applyToSprite(sprite);
-    if(source.x == 0)
-        life = false;
+    if(source.x==2)
+        life=false;
 }
 
 bool Entity::isLife() const {
     return life;
+}
+
+void Entity::draw(sf::RenderWindow &window) {
+    window.draw(sprite);
+
 }
 
 

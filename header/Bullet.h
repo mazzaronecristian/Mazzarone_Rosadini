@@ -9,7 +9,7 @@
 
 class Bullet: public Entity{
 public:
-    explicit Bullet(bool bulletDirection, float speed = 4);
+    explicit Bullet(short int bulletDirection, float speed = 10);
 
     void movement();
 
@@ -17,7 +17,7 @@ public:
 
 private:
     float speed;
-    const bool bulletDirection;
+    const short int bulletDirection;
 };
 
 

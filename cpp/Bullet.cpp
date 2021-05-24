@@ -6,13 +6,10 @@
 
 Bullet::~Bullet() = default;
 
-Bullet::Bullet(bool bulletDirection, float speed):bulletDirection(bulletDirection), speed(speed) {
+Bullet::Bullet(short int bulletDirection, float speed):bulletDirection(bulletDirection), speed(speed) {
 }
 
 void Bullet::movement(){
-    if(bulletDirection)
-        sprite.move(speed,0);
-    else
-        sprite.move(-speed,0);
+        sprite.move((float)bulletDirection*speed,0);
 }
 
