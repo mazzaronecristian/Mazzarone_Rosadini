@@ -26,4 +26,16 @@ void Enemy::setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrategy) {
     Enemy::moveStrategy = moveStrategy;
 }
 
+void Enemy::kill() {
+    Character::kill();
+}
+
+Enemy::Enemy() {
+
+}
+
+void Enemy::fight(Character &character) {
+
+}
+
 

@@ -14,8 +14,13 @@
 
 class Enemy: public Character {
 public:
+    Enemy();
     explicit Enemy(std::shared_ptr<MoveStrategy> moveStrategy);
     void movement(float x, float y);
+
+    void fight(Character &character) override;
+
+    void kill() override;
 
     void setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrategy);
 

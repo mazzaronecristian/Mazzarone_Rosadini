@@ -4,8 +4,7 @@
 
 #include "../header/Animation.h"
 
-Animation::Animation(int nFrame, float switchTime): nFrame(nFrame), switchTime(switchTime) {
-}
+Animation::Animation(int nFrame, float switchTime): nFrame(nFrame), switchTime(switchTime) {}
 
 void Animation::update(sf::Vector2i &source, float deltaTime) {
     animTime += deltaTime;
@@ -13,7 +12,7 @@ void Animation::update(sf::Vector2i &source, float deltaTime) {
         animTime -= switchTime;
         source.x++;
         if (source.x >= nFrame){
-            if (source.y%2 == 0)
+            if(source.y%2 == 0)
                 source = {0,0};
             else
                 source = {0,1};

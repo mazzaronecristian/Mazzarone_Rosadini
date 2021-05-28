@@ -42,6 +42,20 @@ bool Character::isLegalMove(sf::FloatRect bBox) {
     return true;
 }
 
+void Character::update(float deltaTime) {
+    Entity::update(deltaTime);
+    if(hp==0)
+        life = false;
+}
+
+void Character::kill() {
+    source = {4,6};
+}
+
+void Character::fight(Character &character) {
+
+}
+
 //bool Character::isLegalMove() {
 //    if(sprite.getPosition().y < 32 || sprite.getPosition().y > 560)
 //        return false;

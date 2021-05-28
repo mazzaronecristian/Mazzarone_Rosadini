@@ -17,7 +17,9 @@ public:
 
     bool load(const std::string &tileSet, sf::Vector2f position);
 
-    void update(float deltaTime);
+    virtual void update(float deltaTime);
+
+    void setLife(bool life);
 
 
     //Getter and Setter

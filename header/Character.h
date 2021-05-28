@@ -14,6 +14,11 @@ public:
 
     virtual void movement(float x, float y) = 0;
 
+    void update(float deltaTime) override;
+
+    virtual void kill();
+
+    virtual void fight(Character &character) = 0;
     bool isLegalMove(sf::FloatRect bBox);
 
     void receiveDamage(int damage);

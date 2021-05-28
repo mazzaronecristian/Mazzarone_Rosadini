@@ -64,8 +64,7 @@ const Animation &Entity::getAnim() const {
 void Entity::update(float deltaTime) {
     anim.update(source, deltaTime);
     anim.applyToSprite(sprite);
-    if(source.x==2)
-        life=false;
+
 }
 
 bool Entity::isLife() const {
@@ -75,6 +74,10 @@ bool Entity::isLife() const {
 void Entity::draw(sf::RenderWindow &window) {
     window.draw(sprite);
 
+}
+
+void Entity::setLife(bool life) {
+    Entity::life = life;
 }
 
 

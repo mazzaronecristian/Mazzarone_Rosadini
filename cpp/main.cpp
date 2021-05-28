@@ -11,10 +11,12 @@
 #include "../header/Patrol.h"
 #include "../header/Stay.h"
 #include "../header/Bullet.h"
+#include "../header/RangedAttack.h"
 
 #include <cmath>
 #include <list>
-
+#include "memory"
+void update(std::list<Bullet> &bullets, Player1 &hero, std::list<Enemy>  &enemies, float deltaTime);
 int main() {
     sf::RenderWindow window(sf::VideoMode(960, 640), "GAME");
     sf::RenderWindow &app = window;
@@ -25,18 +27,22 @@ int main() {
         return -1;
     m_matrix.close();
 
-    Player1 hero;
+    Player1 hero(std::make_shared<RangedAttack>());
     if (!hero.Entity::load("../tileSets/spaceCadet.png", sf::Vector2f(100, 100)))
         return -1;
 
     srand(time(NULL));
-    Enemy ghoul(std::make_shared<Patrol>());
-    if (!ghoul.Entity::load("../tileSets/ghoul.png", sf::Vector2f(rand()%450+100, rand()%450+100)))
-        return -1;
+    std::list<Enemy> enemies;
+    for(int i = 0; i<20; i++){
+        Enemy ghoul(std::make_shared<Patrol>());
+        if (!ghoul.Entity::load("../tileSets/ghoul.png", sf::Vector2f(rand()%450+100, rand()%450+100)))
+            return -1;
+        enemies.push_back(ghoul);
+    }
+
     sf::Clock clock;
     float deltaTime;
-    std::list<Bullet>bullet;
-
+    std::list<Bullet>bullets;
 
     //main loop
     while (window.isOpen())
@@ -64,10 +70,11 @@ int main() {
                     hero.anim.setSwitchTime(0.06);
                     shot->anim.setNFrame(3);
                     shot->anim.setSwitchTime(0.3);
-                    bullet.push_back(*shot);
+                    bullets.push_back(*shot);
+                    Enemy ghoul(std::make_shared<Patrol>());
+                    hero.fight(ghoul);
                 }
         }
-
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
             hero.movement(0,-1);
             hero.anim.setNFrame(8);
@@ -88,43 +95,52 @@ int main() {
             hero.anim.setNFrame(8);
             hero.anim.setSwitchTime(0.06);
         }
+        for(auto i=enemies.begin(); i!=enemies.end(); i++){
 
-        if(std::abs(hero.getSprite().getPosition().x - ghoul.getSprite().getPosition().x)<=300
-            && std::abs(hero.getSprite().getPosition().y - ghoul.getSprite().getPosition().y)<=300){
-            ghoul.setMoveStrategy(std::make_shared<Follow>());
-            ghoul.anim.setNFrame(8);
-            ghoul.anim.setSwitchTime(0.06);
-        }
-        else
-            ghoul.setMoveStrategy(std::make_shared<Stay>());
-
-        ghoul.movement(hero.getSprite().getPosition().x, hero.getSprite().getPosition().y);
-
-        hero.update(deltaTime);
-        ghoul.update(deltaTime);
-
-        for(auto i=bullet.begin(); i!=bullet.end(); ){
-            Bullet b= *i;
-            i->movement();
-            i->update(deltaTime);
-            if(!i->isLife())
-                i = bullet.erase(i);
+            if(std::abs(hero.getSprite().getPosition().x - i->getSprite().getPosition().x)<=300
+               && std::abs(hero.getSprite().getPosition().y - i->getSprite().getPosition().y)<=300){
+                i->setMoveStrategy(std::make_shared<Follow>());
+                i->anim.setNFrame(8);
+                i->anim.setSwitchTime(0.06);
+            }
             else
-                i++;
+                i->setMoveStrategy(std::make_shared<Stay>());
         }
+
+        update(bullets, hero, enemies, deltaTime);
 
         window.clear();
         window.draw(arena);
         window.draw(hero);
-        window.draw(ghoul);
-
-        //Bullet b = *bullet.begin();
-        //window.draw(b);
-
-        for(auto i:bullet){
+        for(auto i:enemies) {
+            window.draw(i);
+        }
+        for(auto i:bullets){
             window.draw(i);
         }
         window.display();
 }
     return 0;
 };
+
+void update(std::list<Bullet> &bullets, Player1 &hero, std::list<Enemy> &enemies, float deltaTime){
+
+    hero.update(deltaTime);
+    for(auto i=enemies.begin(); i!=enemies.end(); ){
+        i->movement(hero.getSprite().getPosition().x, hero.getSprite().getPosition().y);
+        i->update(deltaTime);
+        if(!i->isLife())
+            i = enemies.erase(i);
+        else
+            i++;
+    }
+    for(auto i=bullets.begin(); i!=bullets.end(); ){
+        i->movement();
+        i->update(deltaTime);
+        if(!i->isLife())
+            i = bullets.erase(i);
+        else
+            i++;
+    }
+
+}
