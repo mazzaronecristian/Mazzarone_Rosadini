@@ -9,7 +9,7 @@
 
 class RangedAttack: public AttackStrategy{
 public:
-    void fight(Character &character) override;
+    void fight(Character &character, int damage) override;
 };
 
 

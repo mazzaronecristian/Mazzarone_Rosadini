@@ -5,11 +5,16 @@
 #ifndef MAZZARONE_ROSADINI_BULLET_H
 #define MAZZARONE_ROSADINI_BULLET_H
 
+#include <list>
 #include "Entity.h"
+#include "Character.h"
+#include "Enemy.h"
 
     class Bullet: public Entity{
     public:
         explicit Bullet(short int bulletDirection, float speed = 10);
+        bool isCollide(Enemy &enemy);
+        bool isCollide(std::list<Enemy> &enemies);
 
         void movement();
         void update(float deltaTime) override;

@@ -4,4 +4,6 @@
 
 #include "../header/RangedAttack.h"
 
-void RangedAttack::fight(Character &character) {}
+void RangedAttack::fight(Character &character, int damage) {
+    character.receiveDamage(damage);
+}

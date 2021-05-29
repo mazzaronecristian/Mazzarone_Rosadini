@@ -6,7 +6,7 @@
 
 #include <utility>
 
-Player1::Player1(std::shared_ptr<AttackStrategy>  attackStrategy): attacksStrategy(std::move(attackStrategy)) {
+Player1::Player1(const std::shared_ptr<AttackStrategy>&  attackStrategy): attacksStrategy(std::move(attackStrategy)) {
 
 }
 Player1::~Player1() {}
@@ -47,7 +47,7 @@ bool Player1::isLegalFight(Character &enemy) {
 }
 
 void Player1::fight(Character &character) {
-    attacksStrategy->fight(character);
+    attacksStrategy->fight(character, damage);
 }
 
 

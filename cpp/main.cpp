@@ -17,6 +17,8 @@
 #include <list>
 #include "memory"
 void update(std::list<Bullet> &bullets, Player1 &hero, std::list<Enemy>  &enemies, float deltaTime);
+bool checkBullCollision(std::_List_iterator<Bullet> bullet, std::list<Enemy>  &enemies, std::_List_iterator<Enemy> &y);
+
 int main() {
     sf::RenderWindow window(sf::VideoMode(960, 640), "GAME");
     sf::RenderWindow &app = window;
@@ -64,7 +66,7 @@ int main() {
                         bulletDirection = -1;
                     }
                     Bullet *shot=new Bullet(bulletDirection);
-                    if (!shot->Entity::load("../tileSets/bullet.png", sf::Vector2f(hero.getSprite().getPosition().x+(16 * (float)bulletDirection), hero.getSprite().getPosition().y)))
+                    if (!shot->Entity::load("../tileSets/bullet.png", sf::Vector2f(hero.getSprite().getPosition().x+(32 * (float)bulletDirection), hero.getSprite().getPosition().y)))
                         return -1;
                     hero.anim.setNFrame(8);
                     hero.anim.setSwitchTime(0.06);
@@ -124,23 +126,33 @@ int main() {
 };
 
 void update(std::list<Bullet> &bullets, Player1 &hero, std::list<Enemy> &enemies, float deltaTime){
-
     hero.update(deltaTime);
     for(auto i=enemies.begin(); i!=enemies.end(); ){
         i->movement(hero.getSprite().getPosition().x, hero.getSprite().getPosition().y);
         i->update(deltaTime);
         if(!i->isLife())
             i = enemies.erase(i);
-        else
-            i++;
+        else i++;
     }
+
     for(auto i=bullets.begin(); i!=bullets.end(); ){
         i->movement();
         i->update(deltaTime);
+        auto y = enemies.begin();
+        if(checkBullCollision(i, enemies, y))
+            hero.fight(*y);
         if(!i->isLife())
             i = bullets.erase(i);
-        else
-            i++;
+        else i++;
     }
+}
 
+bool checkBullCollision(std::_List_iterator<Bullet> bullet, std::list<Enemy> &enemies, std::_List_iterator<Enemy> &y) {
+    while(y!=enemies.end()) {
+        if (bullet->isCollide(*y)) {
+            return true;
+        }
+        y++;
+    }
+    return false;
 }

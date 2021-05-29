@@ -6,7 +6,7 @@
 
 #include <utility>
 
-Enemy::Enemy(std::shared_ptr<MoveStrategy> moveStrategy): moveStrategy(std::move(moveStrategy)), Character(2,2,0.1){}
+Enemy::Enemy(std::shared_ptr<MoveStrategy> moveStrategy): moveStrategy(std::move(moveStrategy)), Character(100,2,0.1){}
 
 void Enemy::movement(float x, float y) {
     if(abs(y - sprite.getPosition().y) > speed || abs(x - sprite.getPosition().x) > speed) {

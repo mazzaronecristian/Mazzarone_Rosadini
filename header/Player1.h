@@ -19,7 +19,7 @@
 class Player1 : public Character{
 public:
    // Player1(int hp = 10, int posX = 10, int posY = 10, int damage = 2, const Weapon &weapon, const Potion &potion);
-   Player1(std::shared_ptr<AttackStrategy>  attackStrategy);
+   Player1(const std::shared_ptr<AttackStrategy>&  attackStrategy);
 
     virtual ~Player1();
 
@@ -31,12 +31,9 @@ public:
     //void usePotion();
 
     //setter
-    //void setAttackStrategy(AttackStrategy *attackStrategy);
     //void setPotion(Potion potion);
 
     //getter
-    //TODO RESOLVE ATTACKSTRATEGY
-    //AttackStrategy *getAttackStrategy() const;
     //Potion getPotion() const;
 
 private:

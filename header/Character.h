@@ -10,7 +10,7 @@
 
 class Character: public Entity {
 public:
-    explicit Character(int hp = 10, int damage = 5, float speed = 0.3);
+    explicit Character(int hp = 10, int damage = 50, float speed = 0.3);
 
     virtual void movement(float x, float y) = 0;
 
