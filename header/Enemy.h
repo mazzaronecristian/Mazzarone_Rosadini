@@ -16,8 +16,8 @@ class Enemy: public Character {
 public:
     Enemy();
     explicit Enemy(std::shared_ptr<MoveStrategy> moveStrategy);
-    void movement(float x, float y);
-
+    void movement(sf::Vector2f direction) override;
+    bool checkBounds(sf::FloatRect rectBox); //TODO checkBounds per evitare colonne e altri personaggi (+ scegliere un nome valido)
     void fight(Character &character) override;
 
     void kill() override;

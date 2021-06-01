@@ -36,12 +36,6 @@ void Character::setSpeed(float speed) {
     Character::speed = speed;
 }
 
-bool Character::isLegalMove(sf::FloatRect bBox) {
-    //if(sprite.getGlobalBounds().intersects(bBox))
-        //return false;
-    return true;
-}
-
 void Character::update(float deltaTime) {
     Entity::update(deltaTime);
     if(hp==0)
@@ -54,5 +48,13 @@ void Character::kill() {
 
 void Character::fight(Character &character) {
 
+}
+
+bool Character::isLegalMove(Character &character) {
+    sf::FloatRect box = sprite.getGlobalBounds();
+    sf::FloatRect extBox = character.getSprite().getGlobalBounds();
+    if(box.intersects(extBox))
+        return false;
+    return true;
 }
 

@@ -28,7 +28,6 @@ int main() {
     if (!arena.load("../tileSets/map/background.png", "../tileSets/map/map.png", sf::Vector2u(32, 32), m_matrix))
         return -1;
     m_matrix.close();
-
     Player1 hero(std::make_shared<RangedAttack>());
     if (!hero.Entity::load("../tileSets/spaceCadet.png", sf::Vector2f(100, 100)))
         return -1;
@@ -78,22 +77,23 @@ int main() {
                 }
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-            hero.movement(0,-1);
+            hero.movement(sf::Vector2f (0,-1));
             hero.anim.setNFrame(8);
             hero.anim.setSwitchTime(0.06);
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-            hero.movement(-1,0);
+            hero.movement(sf::Vector2f (-1,0));
             hero.anim.setNFrame(8);
             hero.anim.setSwitchTime(0.06);
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-            hero.movement(0,1);
+            hero.movement(sf::Vector2f (0,1));
             hero.anim.setNFrame(8);
             hero.anim.setSwitchTime(0.06);
         }
+
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            hero.movement(1,0);
+            hero.movement(sf::Vector2f (1,0));
             hero.anim.setNFrame(8);
             hero.anim.setSwitchTime(0.06);
         }
@@ -128,7 +128,7 @@ int main() {
 void update(std::list<Bullet> &bullets, Player1 &hero, std::list<Enemy> &enemies, float deltaTime){
     hero.update(deltaTime);
     for(auto i=enemies.begin(); i!=enemies.end(); ){
-        i->movement(hero.getSprite().getPosition().x, hero.getSprite().getPosition().y);
+        i->movement(hero.getSprite().getPosition());
         i->update(deltaTime);
         if(!i->isLife())
             i = enemies.erase(i);

@@ -12,14 +12,14 @@ class Character: public Entity {
 public:
     explicit Character(int hp = 10, int damage = 50, float speed = 0.3);
 
-    virtual void movement(float x, float y) = 0;
+    virtual void movement(sf::Vector2f direction) = 0;
 
     void update(float deltaTime) override;
 
     virtual void kill();
 
     virtual void fight(Character &character) = 0;
-    bool isLegalMove(sf::FloatRect bBox);
+    bool isLegalMove(Character &character);
 
     void receiveDamage(int damage);
 

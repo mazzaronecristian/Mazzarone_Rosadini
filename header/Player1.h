@@ -23,7 +23,7 @@ public:
 
     virtual ~Player1();
 
-    void movement(float x, float y);
+    void movement(sf::Vector2f direction) override;
 
     void fight(Character &character) override;
     bool isLegalFight(Character &enemy);

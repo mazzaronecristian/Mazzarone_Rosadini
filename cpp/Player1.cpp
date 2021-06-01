@@ -11,20 +11,20 @@ Player1::Player1(const std::shared_ptr<AttackStrategy>&  attackStrategy): attack
 }
 Player1::~Player1() {}
 
-void Player1::movement(float x, float y) {
-    if(x==0){
+void Player1::movement(sf::Vector2f direction) {
+    if(direction.x==0){
         if(source.y == stayR)
             source.y = right;
         else
             source.y = left;
     }
     else{
-        if(x==1)
+        if(direction.x==1)
             source.y = right;
         else
             source.y = left;
     }
-    sprite.move(x*speed, y*speed);
+    sprite.move(direction.x*speed, direction.y*speed);
 }
 
 /*Potion Player1::getPotion() const {

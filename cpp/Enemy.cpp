@@ -8,13 +8,13 @@
 
 Enemy::Enemy(std::shared_ptr<MoveStrategy> moveStrategy): moveStrategy(std::move(moveStrategy)), Character(100,2,0.1){}
 
-void Enemy::movement(float x, float y) {
-    if(abs(y - sprite.getPosition().y) > speed || abs(x - sprite.getPosition().x) > speed) {
-        sf::Vector2f direction = moveStrategy->movement(x, y, sprite);
-        sprite.move(direction.x * speed, direction.y * speed);
-        if(direction.x < 0)
+void Enemy::movement(sf::Vector2f direction) {
+    if(abs(direction.y - sprite.getPosition().y) > speed || abs(direction.x - sprite.getPosition().x) > speed) {
+        sf::Vector2f dir = moveStrategy->movement(direction,sprite);
+        sprite.move(dir.x * speed, dir.y * speed);
+        if(dir.x < 0)
             source.y = left;
-        else if(direction.x== 0 && direction.y == 0)
+        else if(dir.x== 0 && dir.y == 0)
             source.y = stayR;
         else source.y = right;
     }

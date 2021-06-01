@@ -12,7 +12,7 @@ class Patrol: public MoveStrategy{
 public:
     Patrol();
 
-    sf::Vector2f movement(float x, float y, sf::Sprite &sprite) override;
+    sf::Vector2f movement(sf::Vector2f direction, sf::Sprite &sprite) override;
 
 };
 
