@@ -11,7 +11,7 @@
 
 class Animation {
 public:
-    explicit Animation(int nFrame = 3, float switchTime = 0.3);
+    explicit Animation(sf::Vector2i dim, int nFrame = 3, float switchTime = 0.3);
     void update(sf::Vector2i &source, float deltaTime);
     void applyToSprite(sf::Sprite &sprite);
 
@@ -26,7 +26,7 @@ private:
     int nFrame;
     float animTime = 0.0f;
     float switchTime;
-    sf::IntRect rect = sf::IntRect(0,0,32,32);
+    sf::IntRect rect;
 };
 
 

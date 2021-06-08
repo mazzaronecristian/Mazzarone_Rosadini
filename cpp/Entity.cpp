@@ -4,7 +4,8 @@
 
 #include "../header/Entity.h"
 
-Entity::Entity(const sf::Time &animTime) {}
+Entity::Entity(int width, int height, const sf::Time &animTime): width(width), height(height), anim(sf::Vector2i(width, height)){
+}
 
 void Entity::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(sprite);
@@ -18,7 +19,7 @@ bool Entity::load(const std::string &tileSet, sf::Vector2f position) {
     //sprite.setColor(sf::Color(255,0,0));
     sprite.setPosition(position);
     sprite.scale(1.4, 1.4);
-    sprite.setTextureRect(sf::IntRect (source.x * 32, source.y * 32, 32, 32));//TODO RECT PER IL BULLET
+    sprite.setTextureRect(sf::IntRect(source.x * width, source.y * height, width, height));
     return true;
 }
 
@@ -78,6 +79,11 @@ void Entity::draw(sf::RenderWindow &window) {
 
 void Entity::setLife(bool life) {
     Entity::life = life;
+}
+
+void Entity::setAnim(int nFrame, float switchTime) {
+    anim.setNFrame(nFrame);
+    anim.setSwitchTime(switchTime);
 }
 
 

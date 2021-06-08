@@ -4,7 +4,9 @@
 
 #include "../header/Animation.h"
 
-Animation::Animation(int nFrame, float switchTime): nFrame(nFrame), switchTime(switchTime) {}
+Animation::Animation(sf::Vector2i dim, int nFrame, float switchTime): nFrame(nFrame), switchTime(switchTime) {
+    rect = sf::IntRect(0,0,dim.x,dim.y);
+}
 
 void Animation::update(sf::Vector2i &source, float deltaTime) {
     animTime += deltaTime;
@@ -37,6 +39,5 @@ void Animation::setAnimTime(float animTime) {
 void Animation::setSwitchTime(float switchTime) {
     Animation::switchTime = switchTime;
 }
-
 
 

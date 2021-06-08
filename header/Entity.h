@@ -10,10 +10,10 @@
 #include "SFML/System.hpp"
 
 #include "Animation.h"
-
+#include <iostream>
 class Entity: public sf::Drawable, public sf::Transformable {
 public:
-    explicit Entity(const sf::Time &animTime = sf::milliseconds(60));
+    explicit Entity(int width = 32, int height = 32, const sf::Time &animTime = sf::milliseconds(60));
 
     bool load(const std::string &tileSet, sf::Vector2f position);
 
@@ -23,6 +23,7 @@ public:
 
 
     //Getter and Setter
+    void setAnim(int nFrame, float switchTime);
 
     const sf::Sprite &getSprite() const;
 
@@ -44,17 +45,19 @@ public:
 
     bool isLife() const;
 
-    Animation anim;
-
 public:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     void draw(sf::RenderWindow& window);
 
 protected:
+    int width, height;
     sf::Sprite sprite;
     sf::Texture tileSet;
     sf::Vector2i source = {0,0};
     bool life;
+
+private:
+    Animation anim;
 };
 
 

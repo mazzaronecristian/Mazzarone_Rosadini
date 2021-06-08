@@ -65,45 +65,41 @@ int main() {
                         bulletDirection = -1;
                     }
                     Bullet *shot=new Bullet(bulletDirection);
-                    if (!shot->Entity::load("../tileSets/bullet.png", sf::Vector2f(hero.getSprite().getPosition().x+(32 * (float)bulletDirection), hero.getSprite().getPosition().y)))
+                    if (!shot->Entity::load("../tileSets/bullet.png", sf::Vector2f(hero.getSprite().getPosition().x+(32 * (float)bulletDirection), hero.getSprite().getPosition().y+16)))
                         return -1;
-                    hero.anim.setNFrame(8);
-                    hero.anim.setSwitchTime(0.06);
-                    shot->anim.setNFrame(3);
-                    shot->anim.setSwitchTime(0.3);
+                    hero.setAnim(8,0.06);
+                    shot->setAnim(3,0.3);
                     bullets.push_back(*shot);
                     Enemy ghoul(std::make_shared<Patrol>());
                     hero.fight(ghoul);
                 }
+
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
             hero.movement(sf::Vector2f (0,-1));
-            hero.anim.setNFrame(8);
-            hero.anim.setSwitchTime(0.06);
+            hero.setAnim(8,0.06);
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
             hero.movement(sf::Vector2f (-1,0));
-            hero.anim.setNFrame(8);
-            hero.anim.setSwitchTime(0.06);
+            hero.setAnim(8,0.06);
+
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
             hero.movement(sf::Vector2f (0,1));
-            hero.anim.setNFrame(8);
-            hero.anim.setSwitchTime(0.06);
-        }
+            hero.setAnim(8,0.06);
 
+        }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             hero.movement(sf::Vector2f (1,0));
-            hero.anim.setNFrame(8);
-            hero.anim.setSwitchTime(0.06);
+            hero.setAnim(8,0.06);
+
         }
         for(auto i=enemies.begin(); i!=enemies.end(); i++){
 
             if(std::abs(hero.getSprite().getPosition().x - i->getSprite().getPosition().x)<=300
                && std::abs(hero.getSprite().getPosition().y - i->getSprite().getPosition().y)<=300){
                 i->setMoveStrategy(std::make_shared<Follow>());
-                i->anim.setNFrame(8);
-                i->anim.setSwitchTime(0.06);
+                i->setAnim(8,0.06);
             }
             else
                 i->setMoveStrategy(std::make_shared<Stay>());
