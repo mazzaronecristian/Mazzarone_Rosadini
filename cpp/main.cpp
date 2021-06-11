@@ -17,7 +17,8 @@
 #include <list>
 #include "memory"
 void update(std::list<Bullet> &bullets, Player1 &hero, std::list<Enemy>  &enemies, float deltaTime);
-bool checkBullCollision(std::_List_iterator<Bullet> bullet, std::list<Enemy>  &enemies, std::_List_iterator<Enemy> &y);
+bool checkBullCollision(Bullet &bullet, Enemy &enemy);
+
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(960, 640), "GAME");
@@ -135,20 +136,21 @@ void update(std::list<Bullet> &bullets, Player1 &hero, std::list<Enemy> &enemies
         i->movement();
         i->update(deltaTime);
         auto y = enemies.begin();
-        if(checkBullCollision(i, enemies, y))
-            hero.fight(*y);
+        while(y!=enemies.end()){
+            if(checkBullCollision(*i, *y)){
+                hero.fight(*y);
+                break;
+            }
+            y++;
+        }
         if(!i->isLife())
             i = bullets.erase(i);
         else i++;
     }
 }
 
-bool checkBullCollision(std::_List_iterator<Bullet> bullet, std::list<Enemy> &enemies, std::_List_iterator<Enemy> &y) {
-    while(y!=enemies.end()) {
-        if (bullet->isCollide(*y)) {
-            return true;
-        }
-        y++;
-    }
+bool checkBullCollision(Bullet &bullet, Enemy &enemy){
+    if(bullet.isCollide(enemy))
+        return true;
     return false;
 }
