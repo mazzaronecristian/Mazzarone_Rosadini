@@ -29,17 +29,3 @@ bool Bullet::isCollide(Enemy &enemy) {
     }
     return false;
 }
-
-bool Bullet::isCollide(std::list<Enemy> &enemies) {
-    sf::FloatRect bulletBox = sprite.getGlobalBounds();
-    for(auto i=enemies.begin(); i!=enemies.end(); i++){
-        sf::FloatRect iBox = i->getSprite().getGlobalBounds();
-        if(bulletBox.intersects(iBox)){
-            life = false;
-            i->setLife(false);
-            return true;
-        }
-    }
-    return false;
-}
-

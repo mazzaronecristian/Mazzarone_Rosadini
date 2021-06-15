@@ -86,4 +86,8 @@ void Entity::setAnim(int nFrame, float switchTime) {
     anim.setSwitchTime(switchTime);
 }
 
+int Entity::getSourceX() {
+    return source.x;
+}
+
 

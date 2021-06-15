@@ -1,4 +1,3 @@
-
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 #include "SFML/System.hpp"
@@ -16,9 +15,7 @@
 #include <cmath>
 #include <list>
 #include "memory"
-void update(std::list<Bullet> &bullets, Player1 &hero, std::list<Enemy>  &enemies, float deltaTime);
-bool checkBullCollision(Bullet &bullet, Enemy &enemy);
-
+void update(std::list<std::shared_ptr<Bullet>> &bullets, Player1 &hero, std::list<Enemy>  &enemies, float deltaTime);
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(960, 640), "GAME");
@@ -35,7 +32,7 @@ int main() {
 
     srand(time(NULL));
     std::list<Enemy> enemies;
-    for(int i = 0; i<20; i++){
+    for(int i = 0; i<10; i++){
         Enemy ghoul(std::make_shared<Patrol>());
         if (!ghoul.Entity::load("../tileSets/ghoul.png", sf::Vector2f(rand()%450+100, rand()%450+100)))
             return -1;
@@ -44,7 +41,7 @@ int main() {
 
     sf::Clock clock;
     float deltaTime;
-    std::list<Bullet>bullets;
+    std::list<std::shared_ptr<Bullet>>bullets;
 
     //main loop
     while (window.isOpen())
@@ -65,14 +62,12 @@ int main() {
                         hero.setSourceY(5);
                         bulletDirection = -1;
                     }
-                    Bullet *shot=new Bullet(bulletDirection);
-                    if (!shot->Entity::load("../tileSets/bullet.png", sf::Vector2f(hero.getSprite().getPosition().x+(32 * (float)bulletDirection), hero.getSprite().getPosition().y+16)))
+                    std::shared_ptr<Bullet> shot(new Bullet(bulletDirection));
+                    if (!shot->Entity::load("../tileSets/bullet.png", sf::Vector2f(hero.getSprite().getPosition().x+(16*(float)bulletDirection), hero.getSprite().getPosition().y+16)))
                         return -1;
                     hero.setAnim(8,0.06);
                     shot->setAnim(3,0.3);
-                    bullets.push_back(*shot);
-                    Enemy ghoul(std::make_shared<Patrol>());
-                    hero.fight(ghoul);
+                    bullets.push_back(shot);
                 }
 
         }
@@ -96,14 +91,15 @@ int main() {
 
         }
         for(auto i=enemies.begin(); i!=enemies.end(); i++){
-
-            if(std::abs(hero.getSprite().getPosition().x - i->getSprite().getPosition().x)<=300
-               && std::abs(hero.getSprite().getPosition().y - i->getSprite().getPosition().y)<=300){
-                i->setMoveStrategy(std::make_shared<Follow>());
-                i->setAnim(8,0.06);
+            if(i->isLife()){
+                if(std::abs(hero.getSprite().getPosition().x - i->getSprite().getPosition().x)<=300
+                   && std::abs(hero.getSprite().getPosition().y - i->getSprite().getPosition().y)<=300){
+                    i->setMoveStrategy(std::make_shared<Follow>());
+                    i->setAnim(8,0.06);
+                }
+                else
+                    i->setMoveStrategy(std::make_shared<Stay>());
             }
-            else
-                i->setMoveStrategy(std::make_shared<Stay>());
         }
 
         update(bullets, hero, enemies, deltaTime);
@@ -115,42 +111,37 @@ int main() {
             window.draw(i);
         }
         for(auto i:bullets){
-            window.draw(i);
+            window.draw(*i);
         }
         window.display();
 }
     return 0;
 };
 
-void update(std::list<Bullet> &bullets, Player1 &hero, std::list<Enemy> &enemies, float deltaTime){
+void update( std::list<std::shared_ptr<Bullet>> &bullets, Player1 &hero, std::list<Enemy> &enemies, float deltaTime){
     hero.update(deltaTime);
     for(auto i=enemies.begin(); i!=enemies.end(); ){
         i->movement(hero.getSprite().getPosition());
         i->update(deltaTime);
-        if(!i->isLife())
-            i = enemies.erase(i);
-        else i++;
+        if(!(i->isLife())){
+            i = enemies.erase(i);//TODO animazione della morte
+        }
+        i++;
     }
 
     for(auto i=bullets.begin(); i!=bullets.end(); ){
-        i->movement();
-        i->update(deltaTime);
+        i->get()->movement();
+        i->get()->update(deltaTime);
         auto y = enemies.begin();
         while(y!=enemies.end()){
-            if(checkBullCollision(*i, *y)){
+            if(i->get()->isCollide(*y)){
                 hero.fight(*y);
                 break;
             }
             y++;
         }
-        if(!i->isLife())
+        if(!i->get()->isLife())
             i = bullets.erase(i);
         else i++;
     }
-}
-
-bool checkBullCollision(Bullet &bullet, Enemy &enemy){
-    if(bullet.isCollide(enemy))
-        return true;
-    return false;
 }

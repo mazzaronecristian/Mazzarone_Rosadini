@@ -34,7 +34,7 @@ public:
     void setTileSet(const sf::Texture &tileSet);
 
     const sf::Vector2i &getSource() const;
-
+    int getSourceX();
     void setSourceX(const int x);
 
     void setSourceY(const int y);

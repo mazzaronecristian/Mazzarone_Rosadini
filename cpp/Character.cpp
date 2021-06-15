@@ -38,12 +38,14 @@ void Character::setSpeed(float speed) {
 
 void Character::update(float deltaTime) {
     Entity::update(deltaTime);
-    if(hp==0)
+    if(hp<=0){
         life = false;
+    }
 }
 
 void Character::kill() {
-    source = {4,6};
+    source.y = die;
+    setAnim(6,0.08);
 }
 
 void Character::fight(Character &character) {

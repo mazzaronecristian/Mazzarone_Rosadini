@@ -10,21 +10,20 @@
 #include "Character.h"
 #include "Enemy.h"
 
-    class Bullet: public Entity{
-    public:
-        explicit Bullet(short int bulletDirection, float speed = 10);
-        bool isCollide(Enemy &enemy);
-        bool isCollide(std::list<Enemy> &enemies);
+class Bullet: public Entity{
+public:
+    explicit Bullet(short int bulletDirection, float speed = 10);
+    bool isCollide(Enemy &enemy);
 
-        void movement();
-        void update(float deltaTime) override;
+    void movement();
+    void update(float deltaTime) override;
 
-        virtual ~Bullet();
+    virtual ~Bullet();
 
-    private:
-        float speed;
-        const short int bulletDirection;
-    };
+private:
+    float speed;
+    const short int bulletDirection;
+};
 
 
 #endif //MAZZARONE_ROSADINI_BULLET_H
