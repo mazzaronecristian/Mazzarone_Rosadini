@@ -11,38 +11,40 @@
 #include "../header/Stay.h"
 #include "../header/Bullet.h"
 #include "../header/RangedAttack.h"
+#include "../header/PlayersFactory.h"
+#include "../header/BulletsFactory.h"
 
 #include <cmath>
 #include <list>
-#include "memory"
-void update(std::list<std::shared_ptr<Bullet>> &bullets, Player1 &hero, std::list<Enemy>  &enemies, float deltaTime);
+#include <memory>
+void update(std::list<std::shared_ptr<Bullet>> &bullets, std::shared_ptr<Player1> hero, std::list<std::shared_ptr<Enemy>>  &enemies, float deltaTime);
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(960, 640), "GAME");
-    sf::RenderWindow &app = window;
-
-    std::ifstream m_matrix("../matrix.txt");
+    PlayersFactory factory;
+    std::ifstream m_matrix("./matrix.txt");
     Map arena;
-    if (!arena.load("../tileSets/map/background.png", "../tileSets/map/map.png", sf::Vector2u(32, 32), m_matrix))
+    if (!arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), m_matrix))
         return -1;
     m_matrix.close();
-    Player1 hero(std::make_shared<RangedAttack>());
-    if (!hero.Entity::load("../tileSets/spaceCadet.png", sf::Vector2f(100, 100)))
-        return -1;
+    //Player1 hero(std::make_shared<RangedAttack>());
+    std::shared_ptr<Player1> hero = factory.createHero(EntityType::hero);
+//    if (!hero->Entity::load("./tileSets/spaceCadet.png", sf::Vector2f(100, 100)))
+//        return -1;
 
     srand(time(NULL));
-    std::list<Enemy> enemies;
+    std::list<std::shared_ptr<Enemy>> enemies;
     for(int i = 0; i<10; i++){
-        Enemy ghoul(std::make_shared<Patrol>());
-        if (!ghoul.Entity::load("../tileSets/ghoul.png", sf::Vector2f(rand()%450+100, rand()%450+100)))
-            return -1;
+//        std::unique_ptr<Entity> ghoul(std::make_shared<Patrol>());
+//        if (!ghoul.Entity::load("./tileSets/ghoul.png", sf::Vector2f(rand()%450+100, rand()%450+100)))
+//            return -1;
+        std::shared_ptr<Enemy> ghoul = factory.createEnemy(EntityType::ghoul, sf::Vector2f(rand()%450+100, rand()%450+100));
         enemies.push_back(ghoul);
     }
-
     sf::Clock clock;
     float deltaTime;
     std::list<std::shared_ptr<Bullet>>bullets;
-
+    BulletsFactory bullFactory;
     //main loop
     while (window.isOpen())
     {
@@ -55,50 +57,51 @@ int main() {
             if(e.type==sf::Event::KeyReleased)
                 if(e.key.code==sf::Keyboard::Enter) {
                     short int bulletDirection;
-                    if (hero.getSource().y % 2 == 0) {
-                        hero.setSourceY(4);
+                    if (hero->getSource().y % 2 == 0) {
+                        hero->setSourceY(4);
                         bulletDirection = 1;
                     }else {
-                        hero.setSourceY(5);
+                        hero->setSourceY(5);
                         bulletDirection = -1;
                     }
-                    std::shared_ptr<Bullet> shot(new Bullet(bulletDirection));
-                    if (!shot->Entity::load("../tileSets/bullet.png", sf::Vector2f(hero.getSprite().getPosition().x+(16*(float)bulletDirection), hero.getSprite().getPosition().y+16)))
-                        return -1;
-                    hero.setAnim(8,0.06);
+//                    std::shared_ptr<Bullet> shot(new Bullet(bulletDirection));
+//                    if (!shot->Entity::load("./tileSets/bullet.png", sf::Vector2f(hero->getSprite().getPosition().x+(16*(float)bulletDirection), hero->getSprite().getPosition().y+16)))
+//                        return -1;
+                    std::shared_ptr<Bullet> shot = bullFactory.createBullet(EntityType::bullet, hero->getSprite().getPosition(), bulletDirection);
+                    hero->setAnim(8,0.06);
                     shot->setAnim(3,0.3);
                     bullets.push_back(shot);
                 }
 
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-            hero.movement(sf::Vector2f (0,-1));
-            hero.setAnim(8,0.06);
+            hero->movement(sf::Vector2f (0,-1));
+            hero->setAnim(8,0.06);
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-            hero.movement(sf::Vector2f (-1,0));
-            hero.setAnim(8,0.06);
+            hero->movement(sf::Vector2f (-1,0));
+            hero->setAnim(8,0.06);
 
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-            hero.movement(sf::Vector2f (0,1));
-            hero.setAnim(8,0.06);
+            hero->movement(sf::Vector2f (0,1));
+            hero->setAnim(8,0.06);
 
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            hero.movement(sf::Vector2f (1,0));
-            hero.setAnim(8,0.06);
+            hero->movement(sf::Vector2f (1,0));
+            hero->setAnim(8,0.06);
 
         }
         for(auto i=enemies.begin(); i!=enemies.end(); i++){
-            if(i->isLife()){
-                if(std::abs(hero.getSprite().getPosition().x - i->getSprite().getPosition().x)<=300
-                   && std::abs(hero.getSprite().getPosition().y - i->getSprite().getPosition().y)<=300){
-                    i->setMoveStrategy(std::make_shared<Follow>());
-                    i->setAnim(8,0.06);
+            if(i->get()->isLife()){
+                if(std::abs(hero->getSprite().getPosition().x - i->get()->getSprite().getPosition().x)<=300
+                   && std::abs(hero->getSprite().getPosition().y - i->get()->getSprite().getPosition().y)<=300){
+                    i->get()->setMoveStrategy(std::make_shared<Follow>());
+                    i->get()->setAnim(8,0.06);
                 }
                 else
-                    i->setMoveStrategy(std::make_shared<Stay>());
+                    i->get()->setMoveStrategy(std::make_shared<Stay>());
             }
         }
 
@@ -106,9 +109,9 @@ int main() {
 
         window.clear();
         window.draw(arena);
-        window.draw(hero);
+        window.draw(*hero);
         for(auto i:enemies) {
-            window.draw(i);
+            window.draw(*i);
         }
         for(auto i:bullets){
             window.draw(*i);
@@ -118,12 +121,12 @@ int main() {
     return 0;
 };
 
-void update( std::list<std::shared_ptr<Bullet>> &bullets, Player1 &hero, std::list<Enemy> &enemies, float deltaTime){
-    hero.update(deltaTime);
+void update(std::list<std::shared_ptr<Bullet>> &bullets, std::shared_ptr<Player1> hero, std::list<std::shared_ptr<Enemy>>  &enemies, float deltaTime){
+    hero->update(deltaTime);
     for(auto i=enemies.begin(); i!=enemies.end(); ){
-        i->movement(hero.getSprite().getPosition());
-        i->update(deltaTime);
-        if(!(i->isLife())){
+        i->get()->movement(hero->getSprite().getPosition());
+        i->get()->update(deltaTime);
+        if(!(i->get()->isLife())){
             i = enemies.erase(i);//TODO animazione della morte
         }
         i++;
@@ -134,8 +137,8 @@ void update( std::list<std::shared_ptr<Bullet>> &bullets, Player1 &hero, std::li
         i->get()->update(deltaTime);
         auto y = enemies.begin();
         while(y!=enemies.end()){
-            if(i->get()->isCollide(*y)){
-                hero.fight(*y);
+            if(i->get()->isCollide(**y)){
+                hero->fight(**y);
                 break;
             }
             y++;
