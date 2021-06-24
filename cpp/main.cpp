@@ -27,17 +27,10 @@ int main() {
     if (!arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), m_matrix))
         return -1;
     m_matrix.close();
-    //Player1 hero(std::make_shared<RangedAttack>());
     std::shared_ptr<Player1> hero = factory.createHero(EntityType::hero);
-//    if (!hero->Entity::load("./tileSets/spaceCadet.png", sf::Vector2f(100, 100)))
-//        return -1;
-
     srand(time(NULL));
     std::list<std::shared_ptr<Enemy>> enemies;
     for(int i = 0; i<10; i++){
-//        std::unique_ptr<Entity> ghoul(std::make_shared<Patrol>());
-//        if (!ghoul.Entity::load("./tileSets/ghoul.png", sf::Vector2f(rand()%450+100, rand()%450+100)))
-//            return -1;
         std::shared_ptr<Enemy> ghoul = factory.createEnemy(EntityType::ghoul, sf::Vector2f(rand()%450+100, rand()%450+100));
         enemies.push_back(ghoul);
     }
@@ -64,9 +57,6 @@ int main() {
                         hero->setSourceY(5);
                         bulletDirection = -1;
                     }
-//                    std::shared_ptr<Bullet> shot(new Bullet(bulletDirection));
-//                    if (!shot->Entity::load("./tileSets/bullet.png", sf::Vector2f(hero->getSprite().getPosition().x+(16*(float)bulletDirection), hero->getSprite().getPosition().y+16)))
-//                        return -1;
                     std::shared_ptr<Bullet> shot = bullFactory.createBullet(EntityType::bullet, hero->getSprite().getPosition(), bulletDirection);
                     hero->setAnim(8,0.06);
                     shot->setAnim(3,0.3);

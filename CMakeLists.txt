@@ -3,9 +3,9 @@ project(Mazzarone_Rosadini)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SFML_INCLUDE_DIR "/home/reviewer/Libraries/SFML-2.5.1/include")
-set(SFML_LIBRARY_DIR "/home/reviewer/Libraries/SFML-2.5.1/lib")
-set(SFML_DIR "/home/reviewer/Libraries/SFML-2.5.1/lib/cmake/SFML")
+set(SFML_INCLUDE_DIR "/Users/gianlucarosadini/SFML/include")
+set(SFML_LIBRARY_DIR "/Users/gianlucarosadini/SFML/lib")
+set(SFML_DIR "/Users/gianlucarosadini/SFML")
 
 link_directories(SFML_LIBRARY_DIR)
 include_directories(SFML_INCLUDE_DIR)

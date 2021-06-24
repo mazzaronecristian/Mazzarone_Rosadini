@@ -6,7 +6,7 @@
 
 EntityFactory::EntityFactory() {}
 
-std::unique_ptr<Entity> EntityFactory::createEntity(EntityType type) {
+/*std::unique_ptr<Entity> EntityFactory::createEntity(EntityType type) {
     std::unique_ptr<Entity> result;
     if(type==EntityType::hero){
         result = std::unique_ptr<Entity>(new Player1(std::make_shared<RangedAttack>()));
@@ -18,7 +18,7 @@ std::unique_ptr<Entity> EntityFactory::createEntity(EntityType type) {
     }
 
     return result;
-}
+}*/
 
 std::string EntityFactory::setBitMap(EntityType type) {
     std::string result;

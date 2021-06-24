@@ -17,7 +17,7 @@ enum class EntityType {hero, ghoul, bullet};
 class EntityFactory {
 public:
     EntityFactory();
-    virtual std::unique_ptr<Entity> createEntity(EntityType);
+    //virtual std::unique_ptr<Entity> createEntity(EntityType);
     std::string setBitMap(EntityType type);
 };
 
