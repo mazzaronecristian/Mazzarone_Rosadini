@@ -5,6 +5,7 @@
 #include "../header/Entity.h"
 
 Entity::Entity(int width, int height, const sf::Time &animTime): width(width), height(height), anim(sf::Vector2i(width, height)){
+    life = true;
 }
 
 void Entity::draw(sf::RenderTarget &target, sf::RenderStates states) const {
@@ -12,7 +13,6 @@ void Entity::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 }
 
 bool Entity::load(const std::string &tileSet, sf::Vector2f position) {
-    life = true;
     if(!Entity::tileSet.loadFromFile(tileSet))
         return false;
     sprite.setTexture(Entity::tileSet);
@@ -74,7 +74,6 @@ bool Entity::isLife() const {
 
 void Entity::draw(sf::RenderWindow &window) {
     window.draw(sprite);
-
 }
 
 void Entity::setLife(bool life) {
@@ -88,6 +87,14 @@ void Entity::setAnim(int nFrame, float switchTime) {
 
 int Entity::getSourceX() {
     return source.x;
+}
+
+void Entity::setPosition(sf::Vector2f pos) {
+    sprite.setPosition(pos);
+}
+
+sf::Vector2f Entity::getPosition() {
+    return sprite.getPosition();
 }
 
 

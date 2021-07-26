@@ -8,7 +8,7 @@
 Bullet::~Bullet() = default;
 
 Bullet::Bullet(short int bulletDirection, float speed):bulletDirection(bulletDirection), speed(speed), Entity(32,3){
-}
+    }
 
 void Bullet::movement(){
         sprite.move((float)bulletDirection*speed,0);

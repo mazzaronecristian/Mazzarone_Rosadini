@@ -28,6 +28,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // A sample program demonstrating using Google C++ testing framework.
+//
+// Author: wan@google.com (Zhanyong Wan)
 
 #include "sample1.h"
 
@@ -41,7 +43,7 @@ int Factorial(int n) {
   return result;
 }
 
-// Returns true if and only if n is a prime number.
+// Returns true iff n is a prime number.
 bool IsPrime(int n) {
   // Trivial case 1: small numbers
   if (n <= 1) return false;

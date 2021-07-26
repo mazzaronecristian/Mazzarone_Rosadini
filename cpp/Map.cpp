@@ -18,13 +18,11 @@ bool Map::load(const std::string &background, const std::string &tileSet, sf::Ve
         return false;
 
     int codeX, codeY;
-    Tile tile;
     for(int y = 0; y < height; y++)
         for(int x = 0; x < width; x++){
             matrix>>codeX;
             matrix>>codeY;
-            tile.setCodeX(codeX);
-            tile.setCodeY(codeY);
+            Tile tile(codeX, codeY);
             tile.load(m_tileset, sf::Vector2f(x * 32,y * 32));
             tiles.push_back(tile);
         }

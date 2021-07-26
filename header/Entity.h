@@ -45,6 +45,10 @@ public:
 
     bool isLife() const;
 
+    void setPosition(sf::Vector2f pos);
+
+    sf::Vector2f getPosition();
+
 public:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     void draw(sf::RenderWindow& window);

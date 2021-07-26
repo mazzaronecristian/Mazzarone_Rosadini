@@ -11,21 +11,14 @@
 
 class Tile: public sf::Drawable, public sf::Transformable {
 public:
+    Tile(int codeX, int codeY);
+
     void load(const sf::Texture& tileset, sf::Vector2f position);
 
-    //setter
-    void setSprite(const sf::Sprite &sprite);
-
-    void setCodeY(int codeY);
-
-    void setCodeX(int codeX);
-
-    //getter
     const sf::Sprite &getSprite() const;
 
 private:
     int codeX, codeY;
-    sf::Texture texture;
     sf::Sprite sprite;
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 };

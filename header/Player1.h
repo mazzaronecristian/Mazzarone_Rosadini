@@ -13,13 +13,14 @@
 #include <memory>
 
 #include "AttackStrategy.h"
+#include "RangedAttack.h"
 #include "Character.h"
 #include "Potion.h"
 
 class Player1 : public Character{
 public:
-   // Player1(int hp = 10, int posX = 10, int posY = 10, int damage = 2, const Weapon &weapon, const Potion &potion);
-   Player1(const std::shared_ptr<AttackStrategy>&  attackStrategy);
+    Player1();
+    explicit Player1(std::shared_ptr<AttackStrategy> attackStrategy);
 
     virtual ~Player1();
 
@@ -38,7 +39,7 @@ public:
 
 private:
     //Potion potion;
-    std::shared_ptr<AttackStrategy> attacksStrategy;
+    std::shared_ptr<AttackStrategy> attackStrategy;
 
 };
 
