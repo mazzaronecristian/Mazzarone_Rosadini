@@ -13,7 +13,7 @@
 class Bullet: public Entity{
 public:
     explicit Bullet(short int bulletDirection, float speed = 10);
-    bool isCollide(Enemy &enemy);
+    bool isCollide(const Enemy &enemy);
 
     void movement();
     void update(float deltaTime) override;

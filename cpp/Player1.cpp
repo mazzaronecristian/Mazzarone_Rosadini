@@ -47,6 +47,7 @@ bool Player1::isLegalFight(Character &enemy) {
 }
 
 void Player1::fight(Character &character) {
+    Character::fight(character);
     attackStrategy->fight(character, damage);
 }
 

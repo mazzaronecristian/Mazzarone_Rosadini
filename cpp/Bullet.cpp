@@ -2,7 +2,6 @@
 // Created by Gianluca Rosadini on 16/03/21.
 //
 
-#include <iostream>
 #include "../header/Bullet.h"
 
 Bullet::~Bullet() = default;
@@ -20,7 +19,7 @@ void Bullet::update(float deltaTime) {
         life=false;
 }
 
-bool Bullet::isCollide(Enemy &enemy) {
+bool Bullet::isCollide(const Enemy &enemy) {
     sf::FloatRect bulletBox = sprite.getGlobalBounds();
     sf::FloatRect characterBox = enemy.getSprite().getGlobalBounds();
     if(bulletBox.intersects(characterBox)){

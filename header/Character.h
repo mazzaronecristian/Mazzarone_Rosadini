@@ -10,7 +10,9 @@
 
 class Character: public Entity {
 public:
-    explicit Character(int hp = 10, int damage = 50, float speed = 0.3);
+    explicit Character(int hp = 100, int damage = 50, float speed = 0.3, bool isAttacking = false, bool isDying = false);
+
+    void setIsFighting(bool isAttacking);
 
     virtual void movement(sf::Vector2f direction) = 0;
 
@@ -20,6 +22,7 @@ public:
 
     virtual void fight(Character &character) = 0;
     bool isLegalMove(Character &character);
+    bool isLegalFight(const Character &character);
 
     void receiveDamage(int damage);
 
@@ -33,11 +36,14 @@ public:
     //setter
     void setHp(int hp);
 
+    bool isFighting() const;
+
     void setDamage(int damage);
 
     void setSpeed(float speed);
 
 protected:
+    bool isAttacking, isDying;
     int hp, damage;
     float speed;
     enum action{stayR, stayL, right, left, attackR, attackL, die};

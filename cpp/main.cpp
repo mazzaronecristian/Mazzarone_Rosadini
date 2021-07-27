@@ -8,7 +8,6 @@
 #include "../header/Enemy.h"
 #include "../header/Follow.h"
 #include "../header/Patrol.h"
-#include "../header/Stay.h"
 #include "../header/Bullet.h"
 #include "../header/RangedAttack.h"
 #include "../header/PlayersFactory.h"
@@ -30,7 +29,7 @@ int main() {
     std::shared_ptr<Player1> hero = factory.createHero(EntityType::hero);
     srand(time(NULL));
     std::list<std::shared_ptr<Enemy>> enemies;
-    for(int i = 0; i<10; i++){
+    for(int i = 0; i<1; i++){
         std::shared_ptr<Enemy> ghoul = factory.createEnemy(EntityType::ghoul, sf::Vector2f(rand()%450+100, rand()%450+100));
         enemies.push_back(ghoul);
     }
@@ -57,7 +56,7 @@ int main() {
                         hero->setSourceY(5);
                         bulletDirection = -1;
                     }
-                    std::shared_ptr<Bullet> shot = bullFactory.createBullet(EntityType::bullet, hero->getSprite().getPosition(), bulletDirection);
+                    std::shared_ptr<Bullet> shot = bullFactory.createBullet(EntityType::bullet, hero->getPosition(), bulletDirection);
                     hero->setAnim(8,0.06);
                     shot->setAnim(3,0.3);
                     bullets.push_back(shot);
@@ -83,18 +82,30 @@ int main() {
             hero->setAnim(8,0.06);
 
         }
+
         for(auto i=enemies.begin(); i!=enemies.end(); i++){
-            if(i->get()->isLife()){
+            if(!i->get()->isFighting()){
                 if(std::abs(hero->getSprite().getPosition().x - i->get()->getSprite().getPosition().x)<=300
                    && std::abs(hero->getSprite().getPosition().y - i->get()->getSprite().getPosition().y)<=300){
                     i->get()->setMoveStrategy(std::make_shared<Follow>());
                     i->get()->setAnim(8,0.06);
                 }
-                else
-                    i->get()->setMoveStrategy(std::make_shared<Stay>());
+                else i->get()->setMoveStrategy(std::make_shared<Patrol>());
+            }
+            else i->get()->setMoveStrategy(std::make_shared<Patrol>());
+        }
+
+        for(auto i=enemies.begin(); i!=enemies.end();i++){
+            if(i->get()->isLegalFight(*hero)){
+                i->get()->fight(*hero);
+                i->get()->setAnim(6,0.06);
             }
         }
 
+        for(auto i=enemies.begin(); i!=enemies.end();i++){
+            if(i->get()->getHp() <= 0)
+                i->get()->kill();
+        }
         update(bullets, hero, enemies, deltaTime);
 
         window.clear();

@@ -6,10 +6,10 @@
 
 #include <utility>
 
-Enemy::Enemy(std::shared_ptr<MoveStrategy> moveStrategy): moveStrategy(std::move(moveStrategy)), Character(100,2,0.1){}
+Enemy::Enemy(std::shared_ptr<MoveStrategy> moveStrategy): moveStrategy(std::move(moveStrategy)), Character(100,1,0.1){}
 
 void Enemy::movement(sf::Vector2f direction) {
-    if(life){
+    if(life && !isAttacking && !isDying){
         if(abs(direction.y - sprite.getPosition().y) > speed || abs(direction.x - sprite.getPosition().x) > speed) {
             sf::Vector2f dir = moveStrategy->movement(direction,sprite);
             sprite.move(dir.x * speed, dir.y * speed);
@@ -23,24 +23,23 @@ void Enemy::movement(sf::Vector2f direction) {
             source.y = stayL;
     }
 }
-
 void Enemy::setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrategy) {
     Enemy::moveStrategy = moveStrategy;
 }
-
-
 Enemy::Enemy(){
 
 }
-
 void Enemy::fight(Character &character) {
-
+    Character::fight(character);
+    if(source.y %2 == 0)
+        source.y = 4;
+    else source.y = 5;
+    if(source.x==4)
+        character.receiveDamage(damage);
+    std::cout<<character.getHp()<<" ";
 }
-
 void Enemy::kill() {
     Character::kill();
-    if(source.x==5)
-        source = {5,6};
 }
 
 
