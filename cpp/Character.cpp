@@ -38,9 +38,6 @@ void Character::setSpeed(float speed) {
 
 void Character::update(float deltaTime) {
     Entity::update(deltaTime);
-//    if(hp<=0){
-//        life = false;
-//    }
     isAttacking = false;
 }
 
