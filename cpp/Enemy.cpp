@@ -6,7 +6,7 @@
 
 #include <utility>
 
-Enemy::Enemy(std::shared_ptr<MoveStrategy> moveStrategy): moveStrategy(std::move(moveStrategy)), Character(100,1,0.1){}
+Enemy::Enemy(std::shared_ptr<MoveStrategy> moveStrategy): moveStrategy(std::move(moveStrategy)), Character(100,10,0.1){}
 
 void Enemy::movement(sf::Vector2f direction) {
     if(life && !isAttacking && !isDying){
@@ -38,11 +38,17 @@ void Enemy::fight(Character &character) {
         if(source.x==5){
             source.x++;
             character.receiveDamage(damage);
+            if(character.getHp()>0)
+                std::cout<<"Rimangono "<<character.getHp()<<"HP "<<std::endl;
+            else
+                std::cout<<"sei morto"<<std::endl;
         }
     }
 }
 void Enemy::kill() {
     Character::kill();
+    if(source.x == 7)
+        life = false;
 }
 
 

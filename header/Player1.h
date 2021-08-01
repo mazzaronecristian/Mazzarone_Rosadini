@@ -27,7 +27,11 @@ public:
     void movement(sf::Vector2f direction) override;
 
     void fight(Character &character) override;
+
+    void kill() override;
+
     bool isLegalFight(Character &enemy);
+
     //TODO RESOLVE POTION
     //void usePotion();
 

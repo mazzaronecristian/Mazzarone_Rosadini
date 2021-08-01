@@ -29,7 +29,7 @@ int main() {
     std::shared_ptr<Player1> hero = factory.createHero(EntityType::hero);
     srand(time(NULL));
     std::list<std::shared_ptr<Enemy>> enemies;
-    for(int i = 0; i<2; i++){
+    for(int i = 0; i<5; i++){
         std::shared_ptr<Enemy> ghoul = factory.createEnemy(EntityType::ghoul, sf::Vector2f(rand()%450+100, rand()%450+100));
         enemies.push_back(ghoul);
     }
@@ -61,7 +61,6 @@ int main() {
                     shot->setAnim(3,0.3);
                     bullets.push_back(shot);
                 }
-
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
             hero->movement(sf::Vector2f (0,-1));
@@ -70,17 +69,14 @@ int main() {
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
             hero->movement(sf::Vector2f (-1,0));
             hero->setAnim(8,0.06);
-
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
             hero->movement(sf::Vector2f (0,1));
             hero->setAnim(8,0.06);
-
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             hero->movement(sf::Vector2f (1,0));
             hero->setAnim(8,0.06);
-
         }
 
         for(auto i=enemies.begin(); i!=enemies.end(); i++){
@@ -106,6 +102,10 @@ int main() {
             if(i->get()->getHp() <= 0)
                 i->get()->kill();
         }
+
+        if(hero->getHp() <= 0)
+            hero->kill();
+
         update(bullets, hero, enemies, deltaTime);
         window.clear();
         window.draw(arena);
@@ -119,7 +119,7 @@ int main() {
         window.display();
 }
     return 0;
-};
+}
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::shared_ptr<Player1> hero, std::list<std::shared_ptr<Enemy>>  &enemies, float deltaTime){
     hero->update(deltaTime);
