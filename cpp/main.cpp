@@ -29,7 +29,7 @@ int main() {
     std::shared_ptr<Player1> hero = factory.createHero(EntityType::hero);
     srand(time(NULL));
     std::list<std::shared_ptr<Enemy>> enemies;
-    for(int i = 0; i<1; i++){
+    for(int i = 0; i<2; i++){
         std::shared_ptr<Enemy> ghoul = factory.createEnemy(EntityType::ghoul, sf::Vector2f(rand()%450+100, rand()%450+100));
         enemies.push_back(ghoul);
     }
@@ -98,7 +98,7 @@ int main() {
         for(auto i=enemies.begin(); i!=enemies.end();i++){
             if(i->get()->isLegalFight(*hero)){
                 i->get()->fight(*hero);
-                i->get()->setAnim(6,0.06);
+                i->get()->setAnim(8,0.06);
             }
         }
 
@@ -107,7 +107,6 @@ int main() {
                 i->get()->kill();
         }
         update(bullets, hero, enemies, deltaTime);
-
         window.clear();
         window.draw(arena);
         window.draw(*hero);
@@ -127,9 +126,8 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::shared_ptr<Player1
     for(auto i=enemies.begin(); i!=enemies.end(); ){
         i->get()->movement(hero->getSprite().getPosition());
         i->get()->update(deltaTime);
-        if(!(i->get()->isLife())){
-            i = enemies.erase(i);//TODO animazione della morte
-        }
+        if(!(i->get()->isLife()))
+            i = enemies.erase(i);
         i++;
     }
 

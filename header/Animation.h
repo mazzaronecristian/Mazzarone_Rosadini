@@ -27,6 +27,7 @@ private:
     float animTime = 0.0f;
     float switchTime;
     sf::IntRect rect;
+    sf::Vector2i index = {0,0};
 };
 
 

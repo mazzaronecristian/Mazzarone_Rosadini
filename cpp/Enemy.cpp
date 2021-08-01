@@ -31,12 +31,15 @@ Enemy::Enemy(){
 }
 void Enemy::fight(Character &character) {
     Character::fight(character);
-    if(source.y %2 == 0)
-        source.y = 4;
-    else source.y = 5;
-    if(source.x==4)
-        character.receiveDamage(damage);
-    std::cout<<character.getHp()<<" ";
+    if(hp>0){
+        if(source.y %2 == 0)
+            source.y = attackR;
+        else source.y = attackL;
+        if(source.x==5){
+            source.x++;
+            character.receiveDamage(damage);
+        }
+    }
 }
 void Enemy::kill() {
     Character::kill();

@@ -46,8 +46,7 @@ protected:
     bool isAttacking, isDying;
     int hp, damage;
     float speed;
-    enum action{stayR, stayL, right, left, attackR, attackL, die};
-
+    enum action{stayR=0, stayL=1, right=2, left=3, attackR=4, attackL=5, stay=6,  die=7};
 };
 
 

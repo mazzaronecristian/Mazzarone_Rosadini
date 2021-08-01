@@ -43,14 +43,14 @@ void Character::update(float deltaTime) {
 
 void Character::kill() {
     isDying = true;
-    source.y = die;
-    setAnim(6,0.08);
-    if(source.x == 5)
+    setAnim(8,0.15, die);
+    if(source.x == 7)
        life = false;
+    std::cout<<source.x<<" ";
 }
 
 void Character::fight(Character &character) {
-    isAttacking = true;
+        isAttacking = true;
 }
 
 bool Character::isLegalMove(Character &character) {

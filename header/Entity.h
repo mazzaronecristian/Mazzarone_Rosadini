@@ -25,6 +25,8 @@ public:
     //Getter and Setter
     void setAnim(int nFrame, float switchTime);
 
+    void setAnim(int nFrame, float switchTime, int action);
+
     const sf::Sprite &getSprite() const;
 
     void setSprite(const sf::Sprite &sprite);

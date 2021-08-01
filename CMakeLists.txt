@@ -16,8 +16,8 @@ set(SOURCE_FILES cpp/Character.cpp header/Character.h cpp/Player1.cpp header/Pla
         header/AttackStrategy.h cpp/RangedAttack.cpp header/RangedAttack.h cpp/EntityFactory.cpp header/EntityFactory.h cpp/CharacterFactory.cpp
         header/CharacterFactory.h cpp/PlayersFactory.cpp header/PlayersFactory.h cpp/BulletsFactory.cpp header/BulletsFactory.h)
 
-add_executable(Mazzarone_Rosadini cpp/main.cpp)
+add_executable(Mazzarone_Rosadini cpp/main.cpp ${SOURCE_FILES})
 
 add_library(core ${SOURCE_FILES})
 
-target_link_libraries(Mazzarone_Rosadini core sfml-graphics sfml-window sfml-system)
+target_link_libraries(Mazzarone_Rosadini sfml-graphics sfml-window sfml-system)

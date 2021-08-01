@@ -85,6 +85,15 @@ void Entity::setAnim(int nFrame, float switchTime) {
     anim.setSwitchTime(switchTime);
 }
 
+void Entity::setAnim(int nFrame, float switchTime, int action) {
+    if(source.y != action){
+        source.x = 0;
+    }
+    source.y = action;
+    anim.setNFrame(nFrame);
+    anim.setSwitchTime(switchTime);
+}
+
 int Entity::getSourceX() {
     return source.x;
 }
@@ -96,5 +105,7 @@ void Entity::setPosition(sf::Vector2f pos) {
 sf::Vector2f Entity::getPosition() {
     return sprite.getPosition();
 }
+
+
 
 
