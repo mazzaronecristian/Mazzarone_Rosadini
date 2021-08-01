@@ -3,7 +3,8 @@
 //
 
 #include "../header/HealUse.h"
-void  HealUse::use() {
+
+void HealUse::use() {
     UseStrategy::use();
 
 }

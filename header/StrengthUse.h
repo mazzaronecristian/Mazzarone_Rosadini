@@ -7,7 +7,8 @@
 
 #include "UseStrategy.h"
 #include "Character.h"
-class StrengthUse: public UseStrategy {
+
+class StrengthUse : public UseStrategy {
 public:
     void use() override;
 };

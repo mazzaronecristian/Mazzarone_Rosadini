@@ -8,7 +8,7 @@
 #include "MoveStrategy.h"
 #include <cmath>
 
-class Patrol: public MoveStrategy{
+class Patrol : public MoveStrategy {
 public:
     Patrol();
 

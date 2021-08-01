@@ -8,7 +8,7 @@
 #include "MoveStrategy.h"
 #include <cmath>
 
-class Follow: public MoveStrategy {
+class Follow : public MoveStrategy {
 public:
     sf::Vector2f movement(sf::Vector2f direction, sf::Sprite &sprite) override;
 };

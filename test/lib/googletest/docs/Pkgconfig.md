@@ -1,19 +1,17 @@
 ## Using GoogleTest from various build systems ##
 
-GoogleTest comes with pkg-config files that can be used to determine all
-necessary flags for compiling and linking to GoogleTest (and GoogleMock).
-Pkg-config is a standardised plain-text format containing
+GoogleTest comes with pkg-config files that can be used to determine all necessary flags for compiling and linking to
+GoogleTest (and GoogleMock). Pkg-config is a standardised plain-text format containing
 
-  * the includedir (-I) path
-  * necessary macro (-D) definitions
-  * further required flags (-pthread)
-  * the library (-L) path
-  * the library (-l) to link to
+* the includedir (-I) path
+* necessary macro (-D) definitions
+* further required flags (-pthread)
+* the library (-L) path
+* the library (-l) to link to
 
-All current build systems support pkg-config in one way or another. For
-all examples here we assume you want to compile the sample
+All current build systems support pkg-config in one way or another. For all examples here we assume you want to compile
+the sample
 `samples/sample3_unittest.cc`.
-
 
 ### CMake ###
 
@@ -37,15 +35,12 @@ add_test(first_and_only_test testapp)
 ```
 
 It is generally recommended that you use `target_compile_options` + `_CFLAGS`
-over `target_include_directories` + `_INCLUDE_DIRS` as the former includes not
-just -I flags (GoogleTest might require a macro indicating to internal headers
-that all libraries have been compiled with threading enabled. In addition,
-GoogleTest might also require `-pthread` in the compiling step, and as such
-splitting the pkg-config `Cflags` variable into include dirs and macros for
-`target_compile_definitions()` might still miss this). The same recommendation
-goes for using `_LDFLAGS` over the more commonplace `_LIBRARIES`, which
-happens to discard `-L` flags and `-pthread`.
-
+over `target_include_directories` + `_INCLUDE_DIRS` as the former includes not just -I flags (GoogleTest might require a
+macro indicating to internal headers that all libraries have been compiled with threading enabled. In addition,
+GoogleTest might also require `-pthread` in the compiling step, and as such splitting the pkg-config `Cflags` variable
+into include dirs and macros for
+`target_compile_definitions()` might still miss this). The same recommendation goes for using `_LDFLAGS` over the more
+commonplace `_LIBRARIES`, which happens to discard `-L` flags and `-pthread`.
 
 ### Autotools ###
 
@@ -77,7 +72,6 @@ testapp_CXXFLAGS = $(GTEST_CFLAGS)
 testapp_LDADD = $(GTEST_LIBS)
 ```
 
-
 ### Meson ###
 
 Meson natively uses pkgconfig to query dependencies:
@@ -96,11 +90,9 @@ testapp = executable(
 test('first_and_only_test', testapp)
 ```
 
-
 ### Plain Makefiles ###
 
-Since `pkg-config` is a small Unix command-line utility, it can be used
-in handwritten `Makefile`s too:
+Since `pkg-config` is a small Unix command-line utility, it can be used in handwritten `Makefile`s too:
 
 ```
 GTEST_CFLAGS = `pkg-config --cflags gtest_main`
@@ -120,12 +112,10 @@ testapp.o: samples/sample3_unittest.cc
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< -c -o $@ $(GTEST_CFLAGS)
 ```
 
-
 ### Help! pkg-config can't find GoogleTest! ###
 
-Let's say you have a `CMakeLists.txt` along the lines of the one in this
-tutorial and you try to run `cmake`. It is very possible that you get a
-failure along the lines of:
+Let's say you have a `CMakeLists.txt` along the lines of the one in this tutorial and you try to run `cmake`. It is very
+possible that you get a failure along the lines of:
 
 ```
 -- Checking for one of the modules 'gtest_main'
@@ -133,10 +123,9 @@ CMake Error at /usr/share/cmake/Modules/FindPkgConfig.cmake:640 (message):
   None of the required 'gtest_main' found
 ```
 
-These failures are common if you installed GoogleTest yourself and have not
-sourced it from a distro or other package manager. If so, you need to tell
-pkg-config where it can find the `.pc` files containing the information.
-Say you installed GoogleTest to `/usr/local`, then it might be that the
+These failures are common if you installed GoogleTest yourself and have not sourced it from a distro or other package
+manager. If so, you need to tell pkg-config where it can find the `.pc` files containing the information. Say you
+installed GoogleTest to `/usr/local`, then it might be that the
 `.pc` files are installed under `/usr/local/lib64/pkgconfig`. If you set
 
 ```

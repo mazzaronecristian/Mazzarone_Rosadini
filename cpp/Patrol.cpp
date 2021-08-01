@@ -7,5 +7,5 @@
 Patrol::Patrol() {}
 
 sf::Vector2f Patrol::movement(sf::Vector2f direction, sf::Sprite &sprite) {
-    return sf::Vector2f(0,0);
+    return sf::Vector2f(0, 0);
 }

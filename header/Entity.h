@@ -11,16 +11,15 @@
 
 #include "Animation.h"
 #include <iostream>
-class Entity: public sf::Drawable, public sf::Transformable {
+#include <cmath>
+
+class Entity : public sf::Drawable, public sf::Transformable {
 public:
     explicit Entity(int width = 32, int height = 32, const sf::Time &animTime = sf::milliseconds(60));
 
     bool load(const std::string &tileSet, sf::Vector2f position);
 
     virtual void update(float deltaTime);
-
-    void setLife(bool life);
-
 
     //Getter and Setter
     void setAnim(int nFrame, float switchTime);
@@ -29,37 +28,24 @@ public:
 
     const sf::Sprite &getSprite() const;
 
-    void setSprite(const sf::Sprite &sprite);
-
-    const sf::Texture &getTileSet() const;
-
     void setTileSet(const sf::Texture &tileSet);
 
     const sf::Vector2i &getSource() const;
-    int getSourceX();
-    void setSourceX(const int x);
 
     void setSourceY(const int y);
 
-    void setSource(const int x, const int y);
-
-    const Animation &getAnim() const;
-
     bool isLife() const;
-
-    void setPosition(sf::Vector2f pos);
 
     sf::Vector2f getPosition();
 
 public:
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    void draw(sf::RenderWindow& window);
+    virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 protected:
     int width, height;
     sf::Sprite sprite;
     sf::Texture tileSet;
-    sf::Vector2i source = {0,0};
+    sf::Vector2i source = {0, 0};
     bool life;
 
 private:

@@ -7,7 +7,7 @@
 
 #include "AttackStrategy.h"
 
-class RangedAttack: public AttackStrategy{
+class RangedAttack : public AttackStrategy {
 public:
     void fight(Character &character, int damage) override;
 };

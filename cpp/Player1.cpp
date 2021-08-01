@@ -6,25 +6,27 @@
 
 #include <utility>
 
-Player1::Player1(){}
+Player1::Player1() {}
 
-Player1::Player1(std::shared_ptr<AttackStrategy> attackStrategy): attackStrategy(std::move(attackStrategy)){}
-Player1::~Player1(){}
+Player1::Player1(std::shared_ptr<AttackStrategy> attackStrategy) : attackStrategy(std::move(attackStrategy)) {}
 
-void Player1::movement(sf::Vector2f direction) {
-    if(direction.x==0){
-        if(source.y == stayR)
+Player1::~Player1() {}
+
+void Player1::movement(sf::Vector2f direction, Map map) {
+    if (direction.x == 0) {
+        if (source.y == stayR)
+            source.y = right;
+        else
+            source.y = left;
+    } else {
+        if (direction.x == 1)
             source.y = right;
         else
             source.y = left;
     }
-    else{
-        if(direction.x==1)
-            source.y = right;
-        else
-            source.y = left;
+    if (isLegalMove(direction, map)) {
+        sprite.move(direction.x * speed, direction.y * speed);
     }
-    sprite.move(direction.x*speed, direction.y*speed);
 }
 
 /*Potion Player1::getPotion() const {
@@ -53,7 +55,7 @@ void Player1::fight(Character &character) {
 
 void Player1::kill() {
     Character::kill();
-    if(source.x == 7)
+    if (source.x == 7)
         life = false;
 }
 

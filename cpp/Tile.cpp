@@ -4,12 +4,15 @@
 
 #include "../header/Tile.h"
 
-Tile::Tile(int codeX, int codeY) : codeX(codeX), codeY(codeY){}
+Tile::Tile(int codeX, int codeY, bool walkable, sf::Vector2f position) : codeX(codeX), codeY(codeY), walkable(walkable),
+                                                                         position(position) {
 
-void Tile::load(const sf::Texture &tileset, sf::Vector2f position) {
+}
+
+void Tile::load(const sf::Texture &tileset) {
     sprite.setTexture(tileset);
     sprite.setPosition(position);
-    sprite.setTextureRect(sf::IntRect (codeX*32,codeY*32,32,32));
+    sprite.setTextureRect(sf::IntRect(codeX * 32, codeY * 32, 32, 32));
 }
 
 void Tile::draw(sf::RenderTarget &target, sf::RenderStates states) const {
@@ -18,4 +21,20 @@ void Tile::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 
 const sf::Sprite &Tile::getSprite() const {
     return sprite;
+}
+
+void Tile::setWalkable(bool walkable) {
+    Tile::walkable = walkable;
+}
+
+bool Tile::isWalkable() const {
+    return walkable;
+}
+
+int Tile::getCodeX() const {
+    return codeX;
+}
+
+int Tile::getCodeY() const {
+    return codeY;
 }

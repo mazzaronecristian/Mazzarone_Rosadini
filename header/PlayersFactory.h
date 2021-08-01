@@ -6,9 +6,11 @@
 #define MAZZARONE_ROSADINI_PLAYERSFACTORY_H
 
 #include "CharacterFactory.h"
-class PlayersFactory: public CharacterFactory{
+
+class PlayersFactory : public CharacterFactory {
 public:
     std::shared_ptr<Enemy> createEnemy(EntityType type, sf::Vector2f position) override;
+
     std::shared_ptr<Player1> createHero(EntityType type) override;
 
     PlayersFactory();

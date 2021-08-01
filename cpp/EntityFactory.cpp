@@ -23,11 +23,11 @@ EntityFactory::EntityFactory() {}
 std::string EntityFactory::setBitMap(EntityType type) {
     std::string result;
 
-    if(type == EntityType::hero)
+    if (type == EntityType::hero)
         result = "./tileSets/spaceCadet.png";
-    if(type == EntityType::ghoul)
+    if (type == EntityType::ghoul)
         result = "./tileSets/ghoul.png";
-    if(type == EntityType::bullet)
+    if (type == EntityType::bullet)
         result = "./tileSets/bullet.png";
 
     return result;

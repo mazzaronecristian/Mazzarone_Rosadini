@@ -8,7 +8,8 @@
 #include "EntityFactory.h"
 #include "Bullet.h"
 #include "Character.h"
-class BulletsFactory: public EntityFactory {
+
+class BulletsFactory : public EntityFactory {
 public:
     std::shared_ptr<Bullet> createBullet(EntityType type, sf::Vector2f position, short int direction);
 };

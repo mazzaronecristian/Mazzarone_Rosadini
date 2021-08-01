@@ -14,13 +14,16 @@
 #include <memory>
 #include "Tile.h"
 
-class Map: public sf::Drawable, public sf::Transformable{
+class Map : public sf::Drawable, public sf::Transformable {
 public:
     explicit Map(int width = 30, int height = 20);
-    bool load(const std::string &background, const std::string &tileSet, sf::Vector2u tileSize, std::ifstream& matrix);
+
+    bool load(const std::string &background, const std::string &tileSet, sf::Vector2u tileSize, std::ifstream &matrix);
+
+    Tile getTile(sf::Vector2i source);
 
 private:
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
     int width, height;
     std::vector<Tile> tiles;
@@ -28,4 +31,5 @@ private:
     sf::VertexArray m_vertices;
     sf::Texture m_tileset;
 };
+
 #endif //MAZZARONE_ROSADINI_MAP_H

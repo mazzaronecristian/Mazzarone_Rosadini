@@ -8,7 +8,7 @@
 #include "Barrel.h"
 #include "Player1.h"
 
-class TrapBarrel: public Barrel{
+class TrapBarrel : public Barrel {
 public:
     TrapBarrel(int hp, const Potion &potion);
 

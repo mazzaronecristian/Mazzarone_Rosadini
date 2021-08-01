@@ -8,6 +8,7 @@
 #include <iostream>
 #include "UseStrategy.h"
 #include "Character.h"
+
 class Potion {
 public:
     Potion();

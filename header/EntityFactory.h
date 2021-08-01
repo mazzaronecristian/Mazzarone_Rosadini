@@ -12,15 +12,17 @@
 #include "RangedAttack.h"
 #include "Patrol.h"
 
-enum class EntityType {hero, ghoul, bullet};
+enum class EntityType {
+    hero, ghoul, bullet
+};
 
 class EntityFactory {
 public:
     EntityFactory();
+
     //virtual std::unique_ptr<Entity> createEntity(EntityType);
     std::string setBitMap(EntityType type);
 };
-
 
 
 #endif //MAZZARONE_ROSADINI_ENTITYFACTORY_H

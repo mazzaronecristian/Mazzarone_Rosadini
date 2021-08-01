@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(cmake-build-debug/Mazzarone_Rosadini)
+project(Mazzarone_Rosadini)
 
 set(CMAKE_CXX_STANDARD 14)
 

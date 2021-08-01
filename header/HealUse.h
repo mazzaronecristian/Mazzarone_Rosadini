@@ -8,7 +8,8 @@
 #include "UseStrategy.h"
 #include "Character.h"
 #include "Player1.h"
-class HealUse: public UseStrategy {
+
+class HealUse : public UseStrategy {
 public:
     void use() override;
 };

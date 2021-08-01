@@ -12,7 +12,9 @@
 class Animation {
 public:
     explicit Animation(sf::Vector2i dim, int nFrame = 3, float switchTime = 0.3);
+
     void update(sf::Vector2i &source, float deltaTime);
+
     void applyToSprite(sf::Sprite &sprite);
 
     //setter
@@ -27,7 +29,7 @@ private:
     float animTime = 0.0f;
     float switchTime;
     sf::IntRect rect;
-    sf::Vector2i index = {0,0};
+    sf::Vector2i index = {0, 0};
 };
 
 

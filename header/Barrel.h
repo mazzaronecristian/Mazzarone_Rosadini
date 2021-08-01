@@ -6,6 +6,7 @@
 #define MAZZARONE_ROSADINI_BARREL_H
 
 #include "Potion.h"
+
 class Barrel {
 public:
     Barrel(int hp, Potion potion);
@@ -13,6 +14,7 @@ public:
     virtual ~Barrel();
 
     void receiveDamage(int damage);
+
 private:
     int hp;
     Potion potion;

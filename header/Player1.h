@@ -17,14 +17,15 @@
 #include "Character.h"
 #include "Potion.h"
 
-class Player1 : public Character{
+class Player1 : public Character {
 public:
     Player1();
+
     explicit Player1(std::shared_ptr<AttackStrategy> attackStrategy);
 
     virtual ~Player1();
 
-    void movement(sf::Vector2f direction) override;
+    void movement(sf::Vector2f direction, Map map) override;
 
     void fight(Character &character) override;
 
