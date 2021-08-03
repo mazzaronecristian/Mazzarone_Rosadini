@@ -105,9 +105,6 @@ int main() {
                 i->get()->kill();
         }
 
-        if (hero->getHp() <= 0)
-            hero->kill();
-
         update(bullets, hero, enemies, deltaTime, arena);
 
         window.clear();
@@ -126,6 +123,10 @@ int main() {
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::shared_ptr<Player1> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map arena) {
+
+    if (hero->getHp() <= 0)
+        hero->kill();
+
     hero->update(deltaTime);
     for (auto i = enemies.begin(); i != enemies.end();) {
         i->get()->movement(hero->getSprite().getPosition(), arena);
