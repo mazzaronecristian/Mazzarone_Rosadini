@@ -12,16 +12,17 @@
 #include "../header/RangedAttack.h"
 #include "../header/PlayersFactory.h"
 #include "../header/BulletsFactory.h"
+#include "../header/LifeBar.h"
 
 #include <cmath>
 #include <list>
 #include <memory>
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::shared_ptr<Player1> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map arena);
+            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map arena, LifeBar life);
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(960, 640), "GAME");
+    sf::RenderWindow window(sf::VideoMode(960, 740), "GAME");
     PlayersFactory factory;
     std::ifstream m_matrix("./matrix.txt");
     Map arena;
@@ -29,6 +30,8 @@ int main() {
         return -1;
     m_matrix.close();
     std::shared_ptr<Player1> hero = factory.createHero(EntityType::hero);
+    LifeBar life(hero);
+    life.load("./tileSets/userInterface/lifeBar.png", sf::Vector2f(10, 680));
     srand(time(NULL));
     std::list<std::shared_ptr<Enemy>> enemies;
     for (int i = 0; i < 1; i++) {
@@ -105,7 +108,7 @@ int main() {
                 i->get()->kill();
         }
 
-        update(bullets, hero, enemies, deltaTime, arena);
+        update(bullets, hero, enemies, deltaTime, arena, life);
 
         window.clear();
         window.draw(arena);
@@ -116,18 +119,21 @@ int main() {
         for (auto i:bullets) {
             window.draw(*i);
         }
+        window.draw(life);
         window.display();
     }
     return 0;
 }
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::shared_ptr<Player1> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map arena) {
+            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map arena, LifeBar life) {
 
     if (hero->getHp() <= 0)
         hero->kill();
 
     hero->update(deltaTime);
+    life.update();
+
     for (auto i = enemies.begin(); i != enemies.end();) {
         i->get()->movement(hero->getSprite().getPosition(), arena);
         i->get()->update(deltaTime);
@@ -135,7 +141,6 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::shared_ptr<Player1
             i = enemies.erase(i);
         i++;
     }
-
     for (auto i = bullets.begin(); i != bullets.end();) {
         i->get()->movement();
         i->get()->update(deltaTime);

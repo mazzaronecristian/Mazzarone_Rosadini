@@ -6,7 +6,6 @@
 
 Tile::Tile(int codeX, int codeY, bool walkable, sf::Vector2f position) : codeX(codeX), codeY(codeY), walkable(walkable),
                                                                          position(position) {
-
 }
 
 void Tile::load(const sf::Texture &tileset) {

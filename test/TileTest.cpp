@@ -5,10 +5,10 @@
 #include "../header/Tile.h"
 
 TEST(Tile, dimension) {
-    Tile t(1, 2);
+    Tile t(1, 2, true, sf::Vector2f(0, 0));
     sf::Texture texture;
     texture.loadFromFile("./tileSets/map/map.png");
-    t.load(texture, sf::Vector2f(0, 0));
+    t.load(texture);
     EXPECT_EQ(32, t.getSprite().getTextureRect().left);
     EXPECT_EQ(64, t.getSprite().getTextureRect().top);
     EXPECT_EQ(32, t.getSprite().getTextureRect().height);
