@@ -23,7 +23,7 @@ class CharacterFactory : public EntityFactory {
 public:
     CharacterFactory();
 
-    virtual std::shared_ptr<Player1> createHero(EntityType type) = 0;
+    virtual std::unique_ptr<Player1> createHero(EntityType type) = 0;
 
     virtual std::shared_ptr<Enemy> createEnemy(EntityType type, sf::Vector2f position) = 0;
 

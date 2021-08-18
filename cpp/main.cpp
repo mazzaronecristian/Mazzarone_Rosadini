@@ -19,10 +19,21 @@
 #include <memory>
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::shared_ptr<Player1> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map arena, LifeBar &life);
+            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar);
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(960, 740), "GAME");
+    sf::RenderTexture gameOver;
+    if (!gameOver.create(960, 740))
+        return -1;
+    gameOver.clear(sf::Color(0, 0, 0, 80));
+    sf::Texture t;
+    t.loadFromFile("./tileSets/userInterface/gameOver.png");
+    sf::Sprite s(t);
+    s.setPosition(250, 140);
+    gameOver.draw(s);
+    gameOver.display();
+
     PlayersFactory factory;
     std::ifstream m_matrix("./matrix.txt");
     Map arena;
@@ -30,11 +41,11 @@ int main() {
         return -1;
     m_matrix.close();
     std::shared_ptr<Player1> hero = factory.createHero(EntityType::hero);
-    LifeBar life(hero);
-    life.load("./tileSets/userInterface/lifeBar.png", sf::Vector2f(10, 680));
+    LifeBar lifeBar(hero);
+    lifeBar.load("./tileSets/userInterface/lifeBar.png", sf::Vector2f(10, 680));
     srand(time(NULL));
     std::list<std::shared_ptr<Enemy>> enemies;
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 10; i++) {
         std::shared_ptr<Enemy> ghoul = factory.createEnemy(EntityType::ghoul,
                                                            sf::Vector2f(rand() % 450 + 100, rand() % 450 + 100));
         enemies.push_back(ghoul);
@@ -108,7 +119,7 @@ int main() {
                 i->get()->kill();
         }
 
-        update(bullets, hero, enemies, deltaTime, arena, life);
+        update(bullets, hero, enemies, deltaTime, arena, lifeBar);
 
         window.clear();
         window.draw(arena);
@@ -119,20 +130,29 @@ int main() {
         for (auto i:bullets) {
             window.draw(*i);
         }
-        window.draw(life);
+        window.draw(lifeBar);
+        if (!hero->isLife()) {
+            sf::Sprite over(gameOver.getTexture());
+            window.draw(over);
+        }
+
         window.display();
     }
     return 0;
 }
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::shared_ptr<Player1> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map arena, LifeBar &life) {
+            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar) {
 
     if (hero->getHp() <= 0)
         hero->kill();
-
+    if (!hero->isLife()) {
+        hero.reset(new Player1);
+        for (auto i = enemies.begin(); i != enemies.end(); i++)
+            i->get()->setMoveStrategy(std::make_shared<Patrol>());
+    }
     hero->update(deltaTime);
-    life.update();
+    lifeBar.update();
 
     for (auto i = enemies.begin(); i != enemies.end();) {
         i->get()->movement(hero->getSprite().getPosition(), arena);

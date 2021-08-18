@@ -13,19 +13,21 @@ Player1::Player1(std::shared_ptr<AttackStrategy> attackStrategy) : attackStrateg
 Player1::~Player1() {}
 
 void Player1::movement(sf::Vector2f direction, const Map map) {
-    if (direction.x == 0) {
-        if (source.y == stayR)
-            source.y = right;
-        else
-            source.y = left;
-    } else {
-        if (direction.x == 1)
-            source.y = right;
-        else
-            source.y = left;
-    }
-    if (isLegalMove(direction, map)) {
-        sprite.move(direction.x * speed, direction.y * speed);
+    if (!isDying) {
+        if (direction.x == 0) {
+            if (source.y == stayR)
+                source.y = right;
+            else
+                source.y = left;
+        } else {
+            if (direction.x == 1)
+                source.y = right;
+            else
+                source.y = left;
+        }
+        if (isLegalMove(direction, map)) {
+            sprite.move(direction.x * speed, direction.y * speed);
+        }
     }
 }
 
@@ -55,8 +57,9 @@ void Player1::fight(Character &character) {
 
 void Player1::kill() {
     Character::kill();
-    if (source.x == 7)
+    if (source.x == 7) {
         life = false;
+    }
 }
 
 /*AttackStrategy *Player1::getAttackStrategy() const {

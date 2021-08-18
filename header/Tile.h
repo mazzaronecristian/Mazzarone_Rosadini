@@ -15,7 +15,7 @@ public:
 
     void load(const sf::Texture &tileset);
 
-    const sf::Sprite &getSprite() const;
+    sf::Sprite &getSprite();
 
     bool isWalkable() const;
 

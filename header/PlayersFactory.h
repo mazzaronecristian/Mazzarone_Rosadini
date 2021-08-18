@@ -11,7 +11,7 @@ class PlayersFactory : public CharacterFactory {
 public:
     std::shared_ptr<Enemy> createEnemy(EntityType type, sf::Vector2f position) override;
 
-    std::shared_ptr<Player1> createHero(EntityType type) override;
+    std::unique_ptr<Player1> createHero(EntityType type) override;
 
     PlayersFactory();
 };

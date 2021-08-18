@@ -4,6 +4,11 @@
 
 #include "../header/LifeBar.h"
 
+LifeBar::LifeBar(const std::shared_ptr<Character> &character, int width, int height) : UserInterface(width, height),
+                                                                                       character(character) {
+    bit = character->getHp() / 5;
+}
+
 void LifeBar::update() {
     int i = 5;
     while (character->getHp() < bit * i && character->getHp() >= 0) {
@@ -14,7 +19,3 @@ void LifeBar::update() {
     sprite.setTextureRect(sf::IntRect(source.x * width, source.y * height, width, height));
 }
 
-LifeBar::LifeBar(const std::shared_ptr<Character> &character, int width, int height) : UserInterface(width, height),
-                                                                                       character(character) {
-    bit = character->getHp() / 5;
-}

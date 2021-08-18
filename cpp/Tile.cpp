@@ -18,7 +18,7 @@ void Tile::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(sprite);
 }
 
-const sf::Sprite &Tile::getSprite() const {
+sf::Sprite &Tile::getSprite() {
     return sprite;
 }
 
