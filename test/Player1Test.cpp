@@ -9,10 +9,10 @@ TEST(Player1, TestMoveDown) {
     Map arena;
     arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
     Player1 p(std::make_shared<RangedAttack>());
-    p.load("./tileSets/spaceCadet.png", sf::Vector2f(10, 10));
+    p.load("./tileSets/spaceCadet.png", sf::Vector2f(100, 100));
     p.movement(sf::Vector2f(0, 1), arena);
-    EXPECT_EQ(10, p.getPosition().x);
-    EXPECT_FLOAT_EQ(10.3, p.getPosition().y);
+    EXPECT_EQ(100, p.getPosition().x);
+    EXPECT_FLOAT_EQ(100.3, p.getPosition().y);
 }
 
 TEST(Player1, TestMoveUp) {
@@ -20,10 +20,10 @@ TEST(Player1, TestMoveUp) {
     Map arena;
     arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
     Player1 p(std::make_shared<RangedAttack>());
-    p.load("./tileSets/spaceCadet.png", sf::Vector2f(10, 10));
+    p.load("./tileSets/spaceCadet.png", sf::Vector2f(100, 100));
     p.movement(sf::Vector2f(0, -1), arena);
-    EXPECT_EQ(10, p.getPosition().x);
-    EXPECT_FLOAT_EQ(9.7, p.getPosition().y);
+    EXPECT_EQ(100, p.getPosition().x);
+    EXPECT_FLOAT_EQ(99.7, p.getPosition().y);
 }
 
 TEST(Player1, TestMoveRight) {
@@ -31,10 +31,10 @@ TEST(Player1, TestMoveRight) {
     Map arena;
     arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
     Player1 p(std::make_shared<RangedAttack>());
-    p.load("./tileSets/spaceCadet.png", sf::Vector2f(10, 10));
+    p.load("./tileSets/spaceCadet.png", sf::Vector2f(100, 100));
     p.movement(sf::Vector2f(1, 0), arena);
-    EXPECT_FLOAT_EQ(10.3, p.getPosition().x);
-    EXPECT_EQ(10, p.getPosition().y);
+    EXPECT_FLOAT_EQ(100.3, p.getPosition().x);
+    EXPECT_EQ(100, p.getPosition().y);
 }
 
 TEST(Player1, TestMoveLeft) {
@@ -42,8 +42,8 @@ TEST(Player1, TestMoveLeft) {
     Map arena;
     arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
     Player1 p(std::make_shared<RangedAttack>());
-    p.load("./tileSets/spaceCadet.png", sf::Vector2f(10, 10));
+    p.load("./tileSets/spaceCadet.png", sf::Vector2f(100, 100));
     p.movement(sf::Vector2f(-1, 0), arena);
-    EXPECT_FLOAT_EQ(9.7, p.getPosition().x);
-    EXPECT_EQ(10, p.getPosition().y);
+    EXPECT_FLOAT_EQ(99.7, p.getPosition().x);
+    EXPECT_EQ(100, p.getPosition().y);
 }

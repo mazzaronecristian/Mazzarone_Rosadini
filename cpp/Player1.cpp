@@ -12,7 +12,7 @@ Player1::Player1(std::shared_ptr<AttackStrategy> attackStrategy) : attackStrateg
 
 Player1::~Player1() {}
 
-void Player1::movement(sf::Vector2f direction, Map map) {
+void Player1::movement(sf::Vector2f direction, const Map map) {
     if (direction.x == 0) {
         if (source.y == stayR)
             source.y = right;

@@ -18,7 +18,7 @@ public:
 
     explicit Enemy(std::shared_ptr<MoveStrategy> moveStrategy);
 
-    void movement(sf::Vector2f direction, Map map) override;
+    void movement(sf::Vector2f direction, const Map map) override;
 
     void fight(Character &character) override;
 

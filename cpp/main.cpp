@@ -19,7 +19,7 @@
 #include <memory>
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::shared_ptr<Player1> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map arena, LifeBar life);
+            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map arena, LifeBar &life);
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(960, 740), "GAME");
@@ -126,7 +126,7 @@ int main() {
 }
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::shared_ptr<Player1> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map arena, LifeBar life) {
+            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map arena, LifeBar &life) {
 
     if (hero->getHp() <= 0)
         hero->kill();
