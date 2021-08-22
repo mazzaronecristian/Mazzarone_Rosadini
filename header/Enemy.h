@@ -8,7 +8,7 @@
 #include "Character.h"
 #include "FightStrategy.h"
 #include "MoveStrategy.h"
-#include <math.h>
+#include <cmath>
 #include <memory.h>
 #include <memory>
 
@@ -18,7 +18,7 @@ public:
 
     explicit Enemy(std::shared_ptr<MoveStrategy> moveStrategy);
 
-    void movement(sf::Vector2f direction, const Map map) override;
+    void movement(sf::Vector2f direction, const Map &map) override;
 
     void fight(Character &character) override;
 

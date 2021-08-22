@@ -9,7 +9,7 @@
 Enemy::Enemy(std::shared_ptr<MoveStrategy> moveStrategy) : moveStrategy(std::move(moveStrategy)),
                                                            Character(100, 10, 0.1) {}
 
-void Enemy::movement(sf::Vector2f direction, const Map map) {
+void Enemy::movement(sf::Vector2f direction, const Map &map) {
     if (life && !isAttacking && !isDying) {
         if (abs(direction.y - sprite.getPosition().y) > speed || abs(direction.x - sprite.getPosition().x) > speed) {
             sf::Vector2f dir;
