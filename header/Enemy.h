@@ -21,8 +21,6 @@ public:
 
     void fight(Character &character) override;
 
-    void kill() override;
-
     void setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrategy);
 
 private:

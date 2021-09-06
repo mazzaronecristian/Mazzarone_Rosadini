@@ -11,7 +11,7 @@
 
 class BulletsFactory : public EntityFactory {
 public:
-    std::shared_ptr<Bullet> createBullet(EntityType type, sf::Vector2f position, short int direction);
+    Bullet createBullet(sf::Vector2f position, short int direction);
 };
 
 

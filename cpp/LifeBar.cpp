@@ -4,8 +4,8 @@
 
 #include "../header/LifeBar.h"
 
-LifeBar::LifeBar(const std::shared_ptr<Character> &character, int width, int height) : UserInterface(width, height),
-                                                                                       character(character) {
+LifeBar::LifeBar(Character *character, int width, int height) : UserInterface(width, height),
+                                                                character(character) {
     bit = character->getHp() / 5;
 }
 

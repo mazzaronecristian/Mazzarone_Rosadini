@@ -12,7 +12,6 @@ bool Elements::load(const std::string &tileSet, sf::Vector2f position) {
     if (!Elements::tileSet.loadFromFile(tileSet))
         return false;
     sprite.setTexture(Elements::tileSet);
-    //sprite.setColor(sf::Color(255,0,0));
     sprite.setPosition(position);
     sprite.scale(1.4, 1.4);
     sprite.setTextureRect(sf::IntRect(source.x * width, source.y * height, width, height));

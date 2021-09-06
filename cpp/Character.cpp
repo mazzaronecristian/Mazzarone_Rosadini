@@ -47,6 +47,8 @@ void Character::update(float deltaTime) {
 void Character::kill() {
     isDying = true;
     setAnim(8, 0.15, die);
+    if (source.x == 7)
+        life = false;
 }
 
 void Character::fight(Character &character) {

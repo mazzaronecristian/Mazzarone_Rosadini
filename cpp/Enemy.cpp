@@ -38,18 +38,6 @@ void Enemy::fight(Character &character) {
         if (source.x == 5) {
             source.x++;
             character.receiveDamage(damage);
-            if (character.getHp() > 0)
-                std::cout << "Rimangono " << character.getHp() << "HP " << std::endl;
-            else
-                std::cout << "sei morto" << std::endl;
         }
     }
 }
-
-void Enemy::kill() {
-    Character::kill();
-    if (source.x == 7)
-        life = false;
-}
-
-

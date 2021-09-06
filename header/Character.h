@@ -21,7 +21,7 @@ public:
 
     void update(float deltaTime) override;
 
-    virtual void kill();
+    void kill();
 
     virtual void fight(Character &character) = 0;
 

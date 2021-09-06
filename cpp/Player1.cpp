@@ -55,13 +55,6 @@ void Player1::fight(Character &character) {
     attackStrategy->fight(character, damage);
 }
 
-void Player1::kill() {
-    Character::kill();
-    if (source.x == 7) {
-        life = false;
-    }
-}
-
 /*AttackStrategy *Player1::getAttackStrategy() const {
     return attackStrategy;
 }

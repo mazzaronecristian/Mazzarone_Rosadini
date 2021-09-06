@@ -11,12 +11,12 @@
 
 class LifeBar : public UserInterface {
 public:
-    explicit LifeBar(const std::shared_ptr<Character> &character, int width = 251, int height = 32);
+    explicit LifeBar(Character *character, int width = 251, int height = 32);
 
     void update() override;
 
 private:
-    std::shared_ptr<Character> character;
+    Character *character;
     int bit;
 
 };

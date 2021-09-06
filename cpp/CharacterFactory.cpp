@@ -6,12 +6,12 @@
 
 CharacterFactory::CharacterFactory() {}
 
-sf::Vector2f CharacterFactory::setPosition(EntityType type) {
+sf::Vector2f CharacterFactory::setPosition(ElementType type) {
     std::srand(time(NULL));
     sf::Vector2f position = {0, 0};
-    if (type == EntityType::hero)
+    if (type == ElementType::hero)
         position = sf::Vector2f(100, 100);
-    if (type == EntityType::ghoul)
+    if (type == ElementType::ghoul)
         position = sf::Vector2f(rand() % 450 + 100, rand() % 450 + 100);
     return position;
 }

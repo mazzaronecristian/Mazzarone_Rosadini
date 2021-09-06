@@ -11,16 +11,13 @@
 #include "Enemy.h"
 #include "RangedAttack.h"
 #include "Patrol.h"
+#include "ElementFactory.h"
 
-enum class EntityType {
-    hero, ghoul, bullet
-};
-
-class EntityFactory {
+class EntityFactory : public ElementFactory {
 public:
     EntityFactory();
 
-    std::string setBitMap(EntityType type);
+    std::string setBitMap(ElementType type) override;
 };
 
 

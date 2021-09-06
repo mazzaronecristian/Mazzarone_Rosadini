@@ -6,14 +6,14 @@
 
 EntityFactory::EntityFactory() {}
 
-std::string EntityFactory::setBitMap(EntityType type) {
+std::string EntityFactory::setBitMap(ElementType type) {
     std::string result;
 
-    if (type == EntityType::hero)
+    if (type == ElementType::hero)
         result = "./tileSets/spaceCadet.png";
-    if (type == EntityType::ghoul)
+    if (type == ElementType::ghoul)
         result = "./tileSets/ghoul.png";
-    if (type == EntityType::bullet)
+    if (type == ElementType::bullet)
         result = "./tileSets/bullet.png";
 
     return result;
