@@ -99,8 +99,8 @@ int main() {
 
         for (auto i = enemies.begin(); i != enemies.end(); i++) {
             if (!i->get()->isFighting()) {
-                if (std::abs(hero->getSprite().getPosition().x - i->get()->getSprite().getPosition().x) <= 300
-                    && std::abs(hero->getSprite().getPosition().y - i->get()->getSprite().getPosition().y) <= 300) {
+                if (std::abs(hero->getPosition().x - i->get()->getPosition().x) <= 300
+                    && std::abs(hero->getPosition().y - i->get()->getPosition().y) <= 300) {
                     i->get()->setMoveStrategy(std::make_shared<Follow>());
                     i->get()->setAnim(8, 0.06);
                 } else i->get()->setMoveStrategy(std::make_shared<Patrol>());
@@ -155,7 +155,7 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::shared_ptr<Player1
     lifeBar.update();
 
     for (auto i = enemies.begin(); i != enemies.end();) {
-        i->get()->movement(hero->getSprite().getPosition(), arena);
+        i->get()->movement(hero->getPosition(), arena);
         i->get()->update(deltaTime);
         if (!(i->get()->isLife()))
             i = enemies.erase(i);

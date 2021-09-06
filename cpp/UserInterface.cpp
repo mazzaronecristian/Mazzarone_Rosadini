@@ -4,12 +4,8 @@
 
 #include "../header/UserInterface.h"
 
-UserInterface::UserInterface(int width, int height) : Elements(width, height) {
+UserInterface::UserInterface(int width, int height) : Elements(width, height) {}
 
-
-}
-
-UserInterface::~UserInterface() {
-}
+UserInterface::~UserInterface() {}
 
 

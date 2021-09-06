@@ -7,16 +7,15 @@
 
 #include "Character.h"
 #include "FightStrategy.h"
-#include "MoveStrategy.h"
+#include "Patrol.h"
 #include <math.h>
 #include <memory.h>
 #include <memory>
 
 class Enemy : public Character {
 public:
-    Enemy();
 
-    explicit Enemy(std::shared_ptr<MoveStrategy> moveStrategy);
+    explicit Enemy(std::shared_ptr<MoveStrategy> moveStrategy = std::make_shared<Patrol>());
 
     void movement(sf::Vector2f direction, const Map map) override;
 

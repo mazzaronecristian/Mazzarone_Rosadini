@@ -29,16 +29,12 @@ void Enemy::setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrategy) {
     Enemy::moveStrategy = moveStrategy;
 }
 
-Enemy::Enemy() {
-
-}
-
 void Enemy::fight(Character &character) {
     Character::fight(character);
     if (hp > 0) {
-        if (source.y % 2 == 0)
-            source.y = attackR;
-        else source.y = attackL;
+        if (character.getPosition().x < Entity::getPosition().x)
+            source.y = attackL;
+        else source.y = attackR;
         if (source.x == 5) {
             source.x++;
             character.receiveDamage(damage);

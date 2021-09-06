@@ -7,7 +7,7 @@
 PlayersFactory::PlayersFactory() {}
 
 std::shared_ptr<Enemy> PlayersFactory::createEnemy(EntityType type, sf::Vector2f position) {
-    std::shared_ptr<Enemy> result(new Enemy(std::make_shared<Patrol>()));
+    std::shared_ptr<Enemy> result(new Enemy);
     result->load(setBitMap(type), position);
     return result;
 }
