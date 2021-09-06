@@ -25,7 +25,7 @@ public:
 
     virtual ~Player1();
 
-    void movement(sf::Vector2f direction, const Map map) override;
+    void movement(sf::Vector2f direction, const Map &map) override;
 
     void fight(Character &character) override;
 

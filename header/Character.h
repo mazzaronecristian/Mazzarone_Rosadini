@@ -17,7 +17,7 @@ public:
 
     void setIsFighting(bool isAttacking);
 
-    virtual void movement(sf::Vector2f direction, const Map map) = 0;
+    virtual void movement(sf::Vector2f direction, const Map &map) = 0;
 
     void update(float deltaTime) override;
 
