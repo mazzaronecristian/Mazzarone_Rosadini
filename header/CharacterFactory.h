@@ -6,28 +6,24 @@
 #define MAZZARONE_ROSADINI_CHARACTERFACTORY_H
 
 #include <memory>
-#include "Character.h"
 #include "Player1.h"
 #include "Enemy.h"
 #include "RangedAttack.h"
+#include "MeleeAttack.h"
 #include "Patrol.h"
-#include "EntityFactory.h"
 
 #include <random>
 
-enum class CharacterType {
-    player1, enemy
-};
-
-class CharacterFactory : public EntityFactory {
+class CharacterFactory {
 public:
     CharacterFactory();
 
-    virtual Player1 createHero(ElementType type) = 0;
+    virtual Player1 createHero(CharacterType type) = 0;
 
-    virtual Enemy createEnemy(ElementType type, sf::Vector2f position) = 0;
+    virtual Enemy createEnemy(CharacterType type, sf::Vector2f position) = 0;
 
-    sf::Vector2f setPosition(ElementType type);
+protected:
+    std::string setBitMap(CharacterType type);
 
 };
 

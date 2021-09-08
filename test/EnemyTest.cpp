@@ -7,8 +7,8 @@
 #include "../header/Follow.h"
 
 TEST(Enemy, TestFightLeft) {
-    Enemy e;
-    Player1 p(std::make_shared<RangedAttack>());
+    Enemy e(CharacterType::ghoul);
+    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
     p.load("./tileSets/spaceCadet.png", sf::Vector2f(100, 100));
     e.load("./tileSets/ghoul.png", sf::Vector2f(101, 100));
     e.fight(p);
@@ -17,8 +17,8 @@ TEST(Enemy, TestFightLeft) {
 }
 
 TEST(Enemy, TestFightRight) {
-    Enemy e;
-    Player1 p(std::make_shared<RangedAttack>());
+    Enemy e(CharacterType::ghoul);
+    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
     p.load("./tileSets/spaceCadet.png", sf::Vector2f(100, 100));
     e.load("./tileSets/ghoul.png", sf::Vector2f(99, 100));
     e.fight(p);

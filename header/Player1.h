@@ -19,17 +19,13 @@
 
 class Player1 : public Character {
 public:
-    Player1();
-
-    explicit Player1(std::shared_ptr<AttackStrategy> attackStrategy);
+    Player1(CharacterType type, std::shared_ptr<AttackStrategy> attackStrategy);
 
     virtual ~Player1();
 
     void movement(sf::Vector2f direction, const Map &map) override;
 
     void fight(Character &character) override;
-
-    bool isLegalFight(Character &enemy);
 
     //TODO RESOLVE POTION
     //void usePotion();

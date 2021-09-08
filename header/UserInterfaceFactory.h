@@ -6,15 +6,18 @@
 #define MAZZARONE_ROSADINI_USERINTERFACEFACTORY_H
 
 #include "UserInterface.h"
-#include "ElementFactory.h"
+#include "LifeBar.h"
 
-class UserInterfaceFactory : public ElementFactory {
+enum class UserInterfaceType {
+    lifeBar
+};
+
+class UserInterfaceFactory {
 public:
     LifeBar createLifeBar(Character *character);
 
-    std::string setBitMap(ElementType type) override;
-
-    UserInterfaceFactory();
+private:
+    std::string setBitMap(UserInterfaceType type);
 };
 
 

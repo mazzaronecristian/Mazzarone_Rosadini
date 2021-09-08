@@ -7,7 +7,7 @@
 #include "../header/Patrol.h"
 
 TEST(Bullet, collision) {
-    Enemy e(std::make_shared<Patrol>());
+    Enemy e(CharacterType::ghoul, std::make_shared<Patrol>());
     e.load("./tileSets/ghoul.png", sf::Vector2f(10, 10));
     Bullet b(1);
     b.load("./tileSets/bullet.png", sf::Vector2f(10, 10));

@@ -11,7 +11,7 @@ class AttackStrategy {
 public:
     virtual ~AttackStrategy() = default;
 
-    virtual void fight(Character &character, int damage) = 0;
+    virtual void fight(Character *hero, Character &enemy) = 0;
 };
 
 

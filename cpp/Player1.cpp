@@ -6,14 +6,17 @@
 
 #include <utility>
 
-Player1::Player1() {}
-
-Player1::Player1(std::shared_ptr<AttackStrategy> attackStrategy) : attackStrategy(std::move(attackStrategy)) {}
+Player1::Player1(CharacterType type, std::shared_ptr<AttackStrategy> attackStrategy) : attackStrategy(
+        std::move(attackStrategy)),
+                                                                                       Character(type) {
+    if (type != CharacterType::spaceCadet)
+        hp = 150;
+}
 
 Player1::~Player1() {}
 
 void Player1::movement(sf::Vector2f direction, const Map &map) {
-    if (!isDying) {
+    if (!isDying && !isAttacking) {
         if (direction.x == 0) {
             if (source.y == stayR)
                 source.y = right;
@@ -25,6 +28,7 @@ void Player1::movement(sf::Vector2f direction, const Map &map) {
             else
                 source.y = left;
         }
+        setAnim(8, 0.06);
         if (isLegalMove(direction, map)) {
             sprite.move(direction.x * speed, direction.y * speed);
         }
@@ -46,13 +50,9 @@ void Player1::usePotion() {
         setDamage(potion.use(getDamage()));
 }*/
 
-bool Player1::isLegalFight(Character &enemy) {
-    return false;
-}
-
 void Player1::fight(Character &character) {
-    Character::fight(character);
-    attackStrategy->fight(character, damage);
+    if (!isDying)
+        attackStrategy->fight(this, character);
 }
 
 /*AttackStrategy *Player1::getAttackStrategy() const {

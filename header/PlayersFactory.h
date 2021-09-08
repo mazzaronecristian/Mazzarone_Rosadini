@@ -6,15 +6,12 @@
 #define MAZZARONE_ROSADINI_PLAYERSFACTORY_H
 
 #include "CharacterFactory.h"
-
 class PlayersFactory : public CharacterFactory {
 public:
-    Enemy createEnemy(ElementType type, sf::Vector2f position) override;
+    Enemy createEnemy(CharacterType type, sf::Vector2f position) override;
 
-    Player1 createHero(ElementType type) override;
+    Player1 createHero(CharacterType type) override;
 
-    PlayersFactory();
 };
-
 
 #endif //MAZZARONE_ROSADINI_PLAYERSFACTORY_H

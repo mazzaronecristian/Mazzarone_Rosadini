@@ -4,10 +4,13 @@
 
 #include "../header/Character.h"
 
-Character::Character(int hp, int damage, float speed, bool isAttacking, bool isDying) : hp(hp), damage(damage),
-                                                                                        speed(speed),
-                                                                                        isAttacking(isAttacking),
-                                                                                        isDying(isDying) {}
+Character::Character(CharacterType type, int hp, int damage, float speed, bool isAttacking, bool isDying) : hp(hp),
+                                                                                                            damage(damage),
+                                                                                                            speed(speed),
+                                                                                                            isAttacking(
+                                                                                                                    isAttacking),
+                                                                                                            isDying(isDying),
+                                                                                                            type(type) {}
 
 //getter
 int Character::getHp() const {
@@ -41,7 +44,6 @@ void Character::setSpeed(float speed) {
 
 void Character::update(float deltaTime) {
     Entity::update(deltaTime);
-    isAttacking = false;
 }
 
 void Character::kill() {
@@ -89,4 +91,8 @@ bool Character::isLegalMove(sf::Vector2f direction, Map map) {
     if (tile.isWalkable())
         return true;
     return false;
+}
+
+CharacterType Character::getType() const {
+    return type;
 }

@@ -6,15 +6,13 @@
 
 LifeBar UserInterfaceFactory::createLifeBar(Character *character) {
     LifeBar lifeBar(character);
-    lifeBar.load(setBitMap(ElementType::lifeBar), sf::Vector2f(10, 680));
+    lifeBar.load(setBitMap(UserInterfaceType::lifeBar), sf::Vector2f(10, 680));
     return lifeBar;
 }
 
-std::string UserInterfaceFactory::setBitMap(ElementType type) {
+std::string UserInterfaceFactory::setBitMap(UserInterfaceType type) {
     std::string result;
-    if (type == ElementType::lifeBar)
+    if (type == UserInterfaceType::lifeBar)
         result = "./tileSets/userInterface/lifeBar.png";
     return result;
 }
-
-UserInterfaceFactory::UserInterfaceFactory() {}

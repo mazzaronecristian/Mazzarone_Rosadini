@@ -8,6 +8,6 @@ Bullet BulletsFactory::createBullet(sf::Vector2f position, short int direction) 
     Bullet *result = new Bullet(direction);
     position.y += 16;
     position.x += (16 * (float) direction);
-    result->load(setBitMap(ElementType::bullet), position);
+    result->load("./tileSets/bullet.png", position);
     return *result;
 }

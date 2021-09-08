@@ -4,16 +4,19 @@
 
 #include "../header/PlayersFactory.h"
 
-PlayersFactory::PlayersFactory() {}
 
-Enemy PlayersFactory::createEnemy(ElementType type, sf::Vector2f position) {
-    Enemy *result = new Enemy;
+Enemy PlayersFactory::createEnemy(CharacterType type, sf::Vector2f position) {
+    Enemy *result = new Enemy(type);
     result->load(setBitMap(type), position);
     return *result;
 }
 
-Player1 PlayersFactory::createHero(ElementType type) {
-    Player1 *result = new Player1(std::make_shared<RangedAttack>());
-    result->load(setBitMap(type), setPosition(type));
+Player1 PlayersFactory::createHero(CharacterType type) {
+    Player1 *result;
+    if (type == CharacterType::spaceCadet)
+        result = new Player1(type, std::make_shared<RangedAttack>());
+    else
+        result = new Player1(type, std::make_shared<MeleeAttack>());
+    result->load(setBitMap(type), sf::Vector2f(100, 100));
     return *result;
 }

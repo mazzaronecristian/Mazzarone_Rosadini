@@ -29,6 +29,8 @@ public:
 
     void setSourceY(const int y);
 
+    void setSourceX(const int x);
+
 protected:
     int width, height;
     sf::Sprite sprite;

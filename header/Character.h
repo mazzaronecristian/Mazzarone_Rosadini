@@ -7,17 +7,22 @@
 
 
 #include "Entity.h"
-#include "../header/Map.h"
-#include "../header/Tile.h"
+#include "Map.h"
+#include "Tile.h"
+
+enum class CharacterType {
+    spaceCadet, ghoul
+};
 
 class Character : public Entity {
 public:
-    explicit Character(int hp = 100, int damage = 50, float speed = 0.3, bool isAttacking = false,
+    explicit Character(CharacterType type, int hp = 100, int damage = 50, float speed = 0.3, bool isAttacking = false,
                        bool isDying = false);
 
-    void setIsFighting(bool isAttacking);
 
     virtual void movement(sf::Vector2f direction, const Map &map) = 0;
+
+    CharacterType getType() const;
 
     void update(float deltaTime) override;
 
@@ -40,10 +45,12 @@ public:
 
     float getSpeed() const;
 
+    bool isFighting() const;
+
     //setter
     void setHp(int hp);
 
-    bool isFighting() const;
+    void setIsFighting(bool isAttacking);
 
     void setDamage(int damage);
 
@@ -56,6 +63,7 @@ protected:
     enum action {
         stayR = 0, stayL = 1, right = 2, left = 3, attackR = 4, attackL = 5, stay = 6, die = 7
     };
+    CharacterType type;
 };
 
 

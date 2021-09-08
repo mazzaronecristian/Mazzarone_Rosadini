@@ -4,6 +4,8 @@
 
 #include "../header/Elements.h"
 
+Elements::~Elements() {
+}
 
 Elements::Elements(int width, int height) : width(width), height(height) {
 }
@@ -38,7 +40,8 @@ void Elements::setSourceY(const int y) {
     Elements::source.y = y;
 }
 
-Elements::~Elements() {
+void Elements::setSourceX(const int x) {
+    Elements::source.x = x;
 }
 
 

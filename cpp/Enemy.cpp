@@ -6,8 +6,8 @@
 
 #include <utility>
 
-Enemy::Enemy(std::shared_ptr<MoveStrategy> moveStrategy) : moveStrategy(std::move(moveStrategy)),
-                                                           Character(100, 10, 0.1) {}
+Enemy::Enemy(CharacterType type, std::shared_ptr<MoveStrategy> moveStrategy) : moveStrategy(std::move(moveStrategy)),
+                                                                               Character(type, 100, 10, 0.1) {}
 
 void Enemy::movement(sf::Vector2f direction, const Map &map) {
     if (life && !isAttacking && !isDying) {
@@ -22,6 +22,7 @@ void Enemy::movement(sf::Vector2f direction, const Map &map) {
             else source.y = right;
         } else
             source.y = stayL;
+        setAnim(8, 0.06);
     }
 }
 
@@ -33,11 +34,16 @@ void Enemy::fight(Character &character) {
     Character::fight(character);
     if (hp > 0) {
         if (character.getPosition().x < Entity::getPosition().x)
-            source.y = attackL;
-        else source.y = attackR;
+            setAnim(8, 0.06, attackL);
+        else setAnim(8, 0.06, attackR);
         if (source.x == 5) {
             source.x++;
             character.receiveDamage(damage);
         }
     }
+}
+
+void Enemy::update(float deltaTime) {
+    Character::update(deltaTime);
+    isAttacking = false;
 }

@@ -15,9 +15,11 @@
 class Enemy : public Character {
 public:
 
-    explicit Enemy(std::shared_ptr<MoveStrategy> moveStrategy = std::make_shared<Patrol>());
+    explicit Enemy(CharacterType type, std::shared_ptr<MoveStrategy> moveStrategy = std::make_shared<Patrol>());
 
-    void movement(sf::Vector2f direction, const Map map) override;
+    void update(float deltaTime) override;
+
+    void movement(sf::Vector2f direction, const Map &map) override;
 
     void fight(Character &character) override;
 

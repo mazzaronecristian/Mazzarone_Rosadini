@@ -5,11 +5,10 @@
 #ifndef MAZZARONE_ROSADINI_BULLETSFACTORY_H
 #define MAZZARONE_ROSADINI_BULLETSFACTORY_H
 
-#include "EntityFactory.h"
 #include "Bullet.h"
 #include "Character.h"
 
-class BulletsFactory : public EntityFactory {
+class BulletsFactory {
 public:
     Bullet createBullet(sf::Vector2f position, short int direction);
 };
