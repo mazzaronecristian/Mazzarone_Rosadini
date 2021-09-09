@@ -6,6 +6,7 @@
 #include "../header/Bullet.h"
 #include "../header/Patrol.h"
 
+//test colpo a segno
 TEST(Bullet, collision) {
     Enemy e(CharacterType::ghoul, std::make_shared<Patrol>());
     e.load("./tileSets/ghoul.png", sf::Vector2f(10, 10));

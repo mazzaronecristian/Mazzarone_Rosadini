@@ -92,10 +92,10 @@ int main() {
                             short int bulletDirection;
                             if (hero[0]->getSource().y % 2 == 0) {
                                 hero[0]->setSourceY(4);
-                                bulletDirection = 1;
+                                bulletDirection = 1; //right
                             } else {
                                 hero[0]->setSourceY(5);
-                                bulletDirection = -1;
+                                bulletDirection = -1; //left
                             }
                             std::shared_ptr<Bullet> shot = std::make_shared<Bullet>(
                                     bullFactory.createBullet(hero[0]->getPosition(),
