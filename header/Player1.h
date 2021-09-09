@@ -21,6 +21,11 @@ class Player1 : public Character {
 public:
     Player1(CharacterType type, std::shared_ptr<AttackStrategy> attackStrategy);
 
+    Player1(CharacterType type, int hp, int damage, std::shared_ptr<AttackStrategy> attackStrategy);
+
+
+    void update(float deltaTime) override;
+
     virtual ~Player1();
 
     void movement(sf::Vector2f direction, const Map &map) override;

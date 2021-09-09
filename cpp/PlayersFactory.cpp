@@ -16,7 +16,7 @@ Player1 PlayersFactory::createHero(CharacterType type) {
     if (type == CharacterType::spaceCadet)
         result = new Player1(type, std::make_shared<RangedAttack>());
     else
-        result = new Player1(type, std::make_shared<MeleeAttack>());
+        result = new Player1(type, 150, 60, std::make_shared<MeleeAttack>());
     result->load(setBitMap(type), sf::Vector2f(100, 100));
     return *result;
 }

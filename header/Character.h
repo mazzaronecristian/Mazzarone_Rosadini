@@ -16,7 +16,7 @@ enum class CharacterType {
 
 class Character : public Entity {
 public:
-    explicit Character(CharacterType type, int hp = 100, int damage = 50, float speed = 0.3, bool isAttacking = false,
+    explicit Character(CharacterType type, int hp = 120, int damage = 40, float speed = 0.3, bool isAttacking = false,
                        bool isDying = false);
 
 

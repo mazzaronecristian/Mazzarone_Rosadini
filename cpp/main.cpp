@@ -25,6 +25,11 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared
 void update(std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar);
 
+void draw(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
+          std::list<std::shared_ptr<Enemy>> &enemies, sf::RenderWindow &window, sf::RenderTexture &gameOver, Map &arena,
+          LifeBar &lifeBar);
+
+
 int main() {
     bool restart;
     do {
@@ -36,7 +41,7 @@ int main() {
         sf::Texture t;
         t.loadFromFile("./tileSets/userInterface/gameOver.png");
         sf::Sprite s(t);
-        s.setPosition(250, 140);
+        s.setPosition(250, 80);
         gameOver.draw(s);
         gameOver.display();
 
@@ -49,15 +54,15 @@ int main() {
         m_matrix.close();
         std::vector<std::shared_ptr<Player1>> hero;
 
-        hero.push_back(std::make_shared<Player1>(factory.createHero(CharacterType::ghoul)));
+        hero.push_back(std::make_shared<Player1>(factory.createHero(CharacterType::spaceCadet)));
 
         LifeBar lifeBar = userFactory.createLifeBar(hero[0].get());
 
         srand(time(NULL));
         std::list<std::shared_ptr<Enemy>> enemies;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 2; i++) {
             std::shared_ptr<Enemy> ghoul = std::make_shared<Enemy>(factory.createEnemy(CharacterType::ghoul,
-                                                                                       sf::Vector2f(rand() % 450 + 100,
+                                                                                       sf::Vector2f(rand() % 450 + 300,
                                                                                                     rand() % 450 +
                                                                                                     100)));
             enemies.push_back(ghoul);
@@ -133,21 +138,8 @@ int main() {
                 update(bullets, hero, enemies, deltaTime, arena, lifeBar);
             else
                 update(hero, enemies, deltaTime, arena, lifeBar);
-            window.clear();
-            window.draw(arena);
-            window.draw(*hero[0]);
-            for (auto i: enemies) {
-                window.draw(*i);
-            }
-            for (auto i: bullets) {
-                window.draw(*i);
-            }
-            window.draw(lifeBar);
-            if (!hero[0]->isLife()) {
-                sf::Sprite over(gameOver.getTexture());
-                window.draw(over);
-            }
-            window.display();
+
+            draw(bullets, hero, enemies, window, gameOver, arena, lifeBar);
         }
     } while (restart);
     return 0;
@@ -227,6 +219,9 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
     }
 
     if (hero[0]->isFighting()) {
+        if (hero[0]->getSource().y % 2 == 0)
+            hero[0]->setAnim(8, 0.04, 4);
+        else hero[0]->setAnim(8, 0.04, 5);
         auto y = enemies.begin();
         while (y != enemies.end()) {
             if (hero[0]->isLegalFight(**y)) {
@@ -247,5 +242,26 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
     } else
         hero[0]->update(deltaTime);
     lifeBar.update();
+
+}
+
+void draw(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
+          std::list<std::shared_ptr<Enemy>> &enemies, sf::RenderWindow &window, sf::RenderTexture &gameOver, Map &arena,
+          LifeBar &lifeBar) {
+    window.clear();
+    window.draw(arena);
+    window.draw(*hero[0]);
+    for (auto i: enemies) {
+        window.draw(*i);
+    }
+    for (auto i: bullets) {
+        window.draw(*i);
+    }
+    window.draw(lifeBar);
+    if (!hero[0]->isLife()) {
+        sf::Sprite over(gameOver.getTexture());
+        window.draw(over);
+    }
+    window.display();
 
 }

@@ -11,10 +11,12 @@ LifeBar::LifeBar(Character *character, int width, int height) : UserInterface(wi
 
 void LifeBar::update() {
     int i = 5;
-    while (character->getHp() < bit * i && character->getHp() >= 0) {
+    while (character->getHp() < bit * i) {
         i--;
         if (character->getHp() <= bit * i)
             source.y = 5 - i;
+        if (character->getHp() <= 0)
+            source.y = 5;
     }
     sprite.setTextureRect(sf::IntRect(source.x * width, source.y * height, width, height));
 }

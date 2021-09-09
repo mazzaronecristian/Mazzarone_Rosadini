@@ -7,7 +7,7 @@
 #include <utility>
 
 Enemy::Enemy(CharacterType type, std::shared_ptr<MoveStrategy> moveStrategy) : moveStrategy(std::move(moveStrategy)),
-                                                                               Character(type, 100, 10, 0.1) {}
+                                                                               Character(type, 100, 8, 0.1) {}
 
 void Enemy::movement(sf::Vector2f direction, const Map &map) {
     if (life && !isAttacking && !isDying) {
