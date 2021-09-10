@@ -11,7 +11,7 @@
 #include "Tile.h"
 
 enum class CharacterType {
-    spaceCadet, ghoul
+    spaceCadet, adventurer, ghoul, brain
 };
 
 class Character : public Entity {

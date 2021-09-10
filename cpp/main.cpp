@@ -54,14 +54,14 @@ int main() {
         m_matrix.close();
         std::vector<std::shared_ptr<Player1>> hero;
 
-        hero.push_back(std::make_shared<Player1>(factory.createHero(CharacterType::spaceCadet)));
+        hero.push_back(std::make_shared<Player1>(factory.createHero(CharacterType::adventurer)));
 
         LifeBar lifeBar = userFactory.createLifeBar(hero[0].get());
 
         srand(time(NULL));
         std::list<std::shared_ptr<Enemy>> enemies;
-        for (int i = 0; i < 2; i++) {
-            std::shared_ptr<Enemy> ghoul = std::make_shared<Enemy>(factory.createEnemy(CharacterType::ghoul,
+        for (int i = 0; i < 30; i++) {
+            std::shared_ptr<Enemy> ghoul = std::make_shared<Enemy>(factory.createEnemy(CharacterType::brain,
                                                                                        sf::Vector2f(rand() % 450 + 300,
                                                                                                     rand() % 450 +
                                                                                                     100)));
