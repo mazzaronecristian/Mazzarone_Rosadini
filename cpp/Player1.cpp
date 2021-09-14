@@ -18,7 +18,7 @@ Player1::Player1(CharacterType type, int hp, int damage, std::shared_ptr<AttackS
 Player1::~Player1() {}
 
 void Player1::movement(sf::Vector2f direction, const Map &map) {
-    if (!isDying && !isAttacking) {
+    if (!dying && !attacking) {
         if (direction.x == 0) {
             if (source.y == stayR)
                 source.y = right;
@@ -53,14 +53,14 @@ void Player1::usePotion() {
 }*/
 
 void Player1::fight(Character &character) {
-    if (!isDying)
+    if (!dying)
         attackStrategy->fight(this, character);
 }
 
 void Player1::update(float deltaTime) {
     Character::update(deltaTime);
-    if (isAttacking && source.x >= 7)
-        isAttacking = false;
+    if (attacking && source.x >= 7)
+        attacking = false;
 }
 
 

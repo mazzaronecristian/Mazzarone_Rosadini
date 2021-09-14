@@ -15,9 +15,9 @@ void LifeBar::update() {
         i--;
         if (character->getHp() <= bit * i)
             source.y = 5 - i;
-        if (character->getHp() <= 0)
-            source.y = 5;
     }
+    if (character->getHp() <= 0)
+        source.y = 5;
     sprite.setTextureRect(sf::IntRect(source.x * width, source.y * height, width, height));
 }
 

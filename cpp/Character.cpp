@@ -7,9 +7,9 @@
 Character::Character(CharacterType type, int hp, int damage, float speed, bool isAttacking, bool isDying) : hp(hp),
                                                                                                             damage(damage),
                                                                                                             speed(speed),
-                                                                                                            isAttacking(
+                                                                                                            attacking(
                                                                                                                     isAttacking),
-                                                                                                            isDying(isDying),
+                                                                                                            dying(isDying),
                                                                                                             type(type) {}
 
 //getter
@@ -44,17 +44,20 @@ void Character::setSpeed(float speed) {
 
 void Character::update(float deltaTime) {
     Entity::update(deltaTime);
+    if (type == CharacterType::spaceCadet)
+        attacking = false;
 }
 
 void Character::kill() {
-    isDying = true;
+    attacking = false;
+    dying = true;
     setAnim(8, 0.15, die);
     if (source.x == 7)
         life = false;
 }
 
 void Character::fight(Character &character) {
-    isAttacking = true;
+    attacking = true;
 }
 
 bool Character::isLegalMove(Character &character) {
@@ -74,11 +77,11 @@ bool Character::isLegalFight(const Character &character) {
 }
 
 bool Character::isFighting() const {
-    return isAttacking;
+    return attacking;
 }
 
 void Character::setIsFighting(bool isAttacking) {
-    Character::isAttacking = isAttacking;
+    Character::attacking = isAttacking;
 }
 
 bool Character::isLegalMove(sf::Vector2f direction, Map map) {
@@ -95,4 +98,8 @@ bool Character::isLegalMove(sf::Vector2f direction, Map map) {
 
 CharacterType Character::getType() const {
     return type;
+}
+
+bool Character::isDying() const {
+    return dying;
 }

@@ -8,14 +8,25 @@ CharacterFactory::CharacterFactory() {}
 
 std::string CharacterFactory::setBitMap(CharacterType type) {
     std::string result;
+    //heroes
     if (type == CharacterType::spaceCadet)
-        result = "./tileSets/spaceCadet.png";
-    if (type == CharacterType::ghoul)
-        result = "./tileSets/ghoul.png";
+        result = "./tileSets/characters/spaceCadet.png";
     if (type == CharacterType::adventurer)
-        result = "./tileSets/adventurer.png";
+        result = "./tileSets/characters/adventurer.png";
+    if (type == CharacterType::dwarf)
+        result = "./tileSets/characters/dwarf.png";
+    if (type == CharacterType::gladiator)
+        result = "./tileSets/characters/gladiator.png";
+
+    //enemies
+    if (type == CharacterType::ghoul)
+        result = "./tileSets/characters/ghoul.png";
     if (type == CharacterType::brain)
-        result = "./tileSets/brain.png";
+        result = "./tileSets/characters/brain.png";
+    if (type == CharacterType::cobra)
+        result = "./tileSets/characters/cobra.png";
+    if (type == CharacterType::miniGolem)
+        result = "./tileSets/characters/miniGolem.png";
 
     return result;
 }

@@ -10,7 +10,7 @@ Enemy::Enemy(CharacterType type, std::shared_ptr<MoveStrategy> moveStrategy) : m
                                                                                Character(type, 100, 8, 0.1) {}
 
 void Enemy::movement(sf::Vector2f direction, const Map &map) {
-    if (life && !isAttacking && !isDying) {
+    if (life && !attacking && !dying) {
         if (abs(direction.y - sprite.getPosition().y) > speed || abs(direction.x - sprite.getPosition().x) > speed) {
             sf::Vector2f dir;
             dir = moveStrategy->movement(direction, sprite);
@@ -45,5 +45,5 @@ void Enemy::fight(Character &character) {
 
 void Enemy::update(float deltaTime) {
     Character::update(deltaTime);
-    isAttacking = false;
+    attacking = false;
 }

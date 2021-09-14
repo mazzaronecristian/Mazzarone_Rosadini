@@ -54,14 +54,14 @@ int main() {
         m_matrix.close();
         std::vector<std::shared_ptr<Player1>> hero;
 
-        hero.push_back(std::make_shared<Player1>(factory.createHero(CharacterType::adventurer)));
+        hero.push_back(std::make_shared<Player1>(factory.createHero(CharacterType::gladiator)));
 
         LifeBar lifeBar = userFactory.createLifeBar(hero[0].get());
 
         srand(time(NULL));
         std::list<std::shared_ptr<Enemy>> enemies;
-        for (int i = 0; i < 30; i++) {
-            std::shared_ptr<Enemy> ghoul = std::make_shared<Enemy>(factory.createEnemy(CharacterType::brain,
+        for (int i = 0; i < 10; i++) {
+            std::shared_ptr<Enemy> ghoul = std::make_shared<Enemy>(factory.createEnemy(CharacterType::miniGolem,
                                                                                        sf::Vector2f(rand() % 450 + 300,
                                                                                                     rand() % 450 +
                                                                                                     100)));
@@ -88,7 +88,7 @@ int main() {
                     }
                 if (e.type == sf::Event::KeyPressed)
                     if (e.key.code == sf::Keyboard::Enter) {
-                        if (hero[0]->getType() == CharacterType::spaceCadet) {
+                        if (hero[0]->getType() == CharacterType::spaceCadet && !hero[0]->isDying()) {
                             short int bulletDirection;
                             if (hero[0]->getSource().y % 2 == 0) {
                                 hero[0]->setSourceY(4);
@@ -107,22 +107,19 @@ int main() {
                     }
             }
             //Azione Eroe
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-                hero[0]->movement(sf::Vector2f(0, -1), arena);
+            if (!hero[0]->isDying()) {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+                    hero[0]->movement(sf::Vector2f(0, -1), arena);
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+                    hero[0]->movement(sf::Vector2f(-1, 0), arena);
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+                    hero[0]->movement(sf::Vector2f(0, 1), arena);
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+                    hero[0]->movement(sf::Vector2f(1, 0), arena);
+                if (hero[0]->getType() != CharacterType::spaceCadet)
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+                        hero[0]->setIsFighting(true);
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-                hero[0]->movement(sf::Vector2f(-1, 0), arena);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-                hero[0]->movement(sf::Vector2f(0, 1), arena);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-                hero[0]->movement(sf::Vector2f(1, 0), arena);
-            }
-            if (hero[0]->getType() != CharacterType::spaceCadet)
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-                    hero[0]->setIsFighting(true);
-                }
 
             //Movimento Nemici
             for (auto i = enemies.begin(); i != enemies.end(); i++) {

@@ -11,7 +11,7 @@
 #include "Tile.h"
 
 enum class CharacterType {
-    spaceCadet, adventurer, ghoul, brain
+    spaceCadet, adventurer, dwarf, gladiator, ghoul, brain, cobra, miniGolem
 };
 
 class Character : public Entity {
@@ -38,7 +38,12 @@ public:
 
     void receiveDamage(int damage);
 
+
+
     //getter
+
+    bool isDying() const;
+
     int getHp() const;
 
     int getDamage() const;
@@ -57,7 +62,7 @@ public:
     void setSpeed(float speed);
 
 protected:
-    bool isAttacking, isDying;
+    bool attacking, dying;
     int hp, damage;
     float speed;
     enum action {
