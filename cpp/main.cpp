@@ -14,6 +14,7 @@
 #include "../header/BulletsFactory.h"
 #include "../header/LifeBar.h"
 #include "../header/UserInterfaceFactory.h"
+#include "../header/Gif.h"
 
 #include <cmath>
 #include <list>
@@ -32,6 +33,36 @@ void draw(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_p
 
 int main() {
     bool restart;
+    //scelta personaggio
+    sf::RenderWindow choice(sf::VideoMode(960, 740), "Choose your hero");
+    sf::Texture choiceBackground;
+    choiceBackground.loadFromFile("./tileSets/userInterface/choiceBackground.png");
+    sf::Sprite choiceSprite(choiceBackground);
+    choiceSprite.setPosition(0, 0);
+    std::vector<std::shared_ptr<Gif>> heroesGif;
+    Gif heroGif;
+    heroGif.load("./tileSets/userInterface/gifs/spaceCadet.png", sf::Vector2f(400, 260));
+    heroesGif.push_back(std::make_shared<Gif>(heroGif));
+    float deltaTimeChoice;
+    sf::Clock clockChoice;
+
+    while (choice.isOpen()) {
+        deltaTimeChoice = clockChoice.restart().asSeconds();
+        sf::Event e;
+        while (choice.pollEvent(e)) {
+            if (e.type == sf::Event::Closed)
+                choice.close();
+        }
+        heroesGif[0]->update(deltaTimeChoice);
+        choice.clear();
+        choice.draw(choiceSprite);
+        choice.draw(*heroesGif[0]);
+        choice.display();
+        //std::cout<<heroesGif[0]->getSource().x<<" ";
+        //std::cout<<heroesGif[0]->getSource().y;
+
+    }
+
     do {
         sf::RenderWindow window(sf::VideoMode(960, 740), "GAME");
         sf::RenderTexture gameOver;
