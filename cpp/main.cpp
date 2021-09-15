@@ -33,16 +33,23 @@ void draw(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_p
 
 int main() {
     bool restart;
+
     //scelta personaggio
     sf::RenderWindow choice(sf::VideoMode(960, 740), "Choose your hero");
     sf::Texture choiceBackground;
+    UserInterfaceFactory choiceFactory;
     choiceBackground.loadFromFile("./tileSets/userInterface/choiceBackground.png");
     sf::Sprite choiceSprite(choiceBackground);
     choiceSprite.setPosition(0, 0);
     std::vector<std::shared_ptr<Gif>> heroesGif;
-    Gif heroGif;
-    heroGif.load("./tileSets/userInterface/gifs/spaceCadet.png", sf::Vector2f(400, 260));
-    heroesGif.push_back(std::make_shared<Gif>(heroGif));
+    Gif heroGif1 = choiceFactory.createGif(CharacterType::spaceCadet, sf::Vector2f(200, 130));
+    Gif heroGif2 = choiceFactory.createGif(CharacterType::dwarf, sf::Vector2f(200, 360));
+    Gif heroGif3 = choiceFactory.createGif(CharacterType::adventurer, sf::Vector2f(500, 130));
+    Gif heroGif4 = choiceFactory.createGif(CharacterType::gladiator, sf::Vector2f(500, 360));
+    heroesGif.push_back(std::make_shared<Gif>(heroGif1));
+    heroesGif.push_back(std::make_shared<Gif>(heroGif2));
+    heroesGif.push_back(std::make_shared<Gif>(heroGif3));
+    heroesGif.push_back(std::make_shared<Gif>(heroGif4));
     float deltaTimeChoice;
     sf::Clock clockChoice;
 
@@ -53,14 +60,13 @@ int main() {
             if (e.type == sf::Event::Closed)
                 choice.close();
         }
-        heroesGif[0]->update(deltaTimeChoice);
         choice.clear();
         choice.draw(choiceSprite);
-        choice.draw(*heroesGif[0]);
+        for (const auto &i: heroesGif) {
+            i->update(deltaTimeChoice);
+            choice.draw(*i);
+        }
         choice.display();
-        //std::cout<<heroesGif[0]->getSource().x<<" ";
-        //std::cout<<heroesGif[0]->getSource().y;
-
     }
 
     do {
@@ -112,11 +118,14 @@ int main() {
                     window.close();
                 }
                 //restart event
-                if (e.type == sf::Event::KeyReleased && !hero[0]->isLife())
+                if (e.type == sf::Event::KeyReleased && !hero[0]->isLife()) {
                     if (e.key.code == sf::Keyboard::R) {
                         restart = true;
                         window.close();
                     }
+                    if (e.key.code == sf::Keyboard::Q)
+                        window.close();
+                }
                 if (e.type == sf::Event::KeyPressed)
                     if (e.key.code == sf::Keyboard::Enter) {
                         if (hero[0]->getType() == CharacterType::spaceCadet && !hero[0]->isDying()) {

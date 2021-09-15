@@ -7,17 +7,23 @@
 
 #include "UserInterface.h"
 #include "LifeBar.h"
+#include "Gif.h"
+#include "Character.h"
 
 enum class UserInterfaceType {
-    lifeBar
+    lifeBar, gif
 };
 
 class UserInterfaceFactory {
 public:
     LifeBar createLifeBar(Character *character);
 
+    Gif createGif(CharacterType type, sf::Vector2f position);
+
 private:
     std::string setBitMap(UserInterfaceType type);
+
+    std::string setBitMap(UserInterfaceType type, CharacterType kind);
 };
 
 

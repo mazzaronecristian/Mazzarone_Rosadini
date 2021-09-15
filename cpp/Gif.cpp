@@ -4,12 +4,6 @@
 
 #include "../header/Gif.h"
 
-void Gif::update(float deltaTime) {
-    /*source.x ++;
-    if(source.x ==15)
-        source.x = 0;
-    sprite.setTextureRect(sf::IntRect(source.x * width, source.y * height, width, height));*/
-}
 
 Gif::Gif() : Entity() {
 

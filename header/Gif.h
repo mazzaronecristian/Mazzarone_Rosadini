@@ -10,7 +10,6 @@
 
 class Gif : public Entity {
 public:
-    void update(float deltaTime) override;
 
     Gif();
 

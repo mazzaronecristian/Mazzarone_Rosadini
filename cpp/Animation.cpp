@@ -3,6 +3,7 @@
 //
 
 #include "../header/Animation.h"
+#include <iostream>
 
 Animation::Animation(sf::Vector2i dim, int nFrame, float switchTime) : nFrame(nFrame), switchTime(switchTime),
                                                                        rect(sf::IntRect(0, 0, dim.x, dim.y)) {}
