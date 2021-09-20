@@ -15,6 +15,7 @@
 #include "../header/LifeBar.h"
 #include "../header/UserInterfaceFactory.h"
 #include "../header/Gif.h"
+#include "../header/MapFactory.h"
 
 #include <cmath>
 #include <list>
@@ -43,8 +44,8 @@ int main() {
     choiceSprite.setPosition(0, 0);
     std::vector<std::shared_ptr<Gif>> heroesGif;
     Gif heroGif1 = choiceFactory.createGif(CharacterType::spaceCadet, sf::Vector2f(200, 130));
-    Gif heroGif2 = choiceFactory.createGif(CharacterType::dwarf, sf::Vector2f(200, 360));
-    Gif heroGif3 = choiceFactory.createGif(CharacterType::adventurer, sf::Vector2f(500, 130));
+    Gif heroGif2 = choiceFactory.createGif(CharacterType::adventurer, sf::Vector2f(500, 130));
+    Gif heroGif3 = choiceFactory.createGif(CharacterType::dwarf, sf::Vector2f(200, 360));
     Gif heroGif4 = choiceFactory.createGif(CharacterType::gladiator, sf::Vector2f(500, 360));
     heroesGif.push_back(std::make_shared<Gif>(heroGif1));
     heroesGif.push_back(std::make_shared<Gif>(heroGif2));
@@ -53,12 +54,29 @@ int main() {
     float deltaTimeChoice;
     sf::Clock clockChoice;
 
+    CharacterType heroType;
     while (choice.isOpen()) {
         deltaTimeChoice = clockChoice.restart().asSeconds();
         sf::Event e;
         while (choice.pollEvent(e)) {
             if (e.type == sf::Event::Closed)
-                choice.close();
+                return 0;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
+            heroType = heroesGif[0]->getType();
+            choice.close();
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
+            heroType = heroesGif[1]->getType();
+            choice.close();
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) {
+            heroType = heroesGif[2]->getType();
+            choice.close();
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) {
+            heroType = heroesGif[3]->getType();
+            choice.close();
         }
         choice.clear();
         choice.draw(choiceSprite);
@@ -84,14 +102,11 @@ int main() {
 
         PlayersFactory factory;
         UserInterfaceFactory userFactory;
-        std::ifstream m_matrix("./matrix.txt");
-        Map arena;
-        if (!arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), m_matrix))
-            return -1;
-        m_matrix.close();
+        MapFactory mapFactory;
+        Map arena = mapFactory.createMap(1);
         std::vector<std::shared_ptr<Player1>> hero;
 
-        hero.push_back(std::make_shared<Player1>(factory.createHero(CharacterType::gladiator)));
+        hero.push_back(std::make_shared<Player1>(factory.createHero(heroType)));
 
         LifeBar lifeBar = userFactory.createLifeBar(hero[0].get());
 

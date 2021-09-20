@@ -8,14 +8,12 @@ Map::Map(int width, int height) : width(width), height(height) {
     tiles.reserve(width * height);
 }
 
-bool
+void
 Map::load(const std::string &background, const std::string &tileSet, sf::Vector2u tileSize, std::ifstream &matrix) {
     //load background image
-    if (!bg.loadFromFile(background))
-        return false;
+    bg.loadFromFile(background);
     // load the tileset texture
-    if (!m_tileset.loadFromFile(tileSet))
-        return false;
+    m_tileset.loadFromFile(tileSet);
 
     int codeX, codeY;
     bool walkable;
@@ -31,8 +29,6 @@ Map::load(const std::string &background, const std::string &tileSet, sf::Vector2
             tile.load(m_tileset);
             tiles.push_back(tile);
         }
-
-    return true;
 }
 
 void Map::draw(sf::RenderTarget &target, sf::RenderStates states) const {

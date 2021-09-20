@@ -6,13 +6,17 @@
 #define MAZZARONE_ROSADINI_GIF_H
 
 #include "Entity.h"
+#include "Character.h"
 
 
 class Gif : public Entity {
 public:
+    Gif(CharacterType type);
 
-    Gif();
+    CharacterType getType() const;
 
+private:
+    CharacterType type;
 };
 
 

@@ -18,7 +18,7 @@ std::string UserInterfaceFactory::setBitMap(UserInterfaceType type) {
 }
 
 Gif UserInterfaceFactory::createGif(CharacterType type, sf::Vector2f position) {
-    Gif gif;
+    Gif gif(type);
     gif.load(setBitMap(UserInterfaceType::gif, type), position);
     return gif;
 }

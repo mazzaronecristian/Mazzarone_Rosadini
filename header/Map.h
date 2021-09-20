@@ -18,7 +18,7 @@ class Map : public sf::Drawable, public sf::Transformable {
 public:
     explicit Map(int width = 30, int height = 20);
 
-    bool load(const std::string &background, const std::string &tileSet, sf::Vector2u tileSize, std::ifstream &matrix);
+    void load(const std::string &background, const std::string &tileSet, sf::Vector2u tileSize, std::ifstream &matrix);
 
     Tile getTile(sf::Vector2i source);
 
