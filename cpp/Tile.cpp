@@ -37,3 +37,8 @@ int Tile::getCodeX() const {
 int Tile::getCodeY() const {
     return codeY;
 }
+
+const sf::Vector2f &Tile::getTilePosition() const {
+    return position;
+}
+

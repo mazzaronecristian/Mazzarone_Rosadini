@@ -22,6 +22,8 @@ public:
 
     Tile getTile(sf::Vector2i source);
 
+    void openExitTile();
+
 private:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 

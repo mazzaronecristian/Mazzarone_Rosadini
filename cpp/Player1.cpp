@@ -6,13 +6,14 @@
 
 #include <utility>
 
-Player1::Player1(CharacterType type, std::shared_ptr<AttackStrategy> attackStrategy) : attackStrategy(
-        std::move(attackStrategy)), Character(type) {
+Player1::Player1(CharacterType type, std::shared_ptr<AttackStrategy> attackStrategy, int killCounter) : attackStrategy(
+        std::move(attackStrategy)), killCounter(killCounter), Character(type) {
 }
 
-Player1::Player1(CharacterType type, int hp, int damage, std::shared_ptr<AttackStrategy> attackStrategy)
+Player1::Player1(CharacterType type, int hp, int damage, std::shared_ptr<AttackStrategy> attackStrategy,
+                 int killCounter)
         : attackStrategy(
-        std::move(attackStrategy)), Character(type, hp, damage) {
+        std::move(attackStrategy)), killCounter(killCounter), Character(type, hp, damage) {
 }
 
 Player1::~Player1() {}
@@ -63,6 +64,13 @@ void Player1::update(float deltaTime) {
         attacking = false;
 }
 
+int Player1::getKillCounter() const {
+    return killCounter;
+}
+
+void Player1::increaseKillCounter() {
+    killCounter++;
+}
 
 /*AttackStrategy *Player1::getAttackStrategy() const {
     return attackStrategy;

@@ -7,19 +7,18 @@
 #include "../header/Player1.h"
 #include "../header/Enemy.h"
 #include "../header/Follow.h"
-#include "../header/Patrol.h"
 #include "../header/Bullet.h"
-#include "../header/RangedAttack.h"
 #include "../header/PlayersFactory.h"
 #include "../header/BulletsFactory.h"
 #include "../header/LifeBar.h"
 #include "../header/UserInterfaceFactory.h"
-#include "../header/Gif.h"
 #include "../header/MapFactory.h"
 
 #include <cmath>
 #include <list>
 #include <memory>
+
+void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies); //generates waves of enemies
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar);
@@ -27,14 +26,15 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared
 void update(std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar);
 
-void draw(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
-          std::list<std::shared_ptr<Enemy>> &enemies, sf::RenderWindow &window, sf::RenderTexture &gameOver, Map &arena,
+void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
+          const std::list<std::shared_ptr<Enemy>> &enemies, sf::RenderWindow &window, sf::RenderTexture &gameOver,
+          Map &arena,
           LifeBar &lifeBar);
 
+bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>> hero, int &numArena);
 
 int main() {
     bool restart;
-
     //scelta personaggio
     sf::RenderWindow choice(sf::VideoMode(960, 740), "Choose your hero");
     sf::Texture choiceBackground;
@@ -86,8 +86,9 @@ int main() {
         }
         choice.display();
     }
-
+    int numArena = 1;
     do {
+        int waveCounter = 0;
         sf::RenderWindow window(sf::VideoMode(960, 740), "GAME");
         sf::RenderTexture gameOver;
         if (!gameOver.create(960, 740))
@@ -103,22 +104,19 @@ int main() {
         PlayersFactory factory;
         UserInterfaceFactory userFactory;
         MapFactory mapFactory;
-        Map arena = mapFactory.createMap(1);
+
         std::vector<std::shared_ptr<Player1>> hero;
 
         hero.push_back(std::make_shared<Player1>(factory.createHero(heroType)));
 
         LifeBar lifeBar = userFactory.createLifeBar(hero[0].get());
 
+        Map arena = mapFactory.createMap(numArena);
+
         srand(time(NULL));
         std::list<std::shared_ptr<Enemy>> enemies;
-        for (int i = 0; i < 10; i++) {
-            std::shared_ptr<Enemy> ghoul = std::make_shared<Enemy>(factory.createEnemy(CharacterType::miniGolem,
-                                                                                       sf::Vector2f(rand() % 450 + 300,
-                                                                                                    rand() % 450 +
-                                                                                                    100)));
-            enemies.push_back(ghoul);
-        }
+        generateEnemies(enemies);
+        waveCounter++;
         sf::Clock clock;
         float deltaTime;
         std::list<std::shared_ptr<Bullet>> bullets;
@@ -132,16 +130,7 @@ int main() {
                 if (e.type == sf::Event::Closed) {
                     window.close();
                 }
-                //restart event
-                if (e.type == sf::Event::KeyReleased && !hero[0]->isLife()) {
-                    if (e.key.code == sf::Keyboard::R) {
-                        restart = true;
-                        window.close();
-                    }
-                    if (e.key.code == sf::Keyboard::Q)
-                        window.close();
-                }
-                if (e.type == sf::Event::KeyPressed)
+                if (e.type == sf::Event::KeyReleased)
                     if (e.key.code == sf::Keyboard::Enter) {
                         if (hero[0]->getType() == CharacterType::spaceCadet && !hero[0]->isDying()) {
                             short int bulletDirection;
@@ -161,6 +150,8 @@ int main() {
                         }
                     }
             }
+            //check restart conditions
+            restart = checkRestart(window, hero, numArena);
             //Azione Eroe
             if (!hero[0]->isDying()) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -176,7 +167,7 @@ int main() {
                         hero[0]->setIsFighting(true);
             }
 
-            //Movimento Nemici
+            //Enemies movement
             for (auto i = enemies.begin(); i != enemies.end(); i++) {
                 if (!i->get()->isFighting()) {
                     if (std::abs(hero[0]->getPosition().x - i->get()->getPosition().x) <= 300
@@ -184,6 +175,11 @@ int main() {
                         i->get()->setMoveStrategy(std::make_shared<Follow>());
                     } else i->get()->setMoveStrategy(std::make_shared<Patrol>());
                 } else i->get()->setMoveStrategy(std::make_shared<Patrol>());
+            }
+
+            if (hero[0]->getKillCounter() == 10 && waveCounter < 2) {
+                generateEnemies(enemies);
+                waveCounter++;
             }
 
             if (hero[0]->getType() == CharacterType::spaceCadet)
@@ -197,6 +193,18 @@ int main() {
     return 0;
 }
 
+void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies) {
+    PlayersFactory factory;
+    for (int i = 0; i < 10; i++) {
+        std::shared_ptr<Enemy> ghoul = std::make_shared<Enemy>(factory.createEnemy(CharacterType::miniGolem,
+                                                                                   sf::Vector2f(
+                                                                                           (float) (rand() % 450 + 300),
+                                                                                           (float) (rand() % 450 +
+                                                                                                    100))));
+        enemies.push_back(ghoul);
+    }
+}
+
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar) {
 
@@ -204,8 +212,10 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared
     for (auto i = enemies.begin(); i != enemies.end();) {
         i->get()->movement(hero[0]->getPosition(), arena);
         i->get()->update(deltaTime);
-        if (!(i->get()->isLife()))
+        if (!(i->get()->isLife())) {
             i = enemies.erase(i);
+            hero[0]->increaseKillCounter();
+        }
         i++;
     }
 
@@ -247,6 +257,8 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared
     } else
         hero[0]->update(deltaTime);
     lifeBar.update();
+    if (hero[0]->getKillCounter() == 20)
+        arena.openExitTile();
 }
 
 void update(std::vector<std::shared_ptr<Player1>> hero,
@@ -265,11 +277,13 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
     for (auto i = enemies.begin(); i != enemies.end();) {
         i->get()->movement(hero[0]->getPosition(), arena);
         i->get()->update(deltaTime);
-        if (!(i->get()->isLife()))
+        if (!(i->get()->isLife())) {
             i = enemies.erase(i);
+            hero[0]->increaseKillCounter();
+        }
         i++;
     }
-
+    std::cout << hero[0]->getKillCounter() << " ";
     if (hero[0]->isFighting()) {
         if (hero[0]->getSource().y % 2 == 0)
             hero[0]->setAnim(8, 0.04, 4);
@@ -294,11 +308,13 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
     } else
         hero[0]->update(deltaTime);
     lifeBar.update();
-
+    if (hero[0]->getKillCounter() == 20)
+        arena.openExitTile();
 }
 
-void draw(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
-          std::list<std::shared_ptr<Enemy>> &enemies, sf::RenderWindow &window, sf::RenderTexture &gameOver, Map &arena,
+void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
+          const std::list<std::shared_ptr<Enemy>> &enemies, sf::RenderWindow &window, sf::RenderTexture &gameOver,
+          Map &arena,
           LifeBar &lifeBar) {
     window.clear();
     window.draw(arena);
@@ -316,4 +332,21 @@ void draw(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_p
     }
     window.display();
 
+}
+
+bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>> hero, int &numArena) {
+    bool restart = false;
+
+    if (!hero[0]->isLife()) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+            restart = true;
+            window.close();
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+            window.close();
+    } else if (hero[0]->getPosition().x >= 943) {
+        restart = true;
+        numArena = 2;
+        window.close();
+    }
+    return restart;
 }

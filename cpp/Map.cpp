@@ -2,6 +2,7 @@
 // Created by cristian on 19/03/21.
 //
 
+#include <iostream>
 #include "../header/Map.h"
 
 Map::Map(int width, int height) : width(width), height(height) {
@@ -43,6 +44,30 @@ void Map::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 
 Tile Map::getTile(sf::Vector2i source) {
     return tiles[source.y * width + source.x];
+}
+
+void Map::openExitTile() {
+    Tile tile(2, 4, false, tiles[239].getTilePosition());
+
+    tile.load(m_tileset);
+    tiles[239] = tile;
+
+    tile = Tile(2, 5, false, tiles[269].getTilePosition());
+    tile.load(m_tileset);
+    tiles[269] = tile;
+
+    tile = Tile(8, 5, true, tiles[299].getTilePosition());
+    tile.load(m_tileset);
+    tiles[299] = tile;
+
+    tile = Tile(2, 6, false, tiles[329].getTilePosition());
+    tile.load(m_tileset);
+    tiles[329] = tile;
+
+    tile = Tile(2, 7, false, tiles[359].getTilePosition());
+    tile.load(m_tileset);
+    tiles[359] = tile;
+
 }
 
 

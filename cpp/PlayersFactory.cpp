@@ -17,6 +17,6 @@ Player1 PlayersFactory::createHero(CharacterType type) {
         result = new Player1(type, std::make_shared<RangedAttack>());
     else
         result = new Player1(type, 150, 60, std::make_shared<MeleeAttack>());
-    result->load(setBitMap(type), sf::Vector2f(100, 100));
+    result->load(setBitMap(type), sf::Vector2f(50, 270));
     return *result;
 }

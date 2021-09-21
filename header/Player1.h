@@ -19,10 +19,10 @@
 
 class Player1 : public Character {
 public:
-    Player1(CharacterType type, std::shared_ptr<AttackStrategy> attackStrategy);
+    Player1(CharacterType type, std::shared_ptr<AttackStrategy> attackStrategy, int killCounter = 0);
 
-    Player1(CharacterType type, int hp, int damage, std::shared_ptr<AttackStrategy> attackStrategy);
-
+    Player1(CharacterType type, int hp, int damage, std::shared_ptr<AttackStrategy> attackStrategy,
+            int killCounter = 0);
 
     void update(float deltaTime) override;
 
@@ -31,6 +31,10 @@ public:
     void movement(sf::Vector2f direction, const Map &map) override;
 
     void fight(Character &character) override;
+
+    int getKillCounter() const;
+
+    void increaseKillCounter();
 
     //TODO RESOLVE POTION
     //void usePotion();
@@ -44,6 +48,7 @@ public:
 private:
     //Potion potion;
     std::shared_ptr<AttackStrategy> attackStrategy;
+    int killCounter;
 
 };
 

@@ -25,6 +25,8 @@ public:
 
     int getCodeY() const;
 
+    const sf::Vector2f &getTilePosition() const;
+
 private:
     sf::Vector2f position;
     bool walkable;
