@@ -125,7 +125,6 @@ int main() {
         while (window.isOpen()) {
             deltaTime = clock.restart().asSeconds();
             sf::Event e;
-            restart = false;
             while (window.pollEvent(e)) {
                 if (e.type == sf::Event::Closed) {
                     window.close();
@@ -150,8 +149,10 @@ int main() {
                         }
                     }
             }
+
             //check restart conditions
             restart = checkRestart(window, hero, numArena);
+
             //Azione Eroe
             if (!hero[0]->isDying()) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -208,28 +209,6 @@ void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies) {
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar) {
 
-    //Update dei Nemici
-    for (auto i = enemies.begin(); i != enemies.end();) {
-        i->get()->movement(hero[0]->getPosition(), arena);
-        i->get()->update(deltaTime);
-        if (!(i->get()->isLife())) {
-            i = enemies.erase(i);
-            hero[0]->increaseKillCounter();
-        }
-        i++;
-    }
-
-    for (auto i = enemies.begin(); i != enemies.end(); i++) {
-        if (i->get()->isLegalFight(*hero[0])) {
-            i->get()->fight(*hero[0]);
-        }
-    }
-
-    for (auto i = enemies.begin(); i != enemies.end(); i++) {
-        if (i->get()->getHp() <= 0)
-            i->get()->kill();
-    }
-
     //Update dei Proiettili
     for (auto i = bullets.begin(); i != bullets.end();) {
         i->get()->movement();
@@ -247,18 +226,7 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared
         else i++;
     }
 
-    //Update dell'Eroe
-    if (hero[0]->getHp() <= 0)
-        hero[0]->kill();
-    if (!hero[0]->isLife()) {
-        hero.pop_back();
-        for (auto i = enemies.begin(); i != enemies.end(); i++)
-            i->get()->setMoveStrategy(std::make_shared<Patrol>());
-    } else
-        hero[0]->update(deltaTime);
-    lifeBar.update();
-    if (hero[0]->getKillCounter() == 20)
-        arena.openExitTile();
+    update(hero, enemies, deltaTime, arena, lifeBar);
 }
 
 void update(std::vector<std::shared_ptr<Player1>> hero,
@@ -283,7 +251,6 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
         }
         i++;
     }
-    std::cout << hero[0]->getKillCounter() << " ";
     if (hero[0]->isFighting()) {
         if (hero[0]->getSource().y % 2 == 0)
             hero[0]->setAnim(8, 0.04, 4);
@@ -308,6 +275,7 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
     } else
         hero[0]->update(deltaTime);
     lifeBar.update();
+
     if (hero[0]->getKillCounter() == 20)
         arena.openExitTile();
 }
@@ -335,8 +303,8 @@ void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::sh
 }
 
 bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>> hero, int &numArena) {
-    bool restart = false;
 
+    bool restart = false;
     if (!hero[0]->isLife()) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
             restart = true;
