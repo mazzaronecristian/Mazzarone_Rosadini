@@ -16,6 +16,8 @@ Player1::Player1(CharacterType type, int hp, int damage, std::shared_ptr<AttackS
         std::move(attackStrategy)), killCounter(killCounter), Character(type, hp, damage) {
 }
 
+Player1::~Player1() {}
+
 void Player1::movement(sf::Vector2f direction, const Map &map) {
     if (!dying && !attacking) {
         if (direction.x == 0) {

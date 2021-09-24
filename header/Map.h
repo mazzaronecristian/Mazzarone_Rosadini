@@ -13,8 +13,6 @@
 #include <fstream>
 #include <memory>
 #include "Tile.h"
-#include "Observer.h"
-#include "Player1.h"
 
 class Map : public sf::Drawable, public sf::Transformable {
 public:
