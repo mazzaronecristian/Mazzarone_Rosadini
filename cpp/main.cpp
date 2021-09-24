@@ -183,10 +183,9 @@ int main() {
                 waveCounter++;
             }
 
-            if (hero[0]->getType() == CharacterType::spaceCadet)
-                update(bullets, hero, enemies, deltaTime, arena, lifeBar);
-            else
-                update(hero, enemies, deltaTime, arena, lifeBar);
+            (hero[0]->getType() == CharacterType::spaceCadet) ?
+            update(bullets, hero, enemies, deltaTime, arena, lifeBar) : update(hero, enemies, deltaTime, arena,
+                                                                               lifeBar);
 
             draw(bullets, hero, enemies, window, gameOver, arena, lifeBar);
         }
@@ -270,8 +269,6 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
         hero[0]->kill();
     if (!hero[0]->isLife()) {
         hero.pop_back();
-        for (auto i = enemies.begin(); i != enemies.end(); i++)
-            i->get()->setMoveStrategy(std::make_shared<Patrol>());
     } else
         hero[0]->update(deltaTime);
     lifeBar.update();

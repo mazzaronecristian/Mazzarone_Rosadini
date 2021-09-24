@@ -22,20 +22,8 @@ sf::Sprite &Tile::getSprite() {
     return sprite;
 }
 
-void Tile::setWalkable(bool walkable) {
-    Tile::walkable = walkable;
-}
-
 bool Tile::isWalkable() const {
     return walkable;
-}
-
-int Tile::getCodeX() const {
-    return codeX;
-}
-
-int Tile::getCodeY() const {
-    return codeY;
 }
 
 const sf::Vector2f &Tile::getTilePosition() const {

@@ -16,6 +16,7 @@
 #include "RangedAttack.h"
 #include "Character.h"
 #include "Potion.h"
+#include "Subject.h"
 
 class Player1 : public Character {
 public:
@@ -25,8 +26,6 @@ public:
             int killCounter = 0);
 
     void update(float deltaTime) override;
-
-    virtual ~Player1();
 
     void movement(sf::Vector2f direction, const Map &map) override;
 

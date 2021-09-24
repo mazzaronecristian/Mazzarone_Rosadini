@@ -19,12 +19,6 @@ public:
 
     bool isWalkable() const;
 
-    void setWalkable(bool walkable);
-
-    int getCodeX() const;
-
-    int getCodeY() const;
-
     const sf::Vector2f &getTilePosition() const;
 
 private:

@@ -23,10 +23,9 @@ Map::load(const std::string &background, const std::string &tileSet, sf::Vector2
         for (int x = 0; x < width; x++) {
             matrix >> codeX;
             matrix >> codeY;
-            if (codeX == 8 && codeY == 5) {
-                walkable = true;
-            } else walkable = false;
-            Tile tile(codeX, codeY, walkable, sf::Vector2f(x * 32, y * 32));
+            walkable = (codeX == 8 &&
+                        codeY == 5); //set a tile walkable or not walkable. code=(8,5) corresponds to ground.
+            Tile tile(codeX, codeY, walkable, sf::Vector2f(x * tileSize.x, y * tileSize.y));
             tile.load(m_tileset);
             tiles.push_back(tile);
         }
