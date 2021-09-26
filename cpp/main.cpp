@@ -197,13 +197,15 @@ int main() {
 void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies) {
     PlayersFactory factory;
     for (int i = 0; i < 10; i++) {
-        std::shared_ptr<Enemy> ghoul = std::make_shared<Enemy>(factory.createEnemy(CharacterType::miniGolem,
-                                                                                   sf::Vector2f(
-                                                                                           (float) (rand() % 450 + 300),
-                                                                                           (float) (rand() % 450 +
-                                                                                                    100))));
+        std::shared_ptr<Enemy> ghoul = std::make_shared<Enemy>(
+                factory.createEnemy(static_cast<CharacterType>(rand() % 4 + 4),
+                                    sf::Vector2f(
+                                            (float) (rand() % 450 + 300),
+                                            (float) (rand() % 450 +
+                                                     100))));
         enemies.push_back(ghoul);
     }
+
 }
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,

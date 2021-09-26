@@ -10,7 +10,7 @@
 
 
 TEST(Player1, TestMoveDown) {
-    std::ifstream matrix("./matrix.txt");
+    std::ifstream matrix("./matrix1.txt");
     Map arena;
     arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
     Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
@@ -21,7 +21,7 @@ TEST(Player1, TestMoveDown) {
 }
 
 TEST(Player1, TestMoveUp) {
-    std::ifstream matrix("./matrix.txt");
+    std::ifstream matrix("./matrix1.txt");
     Map arena;
     arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
     Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
@@ -32,7 +32,7 @@ TEST(Player1, TestMoveUp) {
 }
 
 TEST(Player1, TestMoveRight) {
-    std::ifstream matrix("./matrix.txt");
+    std::ifstream matrix("./matrix1.txt");
     Map arena;
     arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
     Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
@@ -43,7 +43,7 @@ TEST(Player1, TestMoveRight) {
 }
 
 TEST(Player1, TestMoveLeft) {
-    std::ifstream matrix("./matrix.txt");
+    std::ifstream matrix("./matrix1.txt");
     Map arena;
     arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
     Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
@@ -54,7 +54,7 @@ TEST(Player1, TestMoveLeft) {
 }
 
 TEST(Player1, TestMeleeAttack) {
-    std::ifstream matrix("./matrix.txt");
+    std::ifstream matrix("./matrix1.txt");
     Map arena;
     arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
     Player1 p(CharacterType::ghoul, 150, 60, std::make_shared<MeleeAttack>());
@@ -70,7 +70,7 @@ TEST(Player1, TestMeleeAttack) {
 
 //Test colpo a vuoto
 TEST(Player1, TestRangedAttack) {
-    std::ifstream matrix("./matrix.txt");
+    std::ifstream matrix("./matrix1.txt");
     Map arena;
     BulletsFactory factory;
     arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);

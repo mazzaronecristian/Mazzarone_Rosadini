@@ -7,7 +7,7 @@
 #include "../header/Follow.h"
 
 TEST(Enemy, TestMoveDown) {
-    std::ifstream matrix("./matrix.txt");
+    std::ifstream matrix("./matrix1.txt");
     Map arena;
     arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
     Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
@@ -20,7 +20,7 @@ TEST(Enemy, TestMoveDown) {
 }
 
 TEST(Enemy, TestMoveUp) {
-    std::ifstream matrix("./matrix.txt");
+    std::ifstream matrix("./matrix1.txt");
     Map arena;
     arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
     Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
@@ -33,7 +33,7 @@ TEST(Enemy, TestMoveUp) {
 }
 
 TEST(Enemy, TestMoveRight) {
-    std::ifstream matrix("./matrix.txt");
+    std::ifstream matrix("./matrix1.txt");
     Map arena;
     arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
     Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
@@ -46,7 +46,7 @@ TEST(Enemy, TestMoveRight) {
 }
 
 TEST(Enemy, TestMoveLeft) {
-    std::ifstream matrix("./matrix.txt");
+    std::ifstream matrix("./matrix1.txt");
     Map arena;
     arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
     Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
@@ -79,7 +79,7 @@ TEST(Enemy, TestFightRight) {
 }
 
 TEST(Enemy, TestEnemyStay) {
-    std::ifstream matrix("./matrix.txt");
+    std::ifstream matrix("./matrix1.txt");
     Map arena;
     arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
     Enemy e(CharacterType::ghoul);

@@ -15,6 +15,8 @@ public:
 private:
     std::ifstream setMatrix(short int numArena);
 
+    std::ifstream setShadesMatrix(short int numArena);
+
 };
 
 
