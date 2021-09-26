@@ -20,6 +20,10 @@ public:
 
     void load(const std::string &background, const std::string &tileSet, sf::Vector2u tileSize, std::ifstream &matrix);
 
+    void load(const std::string &background, const std::string &tileSet, sf::Vector2u tileSize, std::ifstream &matrix,
+              std::ifstream &matrix1);
+
+
     Tile getTile(sf::Vector2i source);
 
     void openExitTile();
@@ -28,10 +32,11 @@ private:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
     int width, height;
-    std::vector<Tile> tiles;
     sf::Texture bg;
     sf::VertexArray m_vertices;
     sf::Texture m_tileset;
+    std::vector<Tile> tiles;
+    std::vector<Tile> tilesRiver;
 };
 
 #endif //MAZZARONE_ROSADINI_MAP_H

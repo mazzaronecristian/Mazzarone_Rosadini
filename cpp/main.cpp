@@ -51,6 +51,7 @@ int main() {
     heroesGif.push_back(std::make_shared<Gif>(heroGif2));
     heroesGif.push_back(std::make_shared<Gif>(heroGif3));
     heroesGif.push_back(std::make_shared<Gif>(heroGif4));
+
     float deltaTimeChoice;
     sf::Clock clockChoice;
 
