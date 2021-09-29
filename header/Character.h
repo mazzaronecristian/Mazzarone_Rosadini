@@ -11,12 +11,12 @@
 #include "Tile.h"
 
 enum class CharacterType {
-    spaceCadetq, adventurer, dwarf, gladiator, ghoul, brain, cobra, miniGolem
+    spaceCadet, adventurer, dwarf, gladiator, ghoul, brain, cobra, miniGolem
 };
 
 class Character : public Entity {
 public:
-    explicit Character(CharacterType type, int hp = 120, int damage = 40, float speed = 0.3, bool isAttacking = false,
+    explicit Character(CharacterType type, int hp = 120, int damage = 40, float speed = 0.7, bool isAttacking = false,
                        bool isDying = false);
 
 
@@ -30,9 +30,7 @@ public:
 
     virtual void fight(Character &character) = 0;
 
-    bool isLegalMove(Character &character);
-
-    bool isLegalMove(sf::Vector2f direction, Map map);
+    virtual bool isLegalMove(sf::Vector2f direction, Map map) = 0;
 
     bool isLegalFight(const Character &character);
 

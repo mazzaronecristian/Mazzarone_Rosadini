@@ -13,12 +13,14 @@
 #include "../header/LifeBar.h"
 #include "../header/UserInterfaceFactory.h"
 #include "../header/MapFactory.h"
+#include "../header/AdaptHorizontal.h"
+#include "../header/AdaptVertical.h"
 
 #include <cmath>
 #include <list>
 #include <memory>
 
-void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies); //generates waves of enemies
+void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int wavwCounter); //generates waves of enemies
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar);
@@ -87,7 +89,7 @@ int main() {
         }
         choice.display();
     }
-    int numArena = 1;
+    int numArena = 2;
     do {
         int waveCounter = 0;
         sf::RenderWindow window(sf::VideoMode(960, 740), "GAME");
@@ -116,8 +118,8 @@ int main() {
 
         srand(time(NULL));
         std::list<std::shared_ptr<Enemy>> enemies;
-        generateEnemies(enemies);
         waveCounter++;
+        generateEnemies(enemies, waveCounter);
         sf::Clock clock;
         float deltaTime;
         std::list<std::shared_ptr<Bullet>> bullets;
@@ -154,7 +156,7 @@ int main() {
             //check restart conditions
             restart = checkRestart(window, hero, numArena);
 
-            //Azione Eroe
+            //hero action
             if (!hero[0]->isDying()) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
                     hero[0]->movement(sf::Vector2f(0, -1), arena);
@@ -180,8 +182,8 @@ int main() {
             }
 
             if (hero[0]->getKillCounter() == 10 && waveCounter < 2) {
-                generateEnemies(enemies);
                 waveCounter++;
+                generateEnemies(enemies, waveCounter);
             }
 
             (hero[0]->getType() == CharacterType::spaceCadet) ?
@@ -194,16 +196,26 @@ int main() {
     return 0;
 }
 
-void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies) {
+void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter) {
     PlayersFactory factory;
-    for (int i = 0; i < 10; i++) {
-        std::shared_ptr<Enemy> ghoul = std::make_shared<Enemy>(
-                factory.createEnemy(static_cast<CharacterType>(rand() % 4 + 4),
-                                    sf::Vector2f(
-                                            (float) (rand() % 450 + 300),
-                                            (float) (rand() % 450 +
-                                                     100))));
-        enemies.push_back(ghoul);
+    std::cout << waveCounter;
+    for (int i = 0; i < 1; i++) {
+        std::shared_ptr<Enemy> enemy;
+        if (waveCounter == 1)
+            enemy = std::make_shared<Enemy>(
+                    factory.createEnemy(static_cast<CharacterType>(rand() % 2 + 4),
+                                        sf::Vector2f(
+                                                (float) (rand() % 450 + 300),
+                                                (float) (rand() % 450 +
+                                                         100))));
+        else
+            enemy = std::make_shared<Enemy>(
+                    factory.createEnemy(static_cast<CharacterType>(rand() % 2 + 6),
+                                        sf::Vector2f(
+                                                (float) (rand() % 450 + 300),
+                                                (float) (rand() % 450 +
+                                                         100))));
+        enemies.push_back(enemy);
     }
 
 }
@@ -211,7 +223,7 @@ void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies) {
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar) {
 
-    //Update dei Proiettili
+    //Bullets update
     for (auto i = bullets.begin(); i != bullets.end();) {
         i->get()->movement();
         i->get()->update(deltaTime);
@@ -233,7 +245,7 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared
 
 void update(std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar) {
-    //Update dei Nemici
+    //Enemies update
     for (auto i = enemies.begin(); i != enemies.end(); i++) {
         if (i->get()->isLegalFight(*hero[0])) {
             i->get()->fight(*hero[0]);
@@ -245,6 +257,9 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
             i->get()->kill();
     }
     for (auto i = enemies.begin(); i != enemies.end();) {
+        if (!i->get()->isLegalMove(hero[0]->getPosition(), arena))
+            i->get()->setMoveStrategy(
+                    std::make_shared<AdaptHorizontal>());//TODO adattare il movimento del nemico agli ostacoli!!!!
         i->get()->movement(hero[0]->getPosition(), arena);
         i->get()->update(deltaTime);
         if (!(i->get()->isLife())) {
@@ -267,7 +282,7 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
         }
     }
 
-    //Update dell'Eroe
+    //Heroes update
     if (hero[0]->getHp() <= 0)
         hero[0]->kill();
     if (!hero[0]->isLife()) {

@@ -20,7 +20,6 @@ void Map::load(const std::string &background, const std::string &tileSet, sf::Ve
     setTilesCode(shades, tileSize, tilesShades);
     setTilesCode(matrix, tileSize, tiles);
 
-
 }
 void Map::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 

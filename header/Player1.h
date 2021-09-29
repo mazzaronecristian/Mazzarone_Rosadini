@@ -30,6 +30,8 @@ public:
 
     void movement(sf::Vector2f direction, const Map &map) override;
 
+    bool isLegalMove(sf::Vector2f direction, Map map) override;
+
     void fight(Character &character) override;
 
     int getKillCounter() const;

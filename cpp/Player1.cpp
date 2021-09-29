@@ -72,6 +72,18 @@ void Player1::increaseKillCounter() {
     killCounter++;
 }
 
+bool Player1::isLegalMove(sf::Vector2f direction, Map map) {
+    sf::Vector2f futurePos;
+    futurePos = {getPosition().x + (speed * direction.x), getPosition().y + (speed * direction.y)};
+    int i = round(futurePos.x / 32);
+    int j = round(futurePos.y / 32);
+    sf::Vector2i source = {i, j};
+    Tile tile = map.getTile(source);
+    if (tile.isWalkable())
+        return true;
+    return false;
+}
+
 /*AttackStrategy *Player1::getAttackStrategy() const {
     return attackStrategy;
 }

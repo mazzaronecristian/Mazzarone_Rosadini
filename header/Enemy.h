@@ -21,6 +21,10 @@ public:
 
     void movement(sf::Vector2f direction, const Map &map) override;
 
+    void adaptMovement(Tile tile, sf::Vector2f direction, sf::Vector2f vector2);
+
+    bool isLegalMove(sf::Vector2f direction, Map map) override;
+
     void fight(Character &character) override;
 
     void setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrategy);
