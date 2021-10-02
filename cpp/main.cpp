@@ -20,7 +20,7 @@
 #include <list>
 #include <memory>
 
-void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int wavwCounter); //generates waves of enemies
+void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter); //generates waves of enemies
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar);
@@ -258,8 +258,8 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
     }
     for (auto i = enemies.begin(); i != enemies.end();) {
         if (!i->get()->isLegalMove(hero[0]->getPosition(), arena))
-            i->get()->setMoveStrategy(
-                    std::make_shared<AdaptHorizontal>());//TODO adattare il movimento del nemico agli ostacoli!!!!
+            i->get()->setMoveStrategy(hero[0]->getPosition(),
+                                      arena);//TODO adattare il movimento del nemico agli ostacoli!!!!
         i->get()->movement(hero[0]->getPosition(), arena);
         i->get()->update(deltaTime);
         if (!(i->get()->isLife())) {
@@ -314,7 +314,6 @@ void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::sh
         window.draw(over);
     }
     window.display();
-
 }
 
 bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>> hero, int &numArena) {

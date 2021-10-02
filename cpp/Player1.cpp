@@ -32,9 +32,8 @@ void Player1::movement(sf::Vector2f direction, const Map &map) {
                 source.y = left;
         }
         setAnim(8, 0.06);
-        if (isLegalMove(direction, map)) {
+//        if (isLegalMove(direction, map))
             sprite.move(direction.x * speed, direction.y * speed);
-        }
     }
 }
 

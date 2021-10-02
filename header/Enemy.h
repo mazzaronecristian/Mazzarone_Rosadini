@@ -8,7 +8,9 @@
 #include "Character.h"
 #include "FightStrategy.h"
 #include "Patrol.h"
-#include <math.h>
+#include "AdaptHorizontal.h"
+#include "AdaptVertical.h"
+#include <cmath>
 #include <memory.h>
 #include <memory>
 
@@ -28,6 +30,8 @@ public:
     void fight(Character &character) override;
 
     void setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrategy);
+
+    void setMoveStrategy(sf::Vector2f direction, Map arena);
 
 private:
     std::shared_ptr<MoveStrategy> moveStrategy;
