@@ -16,7 +16,7 @@ enum class CharacterType {
 
 class Character : public Entity {
 public:
-    explicit Character(CharacterType type, int hp = 120, int damage = 40, float speed = 0.7, bool isAttacking = false,
+    explicit Character(CharacterType type, int hp = 120, int damage = 40, float speed = 0.3, bool isAttacking = false,
                        bool isDying = false);
 
 
@@ -30,13 +30,13 @@ public:
 
     virtual void fight(Character &character) = 0;
 
-    virtual bool isLegalMove(sf::Vector2f direction, Map map) = 0;
+    virtual bool isLegalMove(sf::Vector2f direction, const Map &map) = 0;
+
+    bool isLegalDirection(sf::Vector2f direction, Map map);
 
     bool isLegalFight(const Character &character);
 
     void receiveDamage(int damage);
-
-
 
     //getter
 
@@ -46,18 +46,12 @@ public:
 
     int getDamage() const;
 
-    float getSpeed() const;
-
     bool isFighting() const;
 
     //setter
     void setHp(int hp);
 
     void setIsFighting(bool isAttacking);
-
-    void setDamage(int damage);
-
-    void setSpeed(float speed);
 
 protected:
     bool attacking, dying;

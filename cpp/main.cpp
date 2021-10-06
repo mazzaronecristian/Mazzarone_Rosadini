@@ -13,8 +13,6 @@
 #include "../header/LifeBar.h"
 #include "../header/UserInterfaceFactory.h"
 #include "../header/MapFactory.h"
-#include "../header/AdaptHorizontal.h"
-#include "../header/AdaptVertical.h"
 
 #include <cmath>
 #include <list>
@@ -33,7 +31,7 @@ void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::sh
           Map &arena,
           LifeBar &lifeBar);
 
-bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>> hero, int &numArena);
+bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>> hero, short int &numArena);
 
 int main() {
     bool restart;
@@ -89,9 +87,9 @@ int main() {
         }
         choice.display();
     }
-    int numArena = 2;
+    short int numArena = 2;
     do {
-        int waveCounter = 0;
+        short int waveCounter = 0;
         sf::RenderWindow window(sf::VideoMode(960, 740), "GAME");
         sf::RenderTexture gameOver;
         if (!gameOver.create(960, 740))
@@ -172,13 +170,13 @@ int main() {
             }
 
             //Enemies movement
-            for (auto i = enemies.begin(); i != enemies.end(); i++) {
-                if (!i->get()->isFighting()) {
-                    if (std::abs(hero[0]->getPosition().x - i->get()->getPosition().x) <= 300
-                        && std::abs(hero[0]->getPosition().y - i->get()->getPosition().y) <= 300) {
-                        i->get()->setMoveStrategy(std::make_shared<Follow>());
-                    } else i->get()->setMoveStrategy(std::make_shared<Patrol>());
-                } else i->get()->setMoveStrategy(std::make_shared<Patrol>());
+            for (auto &enemy: enemies) {
+                if (!enemy->isFighting()) {
+                    if (std::abs(hero[0]->getPosition().x - enemy->getPosition().x) <= 300
+                        && std::abs(hero[0]->getPosition().y - enemy->getPosition().y) <= 300) {
+                        enemy->setMoveStrategy(std::make_shared<Follow>());
+                    } else enemy->setMoveStrategy(std::make_shared<Patrol>());
+                } else enemy->setMoveStrategy(std::make_shared<Patrol>());
             }
 
             if (hero[0]->getKillCounter() == 10 && waveCounter < 2) {
@@ -198,7 +196,6 @@ int main() {
 
 void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter) {
     PlayersFactory factory;
-    std::cout << waveCounter;
     for (int i = 0; i < 1; i++) {
         std::shared_ptr<Enemy> enemy;
         if (waveCounter == 1)
@@ -258,8 +255,7 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
     }
     for (auto i = enemies.begin(); i != enemies.end();) {
         if (!i->get()->isLegalMove(hero[0]->getPosition(), arena))
-            i->get()->setMoveStrategy(hero[0]->getPosition(),
-                                      arena);//TODO adattare il movimento del nemico agli ostacoli!!!!
+            i->get()->setMoveStrategy(hero[0]->getPosition(), arena);
         i->get()->movement(hero[0]->getPosition(), arena);
         i->get()->update(deltaTime);
         if (!(i->get()->isLife())) {
@@ -302,10 +298,10 @@ void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::sh
     window.clear();
     window.draw(arena);
     window.draw(*hero[0]);
-    for (auto i: enemies) {
+    for (const auto &i: enemies) {
         window.draw(*i);
     }
-    for (auto i: bullets) {
+    for (const auto &i: bullets) {
         window.draw(*i);
     }
     window.draw(lifeBar);
@@ -316,7 +312,7 @@ void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::sh
     window.display();
 }
 
-bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>> hero, int &numArena) {
+bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>> hero, short int &numArena) {
 
     bool restart = false;
     if (!hero[0]->isLife()) {

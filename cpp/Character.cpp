@@ -4,6 +4,8 @@
 
 #include "../header/Character.h"
 
+#include <cmath>
+
 Character::Character(CharacterType type, int hp, int damage, float speed, bool isAttacking, bool isDying) : hp(hp),
                                                                                                             damage(damage),
                                                                                                             speed(speed),
@@ -21,25 +23,13 @@ int Character::getDamage() const {
     return damage;
 }
 
-float Character::getSpeed() const {
-    return speed;
-}
-
 //setter
 void Character::setHp(int hp) {
     Character::hp = hp;
 }
 
-void Character::setDamage(int damage) {
-    Character::damage = damage;
-}
-
 void Character::receiveDamage(int damage) {
     Character::hp -= damage;
-}
-
-void Character::setSpeed(float speed) {
-    Character::speed = speed;
 }
 
 void Character::update(float deltaTime) {
@@ -83,4 +73,15 @@ CharacterType Character::getType() const {
 
 bool Character::isDying() const {
     return dying;
+}
+
+bool Character::isLegalDirection(sf::Vector2f direction, Map arena) {
+    sf::Vector2f futurePos = {getPosition().x + (speed * direction.x), getPosition().y + (speed * direction.y)};
+    int i = (int) std::round(futurePos.x / 32);
+    int j = (int) std::round(futurePos.y / 32);
+    sf::Vector2i code = {i, j};
+    Tile tile = arena.getTile(code);
+    if (!tile.isWalkable())
+        return false;
+    return true;
 }

@@ -11,7 +11,7 @@ Enemy::Enemy(CharacterType type, std::shared_ptr<MoveStrategy> moveStrategy) : m
 
 void Enemy::movement(sf::Vector2f direction, const Map &map) {
     if (!attacking && !dying) {
-        if (abs(direction.y - getPosition().y) > speed || abs(direction.x - getPosition().x) > speed) {
+        if (std::abs(direction.y - getPosition().y) > speed || std::abs(direction.x - getPosition().x) > speed) {
             sf::Vector2f dir;
             dir = moveStrategy->movement(direction, sprite);
             sprite.move(dir.x * speed, dir.y * speed);
@@ -43,53 +43,26 @@ void Enemy::update(float deltaTime) {
     attacking = false;
 }
 
-bool Enemy::isLegalMove(sf::Vector2f direction, Map map) {
-    sf::Vector2f futurePos;
-    sf::Vector2f dir;
-    dir.x = (direction.x - getPosition().x) / std::abs((direction.x - getPosition().x) + 0.07);
-    dir.y = (direction.y - getPosition().y) / std::abs((direction.y - getPosition().y) + 0.07);
-    futurePos = {getPosition().x + (speed * dir.x), getPosition().y + (speed * dir.y)};
-    int i = round(futurePos.x / 32);
-    int j = round(futurePos.y / 32);
-    sf::Vector2i source = {i, j};
-    Tile tile = map.getTile(source);
-    if (tile.isWalkable())
-        return true;
-    //adaptMovement(tile, direction, futurePos);
-    return false;
-}
-
-void Enemy::adaptMovement(Tile tile, sf::Vector2f direction, sf::Vector2f futurePos) {
-    sf::Vector2f tilePosition = tile.getTilePosition();
-    if (round(tilePosition.y) != round(Entity::getPosition().y)) {
-        setMoveStrategy(std::make_shared<Patrol>());
-        sprite.move(direction.x >= Entity::getPosition().x ? speed : -speed, 0);
-    }
-    if (round(tilePosition.x) != round(Entity::getPosition().x)) {
-        setMoveStrategy(std::make_shared<Patrol>());
-        sprite.move(0, direction.y >= Entity::getPosition().y ? speed : -speed);
-    }
+bool Enemy::isLegalMove(sf::Vector2f position, const Map &arena) {
+    sf::Vector2f direction;
+    direction.x = (float) round((position.x - getPosition().x) / std::abs((position.x - getPosition().x) + 0.07));
+    direction.y = (float) round((position.y - getPosition().y) / std::abs((position.y - getPosition().y) + 0.07));
+    return isLegalDirection(direction, arena);
 }
 
 void Enemy::setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrategy) {
     Enemy::moveStrategy = moveStrategy;
 }
 
-void Enemy::setMoveStrategy(sf::Vector2f direction, Map arena) {
-    sf::Vector2f dir;
-    dir.x = (direction.x - getPosition().x) / std::abs((direction.x - getPosition().x) + 0.07);
-    dir.y = (direction.y - getPosition().y) / std::abs((direction.y - getPosition().y) + 0.07);
-    sf::Vector2f futurePos = {getPosition().x + (speed * dir.x), getPosition().y + (speed * dir.y)};
-    int i = round(futurePos.x / 32);
-    int j = round(futurePos.y / 32);
-    sf::Vector2i code = {i, j};
-    Tile tile = arena.getTile(code);
-    if (!tile.isWalkable()) {
-        if (fabs(tile.getTilePosition().y - Entity::getPosition().y) < 32)
-            moveStrategy = std::make_shared<AdaptHorizontal>();
-        if (fabs(tile.getTilePosition().x - Entity::getPosition().x) < 32)
+void Enemy::setMoveStrategy(sf::Vector2f position, const Map &arena) {
+    sf::Vector2f direction;
+    direction.x = (float) round((position.x - getPosition().x) / std::abs((position.x - getPosition().x) + 0.07));
+    direction.y = (float) round((position.y - getPosition().y) / std::abs((position.y - getPosition().y) + 0.07));
+    if (!isLegalDirection(direction, arena)) {
+        if (isLegalDirection({0, direction.y}, arena)) {
             moveStrategy = std::make_shared<AdaptVertical>();
+        } else if (isLegalDirection({direction.x, 0}, arena)) {
+            moveStrategy = std::make_shared<AdaptHorizontal>();
+        }
     }
-
 }
-

@@ -16,7 +16,7 @@ Player1::Player1(CharacterType type, int hp, int damage, std::shared_ptr<AttackS
         std::move(attackStrategy)), killCounter(killCounter), Character(type, hp, damage) {
 }
 
-Player1::~Player1() {}
+Player1::~Player1() = default;
 
 void Player1::movement(sf::Vector2f direction, const Map &map) {
     if (!dying && !attacking) {
@@ -32,7 +32,7 @@ void Player1::movement(sf::Vector2f direction, const Map &map) {
                 source.y = left;
         }
         setAnim(8, 0.06);
-//        if (isLegalMove(direction, map))
+        if (isLegalMove(direction, map))
             sprite.move(direction.x * speed, direction.y * speed);
     }
 }
@@ -71,16 +71,9 @@ void Player1::increaseKillCounter() {
     killCounter++;
 }
 
-bool Player1::isLegalMove(sf::Vector2f direction, Map map) {
-    sf::Vector2f futurePos;
-    futurePos = {getPosition().x + (speed * direction.x), getPosition().y + (speed * direction.y)};
-    int i = round(futurePos.x / 32);
-    int j = round(futurePos.y / 32);
-    sf::Vector2i source = {i, j};
-    Tile tile = map.getTile(source);
-    if (tile.isWalkable())
-        return true;
-    return false;
+bool Player1::isLegalMove(sf::Vector2f direction, const Map &arena) {
+    return isLegalDirection(direction, arena);
+
 }
 
 /*AttackStrategy *Player1::getAttackStrategy() const {
