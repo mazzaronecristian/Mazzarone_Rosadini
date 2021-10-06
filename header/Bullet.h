@@ -12,7 +12,7 @@
 
 class Bullet : public Entity {
 public:
-    explicit Bullet(short int bulletDirection, float speed = 10);
+    explicit Bullet(short int bulletDirection, float speed = 15);
 
     bool isCollide(const Enemy &enemy);
 

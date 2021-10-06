@@ -18,7 +18,8 @@
 #include <list>
 #include <memory>
 
-void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter); //generates waves of enemies
+void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter,
+                     Map arena); //generates waves of enemies
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar);
@@ -32,6 +33,10 @@ void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::sh
           LifeBar &lifeBar);
 
 bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>> hero, short int &numArena);
+
+//void enemySelectionStrategy(std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Player1>> hero, const Map& arena);
+
+
 
 int main() {
     bool restart;
@@ -117,7 +122,7 @@ int main() {
         srand(time(NULL));
         std::list<std::shared_ptr<Enemy>> enemies;
         waveCounter++;
-        generateEnemies(enemies, waveCounter);
+        generateEnemies(enemies, waveCounter, arena);
         sf::Clock clock;
         float deltaTime;
         std::list<std::shared_ptr<Bullet>> bullets;
@@ -171,17 +176,15 @@ int main() {
 
             //Enemies movement
             for (auto &enemy: enemies) {
-                if (!enemy->isFighting()) {
-                    if (std::abs(hero[0]->getPosition().x - enemy->getPosition().x) <= 300
-                        && std::abs(hero[0]->getPosition().y - enemy->getPosition().y) <= 300) {
-                        enemy->setMoveStrategy(std::make_shared<Follow>());
-                    } else enemy->setMoveStrategy(std::make_shared<Patrol>());
+                if (std::abs(hero[0]->getPosition().x - enemy->getPosition().x) <= 300
+                    && std::abs(hero[0]->getPosition().y - enemy->getPosition().y) <= 300) {
+                    enemy->setMoveStrategy(std::make_shared<Follow>());
                 } else enemy->setMoveStrategy(std::make_shared<Patrol>());
             }
 
             if (hero[0]->getKillCounter() == 10 && waveCounter < 2) {
                 waveCounter++;
-                generateEnemies(enemies, waveCounter);
+                generateEnemies(enemies, waveCounter, arena);
             }
 
             (hero[0]->getType() == CharacterType::spaceCadet) ?
@@ -194,28 +197,39 @@ int main() {
     return 0;
 }
 
-void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter) {
+void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter, Map arena) {
     PlayersFactory factory;
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 10; i++) {
         std::shared_ptr<Enemy> enemy;
+        bool legalPosition = false;
+        sf::Vector2f position;
+        while (!legalPosition) {
+            position = {(float) (rand() % 450 + 300), (float) (rand() % 450 + 100)};
+            sf::Vector2i source = {(int) round(position.x / 32), (int) round(position.y / 32)};
+            Tile tile = arena.getTile(source);
+            if (tile.isWalkable())
+                legalPosition = true;
+        }
         if (waveCounter == 1)
             enemy = std::make_shared<Enemy>(
                     factory.createEnemy(static_cast<CharacterType>(rand() % 2 + 4),
-                                        sf::Vector2f(
-                                                (float) (rand() % 450 + 300),
-                                                (float) (rand() % 450 +
-                                                         100))));
+                                        position, arena));
         else
             enemy = std::make_shared<Enemy>(
                     factory.createEnemy(static_cast<CharacterType>(rand() % 2 + 6),
                                         sf::Vector2f(
                                                 (float) (rand() % 450 + 300),
                                                 (float) (rand() % 450 +
-                                                         100))));
+                                                         100)), arena));
         enemies.push_back(enemy);
     }
 
 }
+
+//void enemySelectionStrategy(std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Player1>> hero,
+//                            const Map &arena) {
+//
+//}
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar) {
@@ -231,6 +245,12 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared
                 break;
             }
             y++;
+        }
+        for (auto &enemy: enemies) {
+            if (std::abs(hero[0]->getPosition().x - enemy->getPosition().x) <= 300
+                && std::abs(hero[0]->getPosition().y - enemy->getPosition().y) <= 300) {
+                enemy->setMoveStrategy(std::make_shared<Follow>());
+            } else enemy->setMoveStrategy(std::make_shared<Patrol>());
         }
         if (!i->get()->isLife())
             i = bullets.erase(i);
@@ -254,6 +274,7 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
             i->get()->kill();
     }
     for (auto i = enemies.begin(); i != enemies.end();) {
+        //enemySelectionStrategy(enemies, hero, arena);
         if (!i->get()->isLegalMove(hero[0]->getPosition(), arena))
             i->get()->setMoveStrategy(hero[0]->getPosition(), arena);
         i->get()->movement(hero[0]->getPosition(), arena);

@@ -14,14 +14,18 @@
 
 #include "AttackStrategy.h"
 #include "RangedAttack.h"
+#include "MeleeAttack.h"
 #include "Character.h"
 #include "Potion.h"
 
 class Player1 : public Character {
 public:
-    Player1(CharacterType type, std::shared_ptr<AttackStrategy> attackStrategy, int killCounter = 0);
+    explicit Player1(CharacterType type,
+                     std::shared_ptr<AttackStrategy> attackStrategy = std::make_shared<RangedAttack>(),
+                     int killCounter = 0);
 
-    Player1(CharacterType type, int hp, int damage, std::shared_ptr<AttackStrategy> attackStrategy,
+    Player1(CharacterType type, int hp, int damage, float speed = 0.7,
+            std::shared_ptr<AttackStrategy> attackStrategy = std::make_shared<MeleeAttack>(),
             int killCounter = 0);
 
     void update(float deltaTime) override;

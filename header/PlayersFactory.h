@@ -8,7 +8,7 @@
 #include "CharacterFactory.h"
 class PlayersFactory : public CharacterFactory {
 public:
-    Enemy createEnemy(CharacterType type, sf::Vector2f position) override;
+    Enemy createEnemy(CharacterType type, sf::Vector2f position, Map arena) override;
 
     Player1 createHero(CharacterType type) override;
 

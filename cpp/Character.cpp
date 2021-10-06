@@ -77,9 +77,7 @@ bool Character::isDying() const {
 
 bool Character::isLegalDirection(sf::Vector2f direction, Map arena) {
     sf::Vector2f futurePos = {getPosition().x + (speed * direction.x), getPosition().y + (speed * direction.y)};
-    int i = (int) std::round(futurePos.x / 32);
-    int j = (int) std::round(futurePos.y / 32);
-    sf::Vector2i code = {i, j};
+    sf::Vector2i code = {(int) std::round(futurePos.x / 32), (int) std::round(futurePos.y / 32)};
     Tile tile = arena.getTile(code);
     if (!tile.isWalkable())
         return false;

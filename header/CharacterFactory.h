@@ -20,7 +20,7 @@ public:
 
     virtual Player1 createHero(CharacterType type) = 0;
 
-    virtual Enemy createEnemy(CharacterType type, sf::Vector2f position) = 0;
+    virtual Enemy createEnemy(CharacterType type, sf::Vector2f position, Map arena) = 0;
 
 protected:
     std::string setBitMap(CharacterType type);
