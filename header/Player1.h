@@ -22,7 +22,7 @@ class Player1 : public Character {
 public:
     explicit Player1(CharacterType type,
                      std::shared_ptr<AttackStrategy> attackStrategy = std::make_shared<RangedAttack>(),
-                     int killCounter = 0);
+                     int killCounter = 20);
 
     Player1(CharacterType type, int hp, int damage, float speed = 0.7,
             std::shared_ptr<AttackStrategy> attackStrategy = std::make_shared<MeleeAttack>(),

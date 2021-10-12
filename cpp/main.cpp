@@ -92,7 +92,7 @@ int main() {
         }
         choice.display();
     }
-    short int numArena = 2;
+    short int numArena = 1;
     do {
         short int waveCounter = 0;
         sf::RenderWindow window(sf::VideoMode(960, 740), "GAME");
@@ -199,7 +199,7 @@ int main() {
 
 void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter, Map arena) {
     PlayersFactory factory;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 0; i++) {
         std::shared_ptr<Enemy> enemy;
         bool legalPosition = false;
         sf::Vector2f position;

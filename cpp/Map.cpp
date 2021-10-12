@@ -17,8 +17,8 @@ void Map::load(const std::string &background, const std::string &tileSet, sf::Ve
     // load the tileset texture
     m_tileset.loadFromFile(tileSet);
 
-    setTilesCode(shades, tileSize, tilesShades);
     setTilesCode(matrix, tileSize, tiles);
+    setTilesCode(shades, tileSize, tilesShades);
 
 }
 void Map::draw(sf::RenderTarget &target, sf::RenderStates states) const {
