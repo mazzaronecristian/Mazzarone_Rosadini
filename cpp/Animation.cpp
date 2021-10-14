@@ -40,4 +40,8 @@ void Animation::setSwitchTime(float switchTime) {
     Animation::switchTime = switchTime;
 }
 
+void Animation::setFrameSize(sf::Vector2i dim) {
+    rect = sf::IntRect(0, 0, dim.x, dim.y);
+}
+
 

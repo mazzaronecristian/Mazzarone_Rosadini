@@ -16,7 +16,9 @@ public:
 
     bool isCollide(const Enemy &enemy);
 
-    void movement();
+    bool isLegalMove(Map arena);
+
+    void movement(const Map &arena);
 
     void update(float deltaTime) override;
 

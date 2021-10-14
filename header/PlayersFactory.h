@@ -12,6 +12,8 @@ public:
 
     Player1 createHero(CharacterType type) override;
 
+    Enemy createBoss(CharacterType type) override;
+
 };
 
 #endif //MAZZARONE_ROSADINI_PLAYERSFACTORY_H

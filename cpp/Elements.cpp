@@ -10,14 +10,12 @@ Elements::~Elements() {
 Elements::Elements(int width, int height) : width(width), height(height) {
 }
 
-bool Elements::load(const std::string &tileSet, sf::Vector2f position) {
-    if (!Elements::tileSet.loadFromFile(tileSet))
-        return false;
+void Elements::load(const std::string &tileSet, sf::Vector2f position) {
+    Elements::tileSet.loadFromFile(tileSet);
     sprite.setTexture(Elements::tileSet);
     sprite.setPosition(position);
     sprite.scale(1.4, 1.4);
     sprite.setTextureRect(sf::IntRect(source.x * width, source.y * height, width, height));
-    return true;
 }
 
 void Elements::draw(sf::RenderTarget &target, sf::RenderStates states) const {
@@ -43,5 +41,6 @@ void Elements::setSourceY(const int y) {
 void Elements::setSourceX(const int x) {
     Elements::source.x = x;
 }
+
 
 

@@ -20,6 +20,8 @@ public:
     //setter
     void setNFrame(int nFrame);
 
+    void setFrameSize(sf::Vector2i dim);
+
     void setSwitchTime(float switchTime);
 
     void setAnimTime(float animTime);

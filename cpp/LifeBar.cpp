@@ -4,8 +4,7 @@
 
 #include "../header/LifeBar.h"
 
-LifeBar::LifeBar(Character *character, int width, int height) : UserInterface(width, height),
-                                                                character(character) {
+LifeBar::LifeBar(Character *character, int width, int height) : Elements(width, height), character(character) {
     bit = character->getHp() / 5;
 }
 

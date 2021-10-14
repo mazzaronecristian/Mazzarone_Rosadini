@@ -9,8 +9,10 @@ Bullet::~Bullet() = default;
 Bullet::Bullet(short int bulletDirection, float speed) : bulletDirection(bulletDirection), speed(speed), Entity(32, 3) {
 }
 
-void Bullet::movement() {
-    sprite.move((float) bulletDirection * speed, 0);
+void Bullet::movement(const Map &arena) {
+    if (isLegalMove(arena))
+        sprite.move((float) bulletDirection * speed, 0);
+    else life = false;
 }
 
 void Bullet::update(float deltaTime) {
@@ -27,4 +29,13 @@ bool Bullet::isCollide(const Enemy &enemy) {
         return true;
     }
     return false;
+}
+
+bool Bullet::isLegalMove(Map arena) {
+    sf::Vector2f futurePos = {getPosition().x + (speed * (float) bulletDirection), getPosition().y};
+    sf::Vector2i code = {(int) std::round(futurePos.x / 32), (int) std::round(futurePos.y / 32)};
+    Tile tile = arena.getTile(code);
+    if (!tile.isWalkable())
+        return false;
+    return true;
 }

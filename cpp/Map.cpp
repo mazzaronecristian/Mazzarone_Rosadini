@@ -65,7 +65,7 @@ void Map::drawTiles(sf::RenderTarget &target, std::vector<Tile> tiles) const {
 void Map::setTilesCode(std::ifstream &matrix, sf::Vector2u tileSize, std::vector<Tile> &tiles) {
 
     int codeX, codeY;
-    bool walkable;
+    bool walkable, shootable;
     for (int y = 0; y < height; y++)
         for (int x = 0; x < width; x++) {
             matrix >> codeX;

@@ -17,6 +17,9 @@
 class Enemy : public Character {
 public:
 
+    Enemy(CharacterType type, int width, int height,
+          std::shared_ptr<MoveStrategy> moveStrategy = std::make_shared<Patrol>());
+
     explicit Enemy(CharacterType type, std::shared_ptr<MoveStrategy> moveStrategy = std::make_shared<Patrol>());
 
     void update(float deltaTime) override;

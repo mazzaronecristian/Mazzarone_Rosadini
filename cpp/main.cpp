@@ -21,21 +21,23 @@
 void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter,
                      Map arena); //generates waves of enemies
 
+void generateBoss(std::vector<std::shared_ptr<Enemy>> &boss);
+
+
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar);
+            std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Enemy>> boss, float deltaTime,
+            Map &arena, LifeBar &lifeBar);
 
 void update(std::vector<std::shared_ptr<Player1>> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar);
+            std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Enemy>> boss, float deltaTime,
+            Map &arena, LifeBar &lifeBar);
 
 void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
           const std::list<std::shared_ptr<Enemy>> &enemies, sf::RenderWindow &window, sf::RenderTexture &gameOver,
           Map &arena,
-          LifeBar &lifeBar);
+          LifeBar &lifeBar, const std::vector<std::shared_ptr<Enemy>> &boss);
 
 bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>> hero, short int &numArena);
-
-//void enemySelectionStrategy(std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Player1>> hero, const Map& arena);
-
 
 
 int main() {
@@ -50,8 +52,8 @@ int main() {
     std::vector<std::shared_ptr<Gif>> heroesGif;
     Gif heroGif1 = choiceFactory.createGif(CharacterType::spaceCadet, sf::Vector2f(200, 130));
     Gif heroGif2 = choiceFactory.createGif(CharacterType::adventurer, sf::Vector2f(500, 130));
-    Gif heroGif3 = choiceFactory.createGif(CharacterType::dwarf, sf::Vector2f(200, 360));
-    Gif heroGif4 = choiceFactory.createGif(CharacterType::gladiator, sf::Vector2f(500, 360));
+    Gif heroGif3 = choiceFactory.createGif(CharacterType::dwarf, sf::Vector2f(200, 380));
+    Gif heroGif4 = choiceFactory.createGif(CharacterType::gladiator, sf::Vector2f(500, 380));
     heroesGif.push_back(std::make_shared<Gif>(heroGif1));
     heroesGif.push_back(std::make_shared<Gif>(heroGif2));
     heroesGif.push_back(std::make_shared<Gif>(heroGif3));
@@ -92,7 +94,7 @@ int main() {
         }
         choice.display();
     }
-    short int numArena = 1;
+    short int numArena = 2;
     do {
         short int waveCounter = 0;
         sf::RenderWindow window(sf::VideoMode(960, 740), "GAME");
@@ -120,13 +122,21 @@ int main() {
         Map arena = mapFactory.createMap(numArena);
 
         srand(time(NULL));
+
+        //enemies
         std::list<std::shared_ptr<Enemy>> enemies;
         waveCounter++;
         generateEnemies(enemies, waveCounter, arena);
+
+        //boss
+        std::vector<std::shared_ptr<Enemy>> boss;
+        if (numArena == 2)
+            generateBoss(boss);
         sf::Clock clock;
         float deltaTime;
         std::list<std::shared_ptr<Bullet>> bullets;
         BulletsFactory bullFactory;
+
         //main loop
         while (window.isOpen()) {
             deltaTime = clock.restart().asSeconds();
@@ -188,10 +198,11 @@ int main() {
             }
 
             (hero[0]->getType() == CharacterType::spaceCadet) ?
-            update(bullets, hero, enemies, deltaTime, arena, lifeBar) : update(hero, enemies, deltaTime, arena,
-                                                                               lifeBar);
+            update(bullets, hero, enemies, boss, deltaTime, arena, lifeBar) : update(hero, enemies, boss, deltaTime,
+                                                                                     arena,
+                                                                                     lifeBar);
 
-            draw(bullets, hero, enemies, window, gameOver, arena, lifeBar);
+            draw(bullets, hero, enemies, window, gameOver, arena, lifeBar, boss);
         }
     } while (restart);
     return 0;
@@ -199,7 +210,7 @@ int main() {
 
 void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter, Map arena) {
     PlayersFactory factory;
-    for (int i = 0; i < 0; i++) {
+    for (int i = 0; i < 10; i++) {
         std::shared_ptr<Enemy> enemy;
         bool legalPosition = false;
         sf::Vector2f position;
@@ -226,17 +237,21 @@ void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveC
 
 }
 
-//void enemySelectionStrategy(std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Player1>> hero,
-//                            const Map &arena) {
-//
-//}
+void generateBoss(std::vector<std::shared_ptr<Enemy>> &boss) {
+    PlayersFactory factory;
+    std::shared_ptr<Enemy> enemy;
+    enemy = std::make_shared<Enemy>(factory.createBoss(CharacterType::cyclops));
+    boss.push_back(enemy);
+    boss[0]->setMoveStrategy(std::make_shared<Follow>());
+}
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar) {
+            std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Enemy>> boss, float deltaTime,
+            Map &arena, LifeBar &lifeBar) {
 
     //Bullets update
     for (auto i = bullets.begin(); i != bullets.end();) {
-        i->get()->movement();
+        i->get()->movement(arena);
         i->get()->update(deltaTime);
         auto y = enemies.begin();
         while (y != enemies.end()) {
@@ -246,29 +261,26 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared
             }
             y++;
         }
-        for (auto &enemy: enemies) {
-            if (std::abs(hero[0]->getPosition().x - enemy->getPosition().x) <= 300
-                && std::abs(hero[0]->getPosition().y - enemy->getPosition().y) <= 300) {
-                enemy->setMoveStrategy(std::make_shared<Follow>());
-            } else enemy->setMoveStrategy(std::make_shared<Patrol>());
-        }
+        if (i->get()->isCollide(*boss[0]))
+            hero[0]->fight(*boss[0]);
+
         if (!i->get()->isLife())
             i = bullets.erase(i);
         else i++;
     }
 
-    update(hero, enemies, deltaTime, arena, lifeBar);
+    update(hero, enemies, boss, deltaTime, arena, lifeBar);
 }
 
 void update(std::vector<std::shared_ptr<Player1>> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, float deltaTime, Map &arena, LifeBar &lifeBar) {
+            std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Enemy>> boss, float deltaTime,
+            Map &arena, LifeBar &lifeBar) {
     //Enemies update
     for (auto i = enemies.begin(); i != enemies.end(); i++) {
         if (i->get()->isLegalFight(*hero[0])) {
             i->get()->fight(*hero[0]);
         }
     }
-
     for (auto i = enemies.begin(); i != enemies.end(); i++) {
         if (i->get()->getHp() <= 0)
             i->get()->kill();
@@ -297,7 +309,13 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
             }
             y++;
         }
+        hero[0]->isLegalFight(*boss[0]);
     }
+
+    if (boss[0]->isLegalMove(hero[0]->getPosition(), arena))
+        boss[0]->setMoveStrategy(hero[0]->getPosition(), arena);
+    boss[0]->movement(hero[0]->getPosition(), arena);
+    boss[0]->update(deltaTime);
 
     //Heroes update
     if (hero[0]->getHp() <= 0)
@@ -315,7 +333,7 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
 void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
           const std::list<std::shared_ptr<Enemy>> &enemies, sf::RenderWindow &window, sf::RenderTexture &gameOver,
           Map &arena,
-          LifeBar &lifeBar) {
+          LifeBar &lifeBar, const std::vector<std::shared_ptr<Enemy>> &boss) {
     window.clear();
     window.draw(arena);
     window.draw(*hero[0]);
@@ -330,6 +348,7 @@ void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::sh
         sf::Sprite over(gameOver.getTexture());
         window.draw(over);
     }
+    window.draw(*boss[0]);
     window.display();
 }
 

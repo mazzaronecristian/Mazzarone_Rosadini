@@ -5,15 +5,14 @@
 #ifndef MAZZARONE_ROSADINI_LIFEBAR_H
 #define MAZZARONE_ROSADINI_LIFEBAR_H
 
-#include "UserInterface.h"
 #include "Character.h"
 #include "memory"
 
-class LifeBar : public UserInterface {
+class LifeBar : Elements {
 public:
     explicit LifeBar(Character *character, int width = 251, int height = 32);
 
-    void update() override;
+    void update();
 
 private:
     Character *character;

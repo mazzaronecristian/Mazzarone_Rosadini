@@ -28,5 +28,9 @@ std::string CharacterFactory::setBitMap(CharacterType type) {
     if (type == CharacterType::miniGolem)
         result = "./tileSets/characters/miniGolem.png";
 
+    //boss
+    if (type == CharacterType::cyclops)
+        result = "./tileSets/characters/cyclops.png";
+
     return result;
 }

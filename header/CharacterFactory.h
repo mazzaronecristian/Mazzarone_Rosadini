@@ -22,6 +22,8 @@ public:
 
     virtual Enemy createEnemy(CharacterType type, sf::Vector2f position, Map arena) = 0;
 
+    virtual Enemy createBoss(CharacterType type) = 0;
+
 protected:
     std::string setBitMap(CharacterType type);
 

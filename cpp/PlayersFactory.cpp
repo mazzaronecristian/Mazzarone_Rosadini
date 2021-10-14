@@ -23,3 +23,9 @@ Player1 PlayersFactory::createHero(CharacterType type) {
     result->load(setBitMap(type), sf::Vector2f(50, 270));
     return *result;
 }
+
+Enemy PlayersFactory::createBoss(CharacterType type) {
+    auto *result = new Enemy(type);
+    result->load(setBitMap(type), sf::Vector2f(700, 270), 64, 64);
+    return *result;
+}

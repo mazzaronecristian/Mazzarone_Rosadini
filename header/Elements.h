@@ -15,7 +15,7 @@ public:
 
     virtual ~Elements() = 0;
 
-    bool load(const std::string &tileSet, sf::Vector2f position);
+    void load(const std::string &tileSet, sf::Vector2f position);
 
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 

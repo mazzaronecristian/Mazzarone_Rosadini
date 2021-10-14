@@ -15,7 +15,7 @@ set(SOURCE_FILES cpp/Character.cpp header/Character.h cpp/Player1.cpp header/Pla
         cpp/Follow.cpp header/Follow.h cpp/Patrol.cpp header/Patrol.h cpp/Animation.cpp header/Animation.h cpp/AttackStrategy.cpp
         header/AttackStrategy.h cpp/RangedAttack.cpp header/RangedAttack.h cpp/CharacterFactory.cpp
         header/CharacterFactory.h cpp/PlayersFactory.cpp header/PlayersFactory.h cpp/BulletsFactory.cpp header/BulletsFactory.h
-        cpp/UserInterface.cpp header/UserInterface.h cpp/Elements.cpp header/Elements.h cpp/LifeBar.cpp header/LifeBar.h
+        cpp/Elements.cpp header/Elements.h cpp/LifeBar.cpp header/LifeBar.h
         cpp/UserInterfaceFactory.cpp header/UserInterfaceFactory.h cpp/MeleeAttack.cpp header/MeleeAttack.h cpp/Gif.cpp header/Gif.h cpp/MapFactory.cpp header/MapFactory.h cpp/AdaptHorizontal.cpp header/AdaptHorizontal.h cpp/AdaptVertical.cpp header/AdaptVertical.h)
 
 add_executable(Mazzarone_Rosadini cpp/main.cpp ${SOURCE_FILES})

@@ -66,3 +66,8 @@ void Enemy::setMoveStrategy(sf::Vector2f position, const Map &arena) {
         }
     }
 }
+
+Enemy::Enemy(CharacterType type, int width, int height, std::shared_ptr<MoveStrategy> moveStrategy) : {
+
+}
+

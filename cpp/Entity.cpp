@@ -9,8 +9,6 @@ Entity::Entity(int width, int height, const sf::Time &animTime) : anim(sf::Vecto
     life = true;
 }
 
-//Getter and Setter
-
 void Entity::update(float deltaTime) {
     anim.update(source, deltaTime);
     anim.applyToSprite(sprite);
@@ -19,6 +17,8 @@ void Entity::update(float deltaTime) {
 bool Entity::isLife() const {
     return life;
 }
+
+//Getter and Setter
 
 void Entity::setAnim(int nFrame, float switchTime) {
     anim.setNFrame(nFrame);
@@ -40,6 +40,7 @@ sf::Vector2f Entity::getPosition() {
 
 Entity::~Entity() {
 }
+
 
 
 
