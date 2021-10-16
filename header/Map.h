@@ -13,10 +13,15 @@
 #include <fstream>
 #include <memory>
 #include "Tile.h"
+#include "Observer.h"
 
-class Map : public sf::Drawable, public sf::Transformable {
+class Player1;
+
+class Map : public Observer, public sf::Drawable, public sf::Transformable {
 public:
-    explicit Map(int width = 30, int height = 20);
+    virtual ~Map();
+
+    explicit Map(Player1 *subject, int width = 30, int height = 20);
 
     void load(const std::string &background, const std::string &tileSet, sf::Vector2u tileSize, std::ifstream &matrix,
               std::ifstream &shades2);
@@ -24,6 +29,13 @@ public:
     Tile getTile(sf::Vector2i source);
 
     void openExitTile();
+
+    //Observer methods
+    void detach() override;
+
+    void attach() override;
+
+    void update() override;
 
 private:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
@@ -39,6 +51,8 @@ private:
     sf::Texture m_tileset;
     std::vector<Tile> tiles;
     std::vector<Tile> tilesShades;
+
+    Player1 *subject;
 };
 
 #endif //MAZZARONE_ROSADINI_MAP_H

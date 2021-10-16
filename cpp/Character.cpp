@@ -6,13 +6,11 @@
 
 #include <cmath>
 
-Character::Character(CharacterType type, int hp, int damage, float speed, bool isAttacking, bool isDying) : hp(hp),
-                                                                                                            damage(damage),
-                                                                                                            speed(speed),
-                                                                                                            attacking(
-                                                                                                                    isAttacking),
-                                                                                                            dying(isDying),
-                                                                                                            type(type) {}
+
+Character::Character(CharacterType type, int width, int height, int hp, int damage, float speed, bool isAttacking,
+                     bool isDying) : hp(hp), damage(damage), speed(speed), attacking(isAttacking), dying(isDying),
+                                     type(type),
+                                     Entity(sf::Vector2i(width, height)) {}
 
 //getter
 int Character::getHp() const {
@@ -83,3 +81,4 @@ bool Character::isLegalDirection(sf::Vector2f direction, Map arena) {
         return false;
     return true;
 }
+

@@ -6,14 +6,15 @@
 
 #include <utility>
 
-Player1::Player1(CharacterType type, std::shared_ptr<AttackStrategy> attackStrategy, int killCounter) : attackStrategy(
-        std::move(attackStrategy)), killCounter(killCounter), Character(type) {
+Player1::Player1(CharacterType type, std::shared_ptr<AttackStrategy> attackStrategy, int killCounter, int width,
+                 int height) : attackStrategy(
+        std::move(attackStrategy)), killCounter(killCounter), Character(type, width, height) {
 }
 
 Player1::Player1(CharacterType type, int hp, int damage, float speed, std::shared_ptr<AttackStrategy> attackStrategy,
-                 int killCounter)
+                 int killCounter, int width, int height)
         : attackStrategy(
-        std::move(attackStrategy)), killCounter(killCounter), Character(type, hp, damage, speed) {
+        std::move(attackStrategy)), killCounter(killCounter), Character(type, width, height, hp, damage, speed) {
 }
 
 Player1::~Player1() = default;
@@ -74,6 +75,19 @@ void Player1::increaseKillCounter() {
 bool Player1::isLegalMove(sf::Vector2f direction, const Map &arena) {
     return isLegalDirection(direction, arena);
 
+}
+
+//Subject methods
+void Player1::subscribe(Observer *o) {
+    observer = o;
+}
+
+void Player1::unsubscribe(Observer *o) {
+    observer = nullptr;
+}
+
+void Player1::notify() {
+    observer->update();
 }
 
 /*AttackStrategy *Player1::getAttackStrategy() const {

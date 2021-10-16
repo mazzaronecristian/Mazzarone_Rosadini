@@ -11,7 +11,7 @@
 
 class Gif : public Entity {
 public:
-    explicit Gif(CharacterType type);
+    explicit Gif(CharacterType type, int width = 32, int height = 32);
 
     CharacterType getType() const;
 

@@ -17,16 +17,17 @@
 #include "MeleeAttack.h"
 #include "Character.h"
 #include "Potion.h"
+#include "Subject.h"
 
-class Player1 : public Character {
+class Player1 : public Character, public Subject {
 public:
     explicit Player1(CharacterType type,
                      std::shared_ptr<AttackStrategy> attackStrategy = std::make_shared<RangedAttack>(),
-                     int killCounter = 20);
+                     int killCounter = 0, int width = 32, int height = 32);
 
     Player1(CharacterType type, int hp, int damage, float speed = 0.7,
             std::shared_ptr<AttackStrategy> attackStrategy = std::make_shared<MeleeAttack>(),
-            int killCounter = 0);
+            int killCounter = 0, int width = 32, int height = 32);
 
     void update(float deltaTime) override;
 
@@ -42,6 +43,13 @@ public:
 
     void increaseKillCounter();
 
+    //Subject methods
+    void subscribe(Observer *o) override;
+
+    void unsubscribe(Observer *o) override;
+
+    void notify() override;
+
     //TODO RESOLVE POTION
     //void usePotion();
 
@@ -55,6 +63,7 @@ private:
     //Potion potion;
     std::shared_ptr<AttackStrategy> attackStrategy;
     int killCounter;
+    Observer *observer;
 
 };
 

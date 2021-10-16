@@ -16,7 +16,7 @@
 
 class Entity : public Elements {
 public:
-    explicit Entity(int width = 32, int height = 32, const sf::Time &animTime = sf::milliseconds(60));
+    explicit Entity(sf::Vector2i dimension, const sf::Time &animTime = sf::milliseconds(60));
 
     virtual ~Entity() = 0;
 

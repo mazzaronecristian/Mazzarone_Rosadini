@@ -6,13 +6,14 @@
 #define MAZZARONE_ROSADINI_LIFEBAR_H
 
 #include "Character.h"
+#include "UserInterface.h"
 #include "memory"
 
-class LifeBar : Elements {
+class LifeBar : public UserInterface {
 public:
     explicit LifeBar(Character *character, int width = 251, int height = 32);
 
-    void update();
+    void update() final;
 
 private:
     Character *character;

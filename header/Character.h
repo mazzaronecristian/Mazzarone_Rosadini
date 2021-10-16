@@ -16,9 +16,9 @@ enum class CharacterType {
 
 class Character : public Entity {
 public:
-    explicit Character(CharacterType type, int hp = 120, int damage = 40, float speed = 0.5, bool isAttacking = false,
-                       bool isDying = false);
-
+    Character(CharacterType type, int width, int height, int hp = 120, int damage = 40, float speed = 0.5,
+              bool isAttacking = false,
+              bool isDying = false);
 
     virtual void movement(sf::Vector2f direction, const Map &map) = 0;
 

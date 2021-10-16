@@ -6,8 +6,11 @@
 
 #include <utility>
 
-Enemy::Enemy(CharacterType type, std::shared_ptr<MoveStrategy> moveStrategy) : moveStrategy(std::move(moveStrategy)),
-                                                                               Character(type, 100, 8, 0.1) {}
+Enemy::Enemy(CharacterType type, int width, int height, int hp, int damage, float speed,
+             std::shared_ptr<MoveStrategy> moveStrategy) : moveStrategy(std::move(moveStrategy)),
+                                                           Character(type, width, height, hp, damage, speed) {
+
+}
 
 void Enemy::movement(sf::Vector2f direction, const Map &map) {
     if (!attacking && !dying) {
@@ -66,8 +69,3 @@ void Enemy::setMoveStrategy(sf::Vector2f position, const Map &arena) {
         }
     }
 }
-
-Enemy::Enemy(CharacterType type, int width, int height, std::shared_ptr<MoveStrategy> moveStrategy) : {
-
-}
-

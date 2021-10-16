@@ -4,8 +4,8 @@
 
 #include "../header/Entity.h"
 
-Entity::Entity(int width, int height, const sf::Time &animTime) : anim(sf::Vector2i(width, height)),
-                                                                  Elements(width, height) {
+Entity::Entity(sf::Vector2i dimension, const sf::Time &animTime) : anim(dimension),
+                                                                   Elements(dimension.x, dimension.y) {
     life = true;
 }
 

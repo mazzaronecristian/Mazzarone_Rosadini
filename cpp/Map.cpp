@@ -4,8 +4,9 @@
 
 #include <iostream>
 #include "../header/Map.h"
+#include "../header/Player1.h"
 
-Map::Map(int width, int height) : width(width), height(height) {
+Map::Map(Player1 *subject, int width, int height) : width(width), height(height), subject(subject) {
     tiles.reserve(width * height);
     tilesShades.reserve(width * height);
 }
@@ -65,7 +66,7 @@ void Map::drawTiles(sf::RenderTarget &target, std::vector<Tile> tiles) const {
 void Map::setTilesCode(std::ifstream &matrix, sf::Vector2u tileSize, std::vector<Tile> &tiles) {
 
     int codeX, codeY;
-    bool walkable, shootable;
+    bool walkable;
     for (int y = 0; y < height; y++)
         for (int x = 0; x < width; x++) {
             matrix >> codeX;
@@ -78,6 +79,26 @@ void Map::setTilesCode(std::ifstream &matrix, sf::Vector2u tileSize, std::vector
         }
 
 }
+
+//Observer methods
+void Map::detach() {
+    subject->unsubscribe(this);
+}
+
+void Map::attach() {
+    subject->subscribe(this);
+}
+
+void Map::update() {
+    if (subject->getKillCounter() == 20)
+        openExitTile();
+}
+
+Map::~Map() {
+    detach();
+}
+
+
 
 
 

@@ -5,7 +5,7 @@
 #include "../header/Gif.h"
 
 
-Gif::Gif(CharacterType type) : type(type), Entity() {
+Gif::Gif(CharacterType type, int width, int height) : type(type), Entity(sf::Vector2i(width, height)) {
     setAnim(16, 0.06);
     sprite.setScale(5, 5);
 }
@@ -13,4 +13,3 @@ Gif::Gif(CharacterType type) : type(type), Entity() {
 CharacterType Gif::getType() const {
     return type;
 }
-

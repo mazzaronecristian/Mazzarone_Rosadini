@@ -7,10 +7,9 @@
 
 #include "Map.h"
 
-
 class MapFactory {
 public:
-    Map createMap(short int numArena);
+    Map createMap(short int numArena, Player1 &subject);
 
 private:
     std::ifstream setMatrix(short int numArena);

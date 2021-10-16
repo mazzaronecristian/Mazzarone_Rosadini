@@ -119,7 +119,7 @@ int main() {
 
         LifeBar lifeBar = userFactory.createLifeBar(hero[0].get());
 
-        Map arena = mapFactory.createMap(numArena);
+        Map arena = mapFactory.createMap(numArena, *hero[0]);
 
         srand(time(NULL));
 
@@ -128,7 +128,6 @@ int main() {
         waveCounter++;
         generateEnemies(enemies, waveCounter, arena);
 
-        //boss
         std::vector<std::shared_ptr<Enemy>> boss;
         if (numArena == 2)
             generateBoss(boss);
@@ -325,9 +324,7 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
     } else
         hero[0]->update(deltaTime);
     lifeBar.update();
-
-    if (hero[0]->getKillCounter() == 20)
-        arena.openExitTile();
+    arena.update();
 }
 
 void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
