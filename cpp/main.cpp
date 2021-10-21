@@ -145,23 +145,16 @@ int main() {
                     window.close();
                 }
                 if (e.type == sf::Event::KeyReleased)
-                    if (e.key.code == sf::Keyboard::Enter) {
-                        if (hero[0]->getType() == CharacterType::spaceCadet && !hero[0]->isDying()) {
-                            short int bulletDirection;
-                            if (hero[0]->getSource().y % 2 == 0) {
-                                hero[0]->setSourceY(4);
-                                bulletDirection = 1; //right
-                            } else {
-                                hero[0]->setSourceY(5);
-                                bulletDirection = -1; //left
-                            }
-                            std::shared_ptr<Bullet> shot = std::make_shared<Bullet>(
-                                    bullFactory.createBullet(hero[0]->getPosition(),
-                                                             bulletDirection));
-                            hero[0]->setAnim(8, 0.06);
-                            shot->setAnim(3, 0.3);
-                            bullets.push_back(shot);
-                        }
+                    if (e.key.code == sf::Keyboard::Enter && hero[0]->getType() == CharacterType::spaceCadet) {
+                        short int bulletDirection;
+                        hero[0]->setSourceY(4 + (hero[0]->getSource().y % 2));
+                        bulletDirection = (hero[0]->getSource().y % 2 == 0) ? 1 : -1;
+                        std::shared_ptr<Bullet> shot = std::make_shared<Bullet>(
+                                bullFactory.createBullet(hero[0]->getPosition(),
+                                                         bulletDirection));
+                        hero[0]->setAnim(8, 0.06);
+                        shot->setAnim(3, 0.3);
+                        bullets.push_back(shot);
                     }
             }
 
@@ -179,8 +172,19 @@ int main() {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                     hero[0]->movement(sf::Vector2f(1, 0), arena);
                 if (hero[0]->getType() != CharacterType::spaceCadet)
-                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
-                        hero[0]->setIsFighting(true);
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+                        if (hero[0]->getSource().y % 2 == 0)
+                            hero[0]->setAnim(8, 0.04, 4);
+                        else hero[0]->setAnim(8, 0.04, 5);
+                        auto y = enemies.begin();
+                        while (y != enemies.end()) {
+                            if (hero[0]->isLegalFight(**y)) {
+                                hero[0]->fight(**y);
+                                break;
+                            }
+                            y++;
+                        }
+                    }
             }
 
             //Enemies movement
@@ -262,7 +266,6 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared
         }
         if (i->get()->isCollide(*boss[0]))
             hero[0]->fight(*boss[0]);
-
         if (!i->get()->isLife())
             i = bullets.erase(i);
         else i++;
@@ -295,20 +298,6 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
             hero[0]->increaseKillCounter();
         }
         i++;
-    }
-    if (hero[0]->isFighting()) {
-        if (hero[0]->getSource().y % 2 == 0)
-            hero[0]->setAnim(8, 0.04, 4);
-        else hero[0]->setAnim(8, 0.04, 5);
-        auto y = enemies.begin();
-        while (y != enemies.end()) {
-            if (hero[0]->isLegalFight(**y)) {
-                hero[0]->fight(**y);
-                break;
-            }
-            y++;
-        }
-        hero[0]->isLegalFight(*boss[0]);
     }
 
     if (boss[0]->isLegalMove(hero[0]->getPosition(), arena))

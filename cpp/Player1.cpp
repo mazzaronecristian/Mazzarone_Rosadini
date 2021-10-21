@@ -90,6 +90,10 @@ void Player1::notify() {
     observer->update();
 }
 
+const std::shared_ptr<AttackStrategy> &Player1::getAttackStrategy() const {
+    return attackStrategy;
+}
+
 /*AttackStrategy *Player1::getAttackStrategy() const {
     return attackStrategy;
 }

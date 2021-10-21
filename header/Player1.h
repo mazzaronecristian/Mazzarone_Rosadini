@@ -41,6 +41,8 @@ public:
 
     int getKillCounter() const;
 
+    const std::shared_ptr<AttackStrategy> &getAttackStrategy() const;
+
     void increaseKillCounter();
 
     //Subject methods

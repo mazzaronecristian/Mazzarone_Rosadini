@@ -56,10 +56,6 @@ bool Character::isLegalFight(const Character &character) {
     return false;
 }
 
-bool Character::isFighting() const {
-    return attacking;
-}
-
 void Character::setIsFighting(bool isAttacking) {
     Character::attacking = isAttacking;
 }

@@ -46,7 +46,6 @@ public:
 
     int getDamage() const;
 
-    bool isFighting() const;
 
     //setter
     void setHp(int hp);
