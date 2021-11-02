@@ -48,14 +48,6 @@ void Character::fight(Character &character) {
     attacking = true;
 }
 
-bool Character::isLegalFight(const Character &character) {
-    sf::FloatRect box = character.getSprite().getGlobalBounds();
-    sf::FloatRect thisBox = sprite.getGlobalBounds();
-    if (thisBox.intersects(box))
-        return true;
-    return false;
-}
-
 void Character::setIsFighting(bool isAttacking) {
     Character::attacking = isAttacking;
 }
@@ -76,5 +68,13 @@ bool Character::isLegalDirection(sf::Vector2f direction, Map arena) {
     if (!tile.isWalkable())
         return false;
     return true;
+}
+
+bool Character::isLegalFight(const Entity *entity) {
+    sf::FloatRect box = entity->getSprite().getGlobalBounds();
+    sf::FloatRect thisBox = sprite.getGlobalBounds();
+    if (thisBox.intersects(box))
+        return true;
+    return false;
 }
 

@@ -45,13 +45,7 @@ void Player1::movement(sf::Vector2f direction, const Map &map) {
 void Player1::setPotion(Potion potion) {
     Player1::potion = potion;
 }
-
-void Player1::usePotion() {
-    if(potion.getDescription()=="heal")
-        setHp(potion.use(getHp()));
-    else
-        setDamage(potion.use(getDamage()));
-}*/
+*/
 
 void Player1::fight(Character &character) {
     if (!dying)
@@ -94,12 +88,26 @@ const std::shared_ptr<AttackStrategy> &Player1::getAttackStrategy() const {
     return attackStrategy;
 }
 
-/*AttackStrategy *Player1::getAttackStrategy() const {
-    return attackStrategy;
+
+void Player1::usePotion() {
+    if (potion != nullptr) {
+        hp = Player1::potion->use(hp);
+        if (hp > 150)
+            hp = 150;
+        potion = nullptr;
+    }
 }
 
-void Player1::setAttackStrategy(AttackStrategy *attackStrategy) {
-    Player1::attackStrategy = attackStrategy;
+bool Player1::pickPotion(const std::shared_ptr<Potion> &potion) {
+    sf::FloatRect bulletBox = sprite.getGlobalBounds();
+    sf::FloatRect characterBox = potion->getSprite().getGlobalBounds();
+    if (bulletBox.intersects(characterBox) && Player1::potion == nullptr) {
+        Player1::potion = potion;
+        return true;
+    }
+    return false;
 }
-*/
 
+const std::shared_ptr<Potion> &Player1::getPotion() const {
+    return potion;
+}

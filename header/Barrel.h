@@ -7,17 +7,21 @@
 
 #include "Potion.h"
 
-class Barrel {
+class Barrel : public Entity {
 public:
-    Barrel(int hp, Potion potion);
+    explicit Barrel(PotionType type, int hp = 1);
 
     virtual ~Barrel();
 
     void receiveDamage(int damage);
 
+    void update(float deltaTime) override;
+
+    Potion &kill();
+
 private:
     int hp;
-    Potion potion;
+    Potion *potion = nullptr;
 };
 
 

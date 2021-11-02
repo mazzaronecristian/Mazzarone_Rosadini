@@ -6,28 +6,25 @@
 #define MAZZARONE_ROSADINI_POTION_H
 
 #include <iostream>
-#include "UseStrategy.h"
-#include "Character.h"
+#include "Entity.h"
 
-class Potion {
+enum class PotionType {
+    regular = 30, super = 50, max = 120
+};
+
+class Potion : public Entity {
 public:
-    Potion();
-
-    Potion(std::string description);
+    explicit Potion(PotionType type);
 
     virtual ~Potion();
-
-    //virtual void use(UseStrategy useStrategy);
 
     int use(int result);
 
     //getter
-    const std::string &getDescription() const;
-
-    void setDescription(const std::string &description);
+    PotionType getType() const;
 
 private:
-    std::string description;
+    PotionType type;
 };
 
 

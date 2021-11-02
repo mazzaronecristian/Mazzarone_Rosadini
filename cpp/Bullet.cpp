@@ -22,15 +22,6 @@ void Bullet::update(float deltaTime) {
         life = false;
 }
 
-bool Bullet::isCollide(const Enemy &enemy) {
-    sf::FloatRect bulletBox = sprite.getGlobalBounds();
-    sf::FloatRect characterBox = enemy.getSprite().getGlobalBounds();
-    if (bulletBox.intersects(characterBox)) {
-        life = false;
-        return true;
-    }
-    return false;
-}
 
 bool Bullet::isLegalMove(Map arena) {
     sf::Vector2f futurePos = {getPosition().x + (speed * (float) bulletDirection), getPosition().y};
@@ -39,4 +30,14 @@ bool Bullet::isLegalMove(Map arena) {
     if (!tile.isWalkable())
         return false;
     return true;
+}
+
+bool Bullet::isCollide(const Entity *entity) {
+    sf::FloatRect bulletBox = sprite.getGlobalBounds();
+    sf::FloatRect characterBox = entity->getSprite().getGlobalBounds();
+    if (bulletBox.intersects(characterBox)) {
+        life = false;
+        return true;
+    }
+    return false;
 }

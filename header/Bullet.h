@@ -9,12 +9,14 @@
 #include "Entity.h"
 #include "Character.h"
 #include "Enemy.h"
+#include "Barrel.h"
 
 class Bullet : public Entity {
 public:
     explicit Bullet(short int bulletDirection, float speed = 15);
 
-    bool isCollide(const Enemy &enemy);
+    bool isCollide(const Entity *entity);
+//    bool isCollide(const Enemy &enemy);
 
     bool isLegalMove(Map arena);
 

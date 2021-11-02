@@ -4,25 +4,17 @@
 
 #include "../header/Potion.h"
 
-Potion::Potion() {}
 
+Potion::Potion(PotionType type) : type(type), Entity(sf::Vector2i(32, 32)) {}
 
-Potion::~Potion() {
-
-}
-
-Potion::Potion(std::string description) : description(description) {}
+Potion::~Potion() {}
 
 int Potion::use(int result) {
-    result += 5;
+    int increment = static_cast<int>(type);
+    result += increment;
     return result;
 }
 
-const std::string &Potion::getDescription() const {
-    return description;
+PotionType Potion::getType() const {
+    return type;
 }
-
-void Potion::setDescription(const std::string &description) {
-    Potion::description = description;
-}
-

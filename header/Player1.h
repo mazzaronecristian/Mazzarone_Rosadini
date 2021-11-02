@@ -45,6 +45,8 @@ public:
 
     void increaseKillCounter();
 
+    bool pickPotion(const std::shared_ptr<Potion> &potion);
+
     //Subject methods
     void subscribe(Observer *o) override;
 
@@ -53,19 +55,20 @@ public:
     void notify() override;
 
     //TODO RESOLVE POTION
-    //void usePotion();
+    void usePotion();
 
     //setter
     //void setPotion(Potion potion);
 
     //getter
-    //Potion getPotion() const;
+
+    const std::shared_ptr<Potion> &getPotion() const;
 
 private:
-    //Potion potion;
+    std::shared_ptr<Potion> potion = nullptr;
     std::shared_ptr<AttackStrategy> attackStrategy;
     int killCounter;
-    Observer *observer;
+    Observer *observer = nullptr;
 
 };
 

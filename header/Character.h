@@ -34,18 +34,16 @@ public:
 
     bool isLegalDirection(sf::Vector2f direction, Map map);
 
-    bool isLegalFight(const Character &character);
+    bool isLegalFight(const Entity *entity);
 
     void receiveDamage(int damage);
 
     //getter
-
     bool isDying() const;
 
     int getHp() const;
 
     int getDamage() const;
-
 
     //setter
     void setHp(int hp);
