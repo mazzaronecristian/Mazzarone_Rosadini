@@ -15,6 +15,7 @@
 #include "../header/UserInterfaceFactory.h"
 #include "../header/MapFactory.h"
 #include "../header/ObjectsFactory.h"
+#include "../header/Boss.h"
 
 #include <cmath>
 #include <list>
@@ -29,22 +30,22 @@ sf::Vector2f rightPosition(Map arena);
 void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter,
                      Map arena); //generates waves of enemies
 
-void generateBoss(std::vector<std::shared_ptr<Enemy>> &boss);
+void generateBoss(std::vector<std::shared_ptr<Boss>> &boss);
 
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Enemy>> boss, float deltaTime,
+            std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Boss>> boss, float deltaTime,
             Map &arena, LifeBar &lifeBar, std::list<std::shared_ptr<Barrel>> &barrels,
             std::list<std::shared_ptr<Potion>> &potions);
 
 void update(std::vector<std::shared_ptr<Player1>> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Enemy>> boss, float deltaTime,
+            std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Boss>> boss, float deltaTime,
             Map &arena, LifeBar &lifeBar, std::list<std::shared_ptr<Barrel>> &barrels);
 
 void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
           const std::list<std::shared_ptr<Enemy>> &enemies, sf::RenderWindow &window, sf::RenderTexture &gameOver,
           Map &arena,
-          LifeBar &lifeBar, const std::vector<std::shared_ptr<Enemy>> &boss,
+          LifeBar &lifeBar, const std::vector<std::shared_ptr<Boss>> &boss,
           const std::list<std::shared_ptr<Barrel>> &barrels, const std::list<std::shared_ptr<Potion>> &potions);
 
 bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>> hero, short int &numArena);
@@ -138,7 +139,7 @@ int main() {
         waveCounter++;
         generateEnemies(enemies, waveCounter, arena);
 
-        std::vector<std::shared_ptr<Enemy>> boss;
+        std::vector<std::shared_ptr<Boss>> boss;
         if (numArena == 2)
             generateBoss(boss);
         sf::Clock clock;
@@ -270,7 +271,6 @@ void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveC
                                                          100)), arena));
         enemies.push_back(enemy);
     }
-
 }
 
 void newPotion(std::list<std::shared_ptr<Potion>> &potions, Barrel &barrel) {
@@ -296,16 +296,16 @@ sf::Vector2f rightPosition(Map arena) {
     return position;
 }
 
-void generateBoss(std::vector<std::shared_ptr<Enemy>> &boss) {
+void generateBoss(std::vector<std::shared_ptr<Boss>> &boss) {
     PlayersFactory factory;
-    std::shared_ptr<Enemy> enemy;
-    enemy = std::make_shared<Enemy>(factory.createBoss(CharacterType::cyclops));
-    boss.push_back(enemy);
+    std::shared_ptr<Boss> b;
+    b = std::make_shared<Boss>(factory.createBoss(CharacterType::cyclops));
+    boss.push_back(b);
     boss[0]->setMoveStrategy(std::make_shared<Follow>());
 }
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Enemy>> boss, float deltaTime,
+            std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Boss>> boss, float deltaTime,
             Map &arena, LifeBar &lifeBar, std::list<std::shared_ptr<Barrel>> &barrels,
             std::list<std::shared_ptr<Potion>> &potions) {
 
@@ -340,7 +340,7 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared
 }
 
 void update(std::vector<std::shared_ptr<Player1>> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Enemy>> boss, float deltaTime,
+            std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Boss>> boss, float deltaTime,
             Map &arena, LifeBar &lifeBar, std::list<std::shared_ptr<Barrel>> &barrels) {
     //Enemies update
     for (auto i = enemies.begin(); i != enemies.end(); i++) {
@@ -388,7 +388,7 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
 void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
           const std::list<std::shared_ptr<Enemy>> &enemies, sf::RenderWindow &window, sf::RenderTexture &gameOver,
           Map &arena,
-          LifeBar &lifeBar, const std::vector<std::shared_ptr<Enemy>> &boss,
+          LifeBar &lifeBar, const std::vector<std::shared_ptr<Boss>> &boss,
           const std::list<std::shared_ptr<Barrel>> &barrels, const std::list<std::shared_ptr<Potion>> &potions) {
     window.clear();
     window.draw(arena);

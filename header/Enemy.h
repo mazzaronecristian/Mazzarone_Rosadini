@@ -5,14 +5,16 @@
 #ifndef MAZZARONE_ROSADINI_ENEMY_H
 #define MAZZARONE_ROSADINI_ENEMY_H
 
+
 #include "Character.h"
-#include "FightStrategy.h"
 #include "Patrol.h"
 #include "AdaptHorizontal.h"
 #include "AdaptVertical.h"
+#include "Follow.h"
 #include <cmath>
 #include <memory.h>
 #include <memory>
+
 
 class Enemy : public Character {
 public:

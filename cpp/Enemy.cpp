@@ -7,9 +7,9 @@
 #include <utility>
 
 Enemy::Enemy(CharacterType type, int width, int height, int hp, int damage, float speed,
-             std::shared_ptr<MoveStrategy> moveStrategy) : moveStrategy(std::move(moveStrategy)),
-                                                           Character(type, width, height, hp, damage, speed) {
-
+             std::shared_ptr<MoveStrategy> moveStrategy) :
+        moveStrategy(std::move(moveStrategy)),
+        Character(type, width, height, hp, damage, speed) {
 }
 
 void Enemy::movement(sf::Vector2f direction, const Map &map) {

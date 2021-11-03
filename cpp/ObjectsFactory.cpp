@@ -5,7 +5,6 @@
 #include "../header/ObjectsFactory.h"
 
 ObjectsFactory::ObjectsFactory() {
-
 }
 
 Barrel ObjectsFactory::createBarrel(PotionType type, sf::Vector2f position) {
@@ -22,10 +21,10 @@ Potion ObjectsFactory::createPotion(PotionType type, sf::Vector2f position) {
 
 std::string ObjectsFactory::setBitmap(PotionType type) {
     if (type == PotionType::regular)
-        return "./tileSets/objects/potion.png";
+        return "./tileSets/objects/potionRegular.png";
     if (type == PotionType::super)
-        return "./tileSets/objects/potion.png";
+        return "./tileSets/objects/potionSuper.png";
     if (type == PotionType::max)
-        return "./tileSets/objects/potion.png";
-    return "./tileSets/objects/potion.png";
+        return "./tileSets/objects/potionMax.png";
+    return "./tileSets/objects/potionRegular.png";
 }

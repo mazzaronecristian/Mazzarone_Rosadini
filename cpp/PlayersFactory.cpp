@@ -5,6 +5,7 @@
 #include "../header/PlayersFactory.h"
 
 
+
 Enemy PlayersFactory::createEnemy(CharacterType type, sf::Vector2f position, Map arena) {
     auto *result = new Enemy(type);
     sf::Vector2i code = {(int) std::round(position.x / 32), (int) std::round(position.y / 32)};
@@ -24,8 +25,8 @@ Player1 PlayersFactory::createHero(CharacterType type) {
     return *result;
 }
 
-Enemy PlayersFactory::createBoss(CharacterType type) {
-    auto *result = new Enemy(type, 64, 64);
+Boss PlayersFactory::createBoss(CharacterType type) {
+    auto *result = new Boss(type, std::make_shared<MeleeBossAttack>());
     result->load(setBitMap(type), sf::Vector2f(700, 270));
     return *result;
 }

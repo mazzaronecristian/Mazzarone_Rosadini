@@ -41,8 +41,6 @@ public:
 
     int getKillCounter() const;
 
-    const std::shared_ptr<AttackStrategy> &getAttackStrategy() const;
-
     void increaseKillCounter();
 
     bool pickPotion(const std::shared_ptr<Potion> &potion);
@@ -54,15 +52,7 @@ public:
 
     void notify() override;
 
-    //TODO RESOLVE POTION
     void usePotion();
-
-    //setter
-    //void setPotion(Potion potion);
-
-    //getter
-
-    const std::shared_ptr<Potion> &getPotion() const;
 
 private:
     std::shared_ptr<Potion> potion = nullptr;

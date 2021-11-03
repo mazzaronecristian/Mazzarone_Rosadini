@@ -38,15 +38,6 @@ void Player1::movement(sf::Vector2f direction, const Map &map) {
     }
 }
 
-/*Potion Player1::getPotion() const {
-    return potion;
-}
-
-void Player1::setPotion(Potion potion) {
-    Player1::potion = potion;
-}
-*/
-
 void Player1::fight(Character &character) {
     if (!dying)
         attackStrategy->fight(this, character);
