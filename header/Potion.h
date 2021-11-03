@@ -14,7 +14,7 @@ enum class PotionType {
 
 class Potion : public Entity {
 public:
-    explicit Potion(PotionType type);
+    explicit Potion(PotionType type = PotionType::regular);
 
     virtual ~Potion();
 

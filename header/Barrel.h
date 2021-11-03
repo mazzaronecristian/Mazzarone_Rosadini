@@ -5,23 +5,19 @@
 #ifndef MAZZARONE_ROSADINI_BARREL_H
 #define MAZZARONE_ROSADINI_BARREL_H
 
+#include <memory>
 #include "Potion.h"
 
 class Barrel : public Entity {
 public:
-    explicit Barrel(PotionType type, int hp = 1);
-
-    virtual ~Barrel();
-
-    void receiveDamage(int damage);
+    explicit Barrel(PotionType type = PotionType::regular);
 
     void update(float deltaTime) override;
 
-    Potion &kill();
+    bool kill(PotionType &type);
 
 private:
-    int hp;
-    Potion *potion = nullptr;
+    Potion *potion;
 };
 
 

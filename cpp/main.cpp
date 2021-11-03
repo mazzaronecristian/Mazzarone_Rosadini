@@ -20,6 +20,8 @@
 #include <list>
 #include <memory>
 
+void generateBarrels(std::list<std::shared_ptr<Barrel>> &barrels, const Map &arena);
+
 void newPotion(std::list<std::shared_ptr<Potion>> &potions, Barrel &barrel);
 
 sf::Vector2f rightPosition(Map arena);
@@ -37,8 +39,7 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared
 
 void update(std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Enemy>> boss, float deltaTime,
-            Map &arena, LifeBar &lifeBar, std::list<std::shared_ptr<Barrel>> &barrels,
-            std::list<std::shared_ptr<Potion>> &potions);
+            Map &arena, LifeBar &lifeBar, std::list<std::shared_ptr<Barrel>> &barrels);
 
 void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
           const std::list<std::shared_ptr<Enemy>> &enemies, sf::RenderWindow &window, sf::RenderTexture &gameOver,
@@ -147,13 +148,7 @@ int main() {
 
         //Barrels
         std::list<std::shared_ptr<Barrel>> barrels;
-        ObjectsFactory barrelFactory;
-        for (int i = 0; i < 3; i++) {
-            sf::Vector2f position = rightPosition(arena);
-            std::shared_ptr<Barrel> barrel = (std::make_shared<Barrel>(barrelFactory.createBarrel(position)));
-            barrels.push_back(barrel);
-        }
-
+        generateBarrels(barrels, arena);
         std::list<std::shared_ptr<Potion>> potions;
 
         //main loop
@@ -211,11 +206,9 @@ int main() {
                             }
                             enemy++;
                         }
-                        auto barrel = barrels.begin();
-                        while (barrel != barrels.end()) {
-                            if (hero[0]->isLegalFight(&(**barrel))) {
+                        for (auto barrel = barrels.begin(); barrel != barrels.end();) {
+                            if (hero[0]->isLegalFight(&(**barrel)))
                                 newPotion(potions, **barrel);
-                            }
                             barrel++;
                         }
                     }
@@ -238,13 +231,25 @@ int main() {
             update(bullets, hero, enemies, boss, deltaTime, arena, lifeBar, barrels, potions) : update(hero, enemies,
                                                                                                        boss, deltaTime,
                                                                                                        arena,
-                                                                                                       lifeBar, barrels,
-                                                                                                       potions);
+                                                                                                       lifeBar,
+                                                                                                       barrels);
 
             draw(bullets, hero, enemies, window, gameOver, arena, lifeBar, boss, barrels, potions);
         }
     } while (restart);
     return 0;
+}
+
+void generateBarrels(std::list<std::shared_ptr<Barrel>> &barrels, const Map &arena) {
+    ObjectsFactory barrelFactory;
+    PotionType T[3] = {PotionType::regular, PotionType::super, PotionType::max};
+    for (int i = 0; i < 3; i++) {
+        sf::Vector2f position = rightPosition(arena);
+        std::shared_ptr<Barrel> barrel = (std::make_shared<Barrel>(
+                barrelFactory.createBarrel(T[rand() % 3], position)));
+        barrels.push_back(barrel);
+    }
+
 }
 
 void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter, Map arena) {
@@ -269,10 +274,13 @@ void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveC
 }
 
 void newPotion(std::list<std::shared_ptr<Potion>> &potions, Barrel &barrel) {
-    std::shared_ptr<Potion> potion;
-    ObjectsFactory factory;
-    potion = std::make_shared<Potion>(factory.createPotion(barrel.kill(), barrel.getPosition()));
-    potions.push_back(potion);
+    PotionType type;
+    if (barrel.kill(type)) {
+        ObjectsFactory factory;
+        std::shared_ptr<Potion> potion;
+        potion = std::make_shared<Potion>(factory.createPotion(type, barrel.getPosition()));
+        potions.push_back(potion);
+    }
 }
 
 sf::Vector2f rightPosition(Map arena) {
@@ -328,13 +336,12 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared
         else bullet++;
     }
 
-    update(hero, enemies, boss, deltaTime, arena, lifeBar, barrels, potions);
+    update(hero, enemies, boss, deltaTime, arena, lifeBar, barrels);
 }
 
 void update(std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, std::vector<std::shared_ptr<Enemy>> boss, float deltaTime,
-            Map &arena, LifeBar &lifeBar, std::list<std::shared_ptr<Barrel>> &barrels,
-            std::list<std::shared_ptr<Potion>> &potions) {
+            Map &arena, LifeBar &lifeBar, std::list<std::shared_ptr<Barrel>> &barrels) {
     //Enemies update
     for (auto i = enemies.begin(); i != enemies.end(); i++) {
         if (i->get()->isLegalFight(&*hero[0])) {
@@ -365,13 +372,14 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
     //Heroes update
     if (hero[0]->getHp() <= 0)
         hero[0]->kill();
-    if (!hero[0]->isLife()) {
+    if (!hero[0]->isLife())
         hero.pop_back();
-    } else
+    else
         hero[0]->update(deltaTime);
-    for (auto i = barrels.begin(); i != barrels.end();) {
-        i->get()->update(deltaTime);
-        !i->get()->isLife() ? (i = barrels.erase(i)) : i++;
+
+    for (auto barrel = barrels.begin(); barrel != barrels.end();) {
+        barrel->get()->update(deltaTime);
+        !barrel->get()->isLife() ? (barrel = barrels.erase(barrel)) : barrel++;
     }
     lifeBar.update();
     arena.update();

@@ -12,9 +12,9 @@ class ObjectsFactory {
 public:
     ObjectsFactory();
 
-    Potion createPotion(Potion &potion, sf::Vector2f position);
+    Potion createPotion(PotionType type, sf::Vector2f position);
 
-    Barrel createBarrel(sf::Vector2f position);
+    Barrel createBarrel(PotionType type, sf::Vector2f position);
 
 private:
     std::string setBitmap(PotionType);

@@ -8,16 +8,16 @@ ObjectsFactory::ObjectsFactory() {
 
 }
 
-
-Barrel ObjectsFactory::createBarrel(sf::Vector2f position) {
-    auto *barrel = new Barrel(PotionType::regular);
+Barrel ObjectsFactory::createBarrel(PotionType type, sf::Vector2f position) {
+    auto *barrel = new Barrel(type);
     barrel->load("./tileSets/objects/barrel.png", position);
     return *barrel;
 }
 
-Potion ObjectsFactory::createPotion(Potion &potion, sf::Vector2f position) {
-    potion.load(setBitmap(potion.getType()), position);
-    return potion;
+Potion ObjectsFactory::createPotion(PotionType type, sf::Vector2f position) {
+    Potion *potion = new Potion(type);
+    potion->load(setBitmap(type), position);
+    return *potion;
 }
 
 std::string ObjectsFactory::setBitmap(PotionType type) {
@@ -27,5 +27,5 @@ std::string ObjectsFactory::setBitmap(PotionType type) {
         return "./tileSets/objects/potion.png";
     if (type == PotionType::max)
         return "./tileSets/objects/potion.png";
+    return "./tileSets/objects/potion.png";
 }
-

@@ -84,11 +84,6 @@ void Player1::notify() {
     observer->update();
 }
 
-const std::shared_ptr<AttackStrategy> &Player1::getAttackStrategy() const {
-    return attackStrategy;
-}
-
-
 void Player1::usePotion() {
     if (potion != nullptr) {
         hp = Player1::potion->use(hp);
@@ -106,8 +101,4 @@ bool Player1::pickPotion(const std::shared_ptr<Potion> &potion) {
         return true;
     }
     return false;
-}
-
-const std::shared_ptr<Potion> &Player1::getPotion() const {
-    return potion;
 }
