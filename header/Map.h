@@ -38,7 +38,7 @@ public:
     void update() override;
 
 private:
-    virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
     void drawTiles(sf::RenderTarget &target, std::vector<Tile> tiles) const;
 

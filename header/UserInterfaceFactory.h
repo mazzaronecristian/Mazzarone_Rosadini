@@ -16,7 +16,7 @@ enum class UserInterfaceType {
 
 class UserInterfaceFactory {
 public:
-    LifeBar createLifeBar(Character *character);
+    LifeBar createLifeBar(Character *character, sf::Vector2f position);
 
     Gif createGif(CharacterType type, sf::Vector2f position);
 

@@ -13,13 +13,12 @@ class Boss : public Enemy {
 public:
     Boss(CharacterType type, std::shared_ptr<BossStrategy> attackStrategy, int width = 64, int height = 64,
          int hp = 450,
-         int damage = 50, float speed = 0.6, std::shared_ptr<MoveStrategy> moveStrategy = std::make_shared<Follow>());
+         int damage = 30, float speed = 0.25, std::shared_ptr<MoveStrategy> moveStrategy = std::make_shared<Follow>());
 
     void fight(Character &character) final;
 
 private:
     std::shared_ptr<BossStrategy> attackStrategy;
-
 };
 
 

@@ -4,9 +4,9 @@
 
 #include "../header/UserInterfaceFactory.h"
 
-LifeBar UserInterfaceFactory::createLifeBar(Character *character) {
+LifeBar UserInterfaceFactory::createLifeBar(Character *character, sf::Vector2f position) {
     LifeBar lifeBar(character);
-    lifeBar.load(setBitMap(UserInterfaceType::lifeBar), sf::Vector2f(10, 680));
+    lifeBar.load(setBitMap(UserInterfaceType::lifeBar), position);
     return lifeBar;
 }
 

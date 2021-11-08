@@ -22,6 +22,8 @@ public:
 
     virtual void update(float deltaTime);
 
+    void load(const std::string &tileSet, sf::Vector2f position) override;
+
     //Getter & Setter
     void setAnim(int nFrame, float switchTime);
 

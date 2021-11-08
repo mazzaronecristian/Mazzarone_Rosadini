@@ -7,7 +7,11 @@
 #include <utility>
 
 void Boss::fight(Character &character) {
-    attackStrategy->fight(character, this);
+    if (isLegalFight(&character)) {
+        attacking = true;
+        attackStrategy = std::make_shared<MeleeBossAttack>();
+        attackStrategy->fight(character, this);
+    }
 }
 
 Boss::Boss(CharacterType type, std::shared_ptr<BossStrategy> attackStrategy, int width, int height, int hp, int damage,

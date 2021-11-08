@@ -41,6 +41,12 @@ sf::Vector2f Entity::getPosition() {
 Entity::~Entity() {
 }
 
+void Entity::load(const std::string &tileSet, sf::Vector2f position) {
+    Elements::load(tileSet, position);
+    if (height == 64)
+        sprite.setOrigin((float) width / 2, (float) height / 2);
+}
+
 
 
 
