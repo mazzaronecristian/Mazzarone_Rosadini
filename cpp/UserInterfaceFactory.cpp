@@ -4,36 +4,36 @@
 
 #include "../header/UserInterfaceFactory.h"
 
-LifeBar UserInterfaceFactory::createLifeBar(Character *character, sf::Vector2f position) {
-    LifeBar lifeBar(character);
-    lifeBar.load(setBitMap(UserInterfaceType::lifeBar), position);
-    return lifeBar;
+LifeBar UserInterfaceFactory::createLifeBar(Character *character, sf::Vector2f position, LifeBarType type) {
+    auto *lifeBar = new LifeBar(character);
+    lifeBar->load(setBitMap(type), position);
+    return *lifeBar;
 }
 
-std::string UserInterfaceFactory::setBitMap(UserInterfaceType type) {
+std::string UserInterfaceFactory::setBitMap(LifeBarType type) {
     std::string result;
-    if (type == UserInterfaceType::lifeBar)
-        result = "./tileSets/userInterface/lifeBar.png";
+    if (type == LifeBarType::hero)
+        result = "./tileSets/userInterface/lifeBarHero.png";
+    if (type == LifeBarType::cyclops)
+        result = "./tileSets/userInterface/lifeBarCyclops.png";
     return result;
 }
 
 Gif UserInterfaceFactory::createGif(CharacterType type, sf::Vector2f position) {
     Gif gif(type);
-    gif.load(setBitMap(UserInterfaceType::gif, type), position);
+    gif.load(setBitMap(type), position);
     return gif;
 }
 
-std::string UserInterfaceFactory::setBitMap(UserInterfaceType type, CharacterType kind) {
+std::string UserInterfaceFactory::setBitMap(CharacterType type) {
     std::string result;
-    if (type == UserInterfaceType::gif) {
-        if (kind == CharacterType::spaceCadet)
-            result = "./tileSets/userInterface/gifs/spaceCadet.png";
-        if (kind == CharacterType::gladiator)
-            result = "./tileSets/userInterface/gifs/gladiator.png";
-        if (kind == CharacterType::adventurer)
-            result = "./tileSets/userInterface/gifs/adventurer.png";
-        if (kind == CharacterType::dwarf)
-            result = "./tileSets/userInterface/gifs/dwarf.png";
-    }
+    if (type == CharacterType::spaceCadet)
+        result = "./tileSets/userInterface/gifs/spaceCadet.png";
+    if (type == CharacterType::gladiator)
+        result = "./tileSets/userInterface/gifs/gladiator.png";
+    if (type == CharacterType::adventurer)
+        result = "./tileSets/userInterface/gifs/adventurer.png";
+    if (type == CharacterType::dwarf)
+        result = "./tileSets/userInterface/gifs/dwarf.png";
     return result;
 }

@@ -44,7 +44,7 @@ void Player1::fight(Character &character) {
 }
 
 void Player1::update(float deltaTime) {
-    Character::update(deltaTime);
+    Entity::update(deltaTime);
     if (attacking && source.x >= 7)
         attacking = false;
 }

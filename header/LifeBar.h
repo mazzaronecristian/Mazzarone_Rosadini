@@ -9,6 +9,11 @@
 #include "UserInterface.h"
 #include "memory"
 
+enum class LifeBarType {
+    hero,
+    cyclops
+};
+
 class LifeBar : public UserInterface {
 public:
     explicit LifeBar(Character *character, int width = 251, int height = 32);
@@ -17,7 +22,7 @@ public:
 
 private:
     Character *character;
-    int bit;
+    const int bit;
 
 };
 

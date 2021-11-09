@@ -10,7 +10,7 @@
 
 class BossStrategy {
 public:
-    virtual void fight(Character &hero, Enemy *boss) = 0;
+    virtual void fight(Character &hero, Enemy *boss, float &timer) = 0;
 };
 
 

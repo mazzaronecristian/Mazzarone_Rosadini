@@ -24,8 +24,6 @@ public:
 
     CharacterType getType() const;
 
-    void update(float deltaTime) override;
-
     void kill();
 
     virtual void fight(Character &character) = 0;

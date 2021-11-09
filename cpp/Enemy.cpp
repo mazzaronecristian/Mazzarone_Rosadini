@@ -42,7 +42,7 @@ void Enemy::fight(Character &character) {
 }
 
 void Enemy::update(float deltaTime) {
-    Character::update(deltaTime);
+    Entity::update(deltaTime);
     attacking = false;
 }
 

@@ -4,12 +4,12 @@
 
 #include "../header/MeleeBossAttack.h"
 
-void MeleeBossAttack::fight(Character &hero, Enemy *boss) {
-    if (hero.getPosition().x < boss->getPosition().x)
-        boss->setAnim(8, 0.06, 5);
-    else boss->setAnim(8, 0.06, 4);
+void MeleeBossAttack::fight(Character &hero, Enemy *boss, float &timer) {
+    if (timer < .8) return;
+    boss->setAnim(8, 0.06, hero.getPosition().x < boss->getPosition().x ? 5 : 4);
     if (boss->getSource().x == 5) {
         boss->setSourceX(boss->getSource().x + 1);
         hero.receiveDamage(boss->getDamage());
+        timer = 0;
     }
 }

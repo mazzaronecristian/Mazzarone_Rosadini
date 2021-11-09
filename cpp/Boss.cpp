@@ -10,7 +10,7 @@ void Boss::fight(Character &character) {
     if (isLegalFight(&character)) {
         attacking = true;
         attackStrategy = std::make_shared<MeleeBossAttack>();
-        attackStrategy->fight(character, this);
+        attackStrategy->fight(character, this, attackTimer);
     }
 }
 
@@ -19,4 +19,12 @@ Boss::Boss(CharacterType type, std::shared_ptr<BossStrategy> attackStrategy, int
            std::shared_ptr<MoveStrategy> moveStrategy) : Enemy(type, width, height, hp, damage, speed,
                                                                std::move(moveStrategy)),
                                                          attackStrategy(std::move(attackStrategy)) {
+    attackTimer = 0;
+}
+
+void Boss::update(float deltaTime) {
+    Entity::update(deltaTime);
+    if (attacking)
+        attackTimer += deltaTime;
+    attacking = false;
 }

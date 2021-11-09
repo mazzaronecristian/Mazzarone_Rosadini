@@ -16,14 +16,14 @@ enum class UserInterfaceType {
 
 class UserInterfaceFactory {
 public:
-    LifeBar createLifeBar(Character *character, sf::Vector2f position);
+    LifeBar createLifeBar(Character *character, sf::Vector2f position, LifeBarType type);
 
     Gif createGif(CharacterType type, sf::Vector2f position);
 
 private:
-    std::string setBitMap(UserInterfaceType type);
+    std::string setBitMap(LifeBarType type);
 
-    std::string setBitMap(UserInterfaceType type, CharacterType kind);
+    std::string setBitMap(CharacterType type);
 };
 
 

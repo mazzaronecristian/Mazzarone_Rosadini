@@ -9,7 +9,7 @@
 
 class MeleeBossAttack : public BossStrategy {
 public:
-    void fight(Character &hero, Enemy *boss) override;
+    void fight(Character &hero, Enemy *boss, float &timer) override;
 };
 
 

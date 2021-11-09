@@ -30,12 +30,6 @@ void Character::receiveDamage(int damage) {
     Character::hp -= damage;
 }
 
-void Character::update(float deltaTime) {
-    Entity::update(deltaTime);
-    if (type == CharacterType::spaceCadet)
-        attacking = false;
-}
-
 void Character::kill() {
     attacking = false;
     dying = true;
