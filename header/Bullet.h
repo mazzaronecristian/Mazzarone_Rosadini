@@ -7,16 +7,13 @@
 
 #include <list>
 #include "Entity.h"
-#include "Character.h"
-#include "Enemy.h"
-#include "Barrel.h"
+#include "Map.h"
 
 class Bullet : public Entity {
 public:
     explicit Bullet(short int bulletDirection, float speed = 15);
 
     bool isCollide(const Entity *entity);
-//    bool isCollide(const Enemy &enemy);
 
     bool isLegalMove(Map arena);
 

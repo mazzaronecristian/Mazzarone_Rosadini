@@ -8,7 +8,6 @@
 
 #include "Entity.h"
 #include "Map.h"
-#include "Tile.h"
 
 enum class CharacterType {
     spaceCadet, adventurer, dwarf, gladiator, ghoul, brain, cobra, miniGolem, cyclops

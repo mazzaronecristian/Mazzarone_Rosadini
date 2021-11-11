@@ -3,19 +3,16 @@
 #include "SFML/System.hpp"
 
 #include "../header/Map.h"
-#include "../header/Character.h"
 #include "../header/Player1.h"
-#include "../header/Enemy.h"
 #include "../header/Follow.h"
 #include "../header/Bullet.h"
-#include "../header/Barrel.h"
 #include "../header/PlayersFactory.h"
 #include "../header/BulletsFactory.h"
 #include "../header/LifeBar.h"
 #include "../header/UserInterfaceFactory.h"
 #include "../header/MapFactory.h"
 #include "../header/ObjectsFactory.h"
-#include "../header/Boss.h"
+
 
 #include <cmath>
 #include <list>
@@ -28,7 +25,7 @@ void newPotion(std::list<std::shared_ptr<Potion>> &potions, Barrel &barrel);
 sf::Vector2f rightPosition(Map arena);
 
 void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter,
-                     Map arena); //generates waves of enemies
+                     const Map &arena); //generates waves of enemies
 
 void generateBoss(std::list<std::shared_ptr<Boss>> &boss, std::list<std::shared_ptr<LifeBar>> &lifeBar);
 
@@ -135,8 +132,6 @@ int main() {
         lifeBars.push_back(std::make_shared<LifeBar>(lifeBar));
 
         Map arena = mapFactory.createMap(numArena, *hero[0]);
-
-        srand(time(NULL));
 
         //enemies
         std::list<std::shared_ptr<Enemy>> enemies;
@@ -261,27 +256,27 @@ void generateBarrels(std::list<std::shared_ptr<Barrel>> &barrels, const Map &are
     for (int i = 0; i < 3; i++) {
         sf::Vector2f position = rightPosition(arena);
         std::shared_ptr<Barrel> barrel = (std::make_shared<Barrel>(
-                barrelFactory.createBarrel(T[rand() % 3], position)));
+                barrelFactory.createBarrel(T[random() % 3], position)));
         barrels.push_back(barrel);
     }
 
 }
 
-void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter, Map arena) {
+void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter, const Map &arena) {
     PlayersFactory factory;
     for (int i = 0; i < 0; i++) {
         std::shared_ptr<Enemy> enemy;
         sf::Vector2f position = rightPosition(arena);
         if (waveCounter == 1)
             enemy = std::make_shared<Enemy>(
-                    factory.createEnemy(static_cast<CharacterType>(rand() % 2 + 4),
+                    factory.createEnemy(static_cast<CharacterType>(random() % 2 + 4),
                                         position, arena));
         else
             enemy = std::make_shared<Enemy>(
-                    factory.createEnemy(static_cast<CharacterType>(rand() % 2 + 6),
+                    factory.createEnemy(static_cast<CharacterType>(random() % 2 + 6),
                                         sf::Vector2f(
-                                                (float) (rand() % 450 + 300),
-                                                (float) (rand() % 450 +
+                                                (float) (random() % 450 + 300),
+                                                (float) (random() % 450 +
                                                          100)), arena));
         enemies.push_back(enemy);
     }
@@ -301,7 +296,7 @@ sf::Vector2f rightPosition(Map arena) {
     bool legalPosition = false;
     sf::Vector2f position;
     while (!legalPosition) {
-        position = {(float) (rand() % 450 + 300), (float) (rand() % 450 + 100)};
+        position = {(float) (random() % 450 + 300), (float) (random() % 450 + 100)};
         sf::Vector2i source = {(int) round(position.x / 32), (int) round(position.y / 32)};
         Tile tile = arena.getTile(source);
         if (tile.isWalkable())
@@ -366,14 +361,14 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, std::list<std::shared_ptr<Boss>> &boss, float deltaTime,
             Map &arena, std::list<std::shared_ptr<LifeBar>> &lifeBars, std::list<std::shared_ptr<Barrel>> &barrels) {
     //Enemies update
-    for (auto i = enemies.begin(); i != enemies.end(); i++) {
-        if (i->get()->isLegalFight(&*hero[0])) {
-            i->get()->fight(*hero[0]);
+    for (auto &enemy: enemies) {
+        if (enemy->isLegalFight(&*hero[0])) {
+            enemy->fight(*hero[0]);
         }
     }
-    for (auto i = enemies.begin(); i != enemies.end(); i++) {
-        if (i->get()->getHp() <= 0)
-            i->get()->kill();
+    for (auto &enemy: enemies) {
+        if (enemy->getHp() <= 0)
+            enemy->kill();
     }
     for (auto i = enemies.begin(); i != enemies.end();) {
         if (!i->get()->isLegalMove(hero[0]->getPosition(), arena))
@@ -389,6 +384,7 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
     //boss update
     for (auto &bos: boss) {
         bos->fight(*hero[0]);
+        bos->moveLaser(arena);
         if (!bos->isLegalMove(hero[0]->getPosition(), arena))
             bos->setMoveStrategy(hero[0]->getPosition(), arena);
         bos->movement(hero[0]->getPosition(), arena);
@@ -440,8 +436,12 @@ void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::sh
         sf::Sprite over(gameOver.getTexture());
         window.draw(over);
     }
-    for (const auto &bos: boss)
+    for (const auto &bos: boss) {
         window.draw(*bos);
+        for (const auto &laser: bos->getLasers())
+            window.draw(*laser);
+    }
+
     window.display();
 }
 

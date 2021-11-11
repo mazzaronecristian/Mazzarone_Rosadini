@@ -4,7 +4,7 @@
 
 #include "../header/Enemy.h"
 
-#include <utility>
+#include <cmath>
 
 Enemy::Enemy(CharacterType type, int width, int height, int hp, int damage, float speed,
              std::shared_ptr<MoveStrategy> moveStrategy) :

@@ -20,7 +20,7 @@ set(SOURCE_FILES cpp/Character.cpp header/Character.h cpp/Player1.cpp header/Pla
         cpp/Gif.cpp header/Gif.h cpp/MapFactory.cpp header/MapFactory.h cpp/AdaptHorizontal.cpp header/AdaptHorizontal.h
         cpp/AdaptVertical.cpp header/AdaptVertical.h cpp/UserInterface.cpp header/UserInterface.h header/Observer.h
         header/Subject.h cpp/ObjectsFactory.cpp header/ObjectsFactory.h cpp/BossStrategy.cpp header/BossStrategy.h
-        cpp/MeleeBossAttack.cpp header/MeleeBossAttack.h cpp/Boss.cpp header/Boss.h)
+        cpp/MeleeBossAttack.cpp header/MeleeBossAttack.h cpp/Boss.cpp header/Boss.h cpp/RangedBossAttack.cpp header/RangedBossAttack.h)
 
 add_executable(Mazzarone_Rosadini cpp/main.cpp ${SOURCE_FILES})
 

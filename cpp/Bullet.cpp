@@ -3,6 +3,8 @@
 //
 
 #include "../header/Bullet.h"
+#include <cmath>
+
 
 Bullet::~Bullet() = default;
 
@@ -21,7 +23,6 @@ void Bullet::update(float deltaTime) {
     if (source.x == 2)
         life = false;
 }
-
 
 bool Bullet::isLegalMove(Map arena) {
     sf::Vector2f futurePos = {getPosition().x + (speed * (float) bulletDirection), getPosition().y};

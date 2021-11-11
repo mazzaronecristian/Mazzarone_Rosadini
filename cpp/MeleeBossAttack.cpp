@@ -3,13 +3,14 @@
 //
 
 #include "../header/MeleeBossAttack.h"
+#include "../header/Boss.h"
 
-void MeleeBossAttack::fight(Character &hero, Enemy *boss, float &timer) {
-    if (timer < .8) return;
-    boss->setAnim(8, 0.06, hero.getPosition().x < boss->getPosition().x ? 5 : 4);
+void MeleeBossAttack::fight(Character &hero, Boss *boss) {
+    if (boss->getAttackTimer() < .8) return;
+    boss->setAnim(8, .06, hero.getPosition().x < boss->getPosition().x ? 5 : 4);
     if (boss->getSource().x == 5) {
         boss->setSourceX(boss->getSource().x + 1);
         hero.receiveDamage(boss->getDamage());
-        timer = 0;
+        boss->setAttackTimer(0);
     }
 }

@@ -3,7 +3,6 @@
 //
 
 #include "../header/Character.h"
-
 #include <cmath>
 
 

@@ -8,6 +8,8 @@
 #include "Enemy.h"
 #include "BossStrategy.h"
 #include "MeleeBossAttack.h"
+#include "RangedBossAttack.h"
+#include "Bullet.h"
 
 class Boss : public Enemy {
 public:
@@ -19,9 +21,20 @@ public:
 
     void update(float deltaTime) override;
 
+    void addLaser(Bullet bullet);
+
+    void moveLaser(const Map &arena);
+
+    float getAttackTimer() const;
+
+    void setAttackTimer(float attackTimer);
+
+    const std::list<std::shared_ptr<Bullet>> &getLasers() const;
+
 private:
     float attackTimer;
     std::shared_ptr<BossStrategy> attackStrategy;
+    std::list<std::shared_ptr<Bullet>> lasers;
 };
 
 

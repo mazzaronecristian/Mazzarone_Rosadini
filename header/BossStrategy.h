@@ -5,12 +5,13 @@
 #ifndef MAZZARONE_ROSADINI_BOSSSTRATEGY_H
 #define MAZZARONE_ROSADINI_BOSSSTRATEGY_H
 
-#include "Enemy.h"
 #include "Player1.h"
+
+class Boss;
 
 class BossStrategy {
 public:
-    virtual void fight(Character &hero, Enemy *boss, float &timer) = 0;
+    virtual void fight(Character &hero, Boss *boss) = 0;
 };
 
 

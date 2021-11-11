@@ -10,8 +10,6 @@
 #include "SFML/System.hpp"
 
 #include "Animation.h"
-#include <iostream>
-#include <cmath>
 #include "Elements.h"
 
 class Entity : public Elements {
