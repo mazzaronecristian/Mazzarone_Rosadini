@@ -13,19 +13,21 @@ void RangedBossAttack::fight(Character &hero, Boss *boss) {
         numLaser++;
     if (numLaser < 3) {
         short int direction;
-        if (boss->getSource().y % 2 == 0) {
-            boss->setAnim(6, 0.1, 8);
-            direction = 1;
-        } else {
+        if (hero.getPosition().x < boss->getPosition().x) {
             boss->setAnim(6, 0.1, 9);
             direction = -1;
+        } else {
+            boss->setAnim(6, 0.1, 8);
+            direction = 1;
         }
-        BulletsFactory factory;
-        Bullet bullet = factory.createBullet(boss->getPosition(), direction);
-        boss->addLaser(bullet);
+        if (boss->getSource().x == 4) {
+            Bullet bullet = BulletsFactory::createBullet(BulletType::laser, direction,
+                                                         sf::Vector2f(boss->getPosition().x,
+                                                                      boss->getPosition().y - 16), sf::Vector2i(64, 7));
+            boss->addLaser(bullet);
+            boss->setAttackTimer(0);
+        }
     }
-    if (boss->getSource().x == 5)
-        boss->setAttackTimer(0);
 }
 
 

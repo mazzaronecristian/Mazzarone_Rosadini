@@ -98,6 +98,11 @@ Map::~Map() {
     detach();
 }
 
+void Map::update(bool life) {
+    if (!life)
+        openExitTile();
+}
+
 
 
 

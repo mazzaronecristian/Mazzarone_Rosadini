@@ -13,9 +13,9 @@
 
 class Boss : public Enemy {
 public:
-    Boss(CharacterType type, std::shared_ptr<BossStrategy> attackStrategy, int width = 64, int height = 64,
-         int hp = 1000,
-         int damage = 30, float speed = 0.25, std::shared_ptr<MoveStrategy> moveStrategy = std::make_shared<Follow>());
+    Boss(CharacterType type, std::shared_ptr<BossStrategy> attackStrategy, int damage = 30, int laserDamage = 50,
+         int hp = 1000, int width = 64, float speed = 0.25,
+         std::shared_ptr<MoveStrategy> moveStrategy = std::make_shared<Follow>(), int height = 64);
 
     void fight(Character &character) final;
 
@@ -32,6 +32,7 @@ public:
     const std::list<std::shared_ptr<Bullet>> &getLasers() const;
 
 private:
+    int laserDamage;
     float attackTimer;
     std::shared_ptr<BossStrategy> attackStrategy;
     std::list<std::shared_ptr<Bullet>> lasers;

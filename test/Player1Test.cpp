@@ -78,7 +78,7 @@ TEST(Player1, TestRangedAttack) {
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
     Enemy e(CharacterType::ghoul);
     e.load("./tileSets/characters/ghoul.png", sf::Vector2f(100, 100));
-    Bullet bullet = factory.createBullet(p.getPosition(), 1);
+    Bullet bullet = factory.createBullet(BulletType::bullet, 1, p.getPosition(), sf::Vector2i());
     bullet.movement();
     bool c = bullet.isCollide(e);
     EXPECT_EQ(false, c);

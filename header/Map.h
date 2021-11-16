@@ -37,6 +37,8 @@ public:
 
     void update() override;
 
+    void update(bool life) override;
+
 private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 

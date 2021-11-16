@@ -6,29 +6,35 @@
 #include <utility>
 
 void Boss::fight(Character &character) {
-    if (isLegalFight(&character)) {
-        attacking = true;
-        attackStrategy = std::make_shared<MeleeBossAttack>();
-        attackStrategy->fight(character, this);
-    } else if (round(character.getPosition().y) == round(getPosition().y)) {
-        attacking = true;
-        attackStrategy = std::make_shared<RangedBossAttack>();
-        attackStrategy->fight(character, this);
+    if (!dying) {
+        if (isLegalFight(&character)) {
+            attacking = true;
+            attackStrategy = std::make_shared<MeleeBossAttack>();
+            attackStrategy->fight(character, this);
+        } else if (round(character.getPosition().y) == round(getPosition().y)) {
+            attacking = true;
+            attackStrategy = std::make_shared<RangedBossAttack>();
+            attackStrategy->fight(character, this);
+        }
+        for (auto laser = lasers.begin(); laser != lasers.end();) {
+            if (laser->get()->isCollide(&character)) {
+                character.receiveDamage(laserDamage);
+                laser = lasers.erase(laser);
+            } else
+                laser++;
+        }
     }
-    for (auto laser = lasers.begin(); laser != lasers.end();) {
-        if (laser->get()->isCollide(&character)) {
-            character.receiveDamage(damage);
-            laser = lasers.erase(laser);
-        } else
-            laser++;
-    }
+
 }
 
-Boss::Boss(CharacterType type, std::shared_ptr<BossStrategy> attackStrategy, int width, int height, int hp, int damage,
-           float speed,
-           std::shared_ptr<MoveStrategy> moveStrategy) : Enemy(type, width, height, hp, damage, speed,
-                                                               std::move(moveStrategy)),
-                                                         attackStrategy(std::move(attackStrategy)) {
+Boss::Boss(CharacterType type, std::shared_ptr<BossStrategy> attackStrategy, int damage, int laserDamage, int hp,
+           int width, float speed, std::shared_ptr<MoveStrategy> moveStrategy, int height) : laserDamage(laserDamage),
+                                                                                             Enemy(type, width, height,
+                                                                                                   hp, damage, speed,
+                                                                                                   std::move(
+                                                                                                           moveStrategy)),
+                                                                                             attackStrategy(std::move(
+                                                                                                     attackStrategy)) {
     attackTimer = 0;
 }
 
@@ -66,4 +72,3 @@ void Boss::moveLaser(const Map &arena) {
         else laser++;
     }
 }
-

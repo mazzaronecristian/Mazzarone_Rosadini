@@ -8,8 +8,9 @@
 
 Bullet::~Bullet() = default;
 
-Bullet::Bullet(short int bulletDirection, float speed) : bulletDirection(bulletDirection), speed(speed),
-                                                         Entity(sf::Vector2i(32, 3)) {
+Bullet::Bullet(short int bulletDirection, sf::Vector2i dimension, float speed)
+        : bulletDirection(bulletDirection), speed(speed),
+          Entity(dimension) {
 }
 
 void Bullet::movement(const Map &arena) {

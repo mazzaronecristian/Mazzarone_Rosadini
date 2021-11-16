@@ -50,4 +50,3 @@ void Entity::load(const std::string &tileSet, sf::Vector2f position) {
 
 
 
-

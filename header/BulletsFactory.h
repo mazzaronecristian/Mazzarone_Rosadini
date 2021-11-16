@@ -7,10 +7,15 @@
 
 #include "Bullet.h"
 #include "Character.h"
+enum class BulletType {
+    bullet, laser
+};
 
 class BulletsFactory {
 public:
-    Bullet createBullet(sf::Vector2f position, short int direction);
+    static Bullet createBullet(BulletType type, short int direction, sf::Vector2f position, sf::Vector2i dimension);
+
+    static std::string setBitmap(BulletType type);
 };
 
 
