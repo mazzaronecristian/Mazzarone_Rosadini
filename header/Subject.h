@@ -15,7 +15,7 @@ public:
 
     virtual void unsubscribe(Observer *o) = 0;
 
-    virtual void notify() = 0;
+    virtual void notify(int numArena) = 0;
 };
 
 

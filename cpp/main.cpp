@@ -33,11 +33,11 @@ void generateBoss(std::list<std::shared_ptr<Boss>> &boss, std::list<std::shared_
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, std::list<std::shared_ptr<Boss>> &boss, float deltaTime,
             Map &arena, std::list<std::shared_ptr<LifeBar>> &lifeBars, std::list<std::shared_ptr<Barrel>> &barrels,
-            std::list<std::shared_ptr<Potion>> &potions);
+            std::list<std::shared_ptr<Potion>> &potions, int numArena);
 
-void update(std::vector<std::shared_ptr<Player1>> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, std::list<std::shared_ptr<Boss>> &boss, float deltaTime,
-            Map &arena, std::list<std::shared_ptr<LifeBar>> &lifeBars, std::list<std::shared_ptr<Barrel>> &barrels);
+void update(std::vector<std::shared_ptr<Player1>> hero, std::list<std::shared_ptr<Enemy>> &enemies,
+            std::list<std::shared_ptr<Boss>> &boss, float deltaTime, Map &arena,
+            std::list<std::shared_ptr<LifeBar>> &lifeBars, std::list<std::shared_ptr<Barrel>> &barrels, int numArena);
 
 void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
           const std::list<std::shared_ptr<Enemy>> &enemies, sf::RenderWindow &window, sf::RenderTexture &gameOver,
@@ -51,7 +51,7 @@ bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>
 
 int main() {
     bool restart = false, finish = false;
-    short int numArena = 1;
+    short int numArena = 2;
     //scelta personaggio
     sf::RenderWindow choice(sf::VideoMode(960, 740), "Choose your hero");
     sf::Texture choiceBackground;
@@ -142,9 +142,7 @@ int main() {
 
         //boss
         std::list<std::shared_ptr<Boss>> boss;
-        if (numArena == 2) {
-            generateBoss(boss, lifeBars);
-        }
+
         sf::Clock clock;
         float deltaTime;
         std::list<std::shared_ptr<Bullet>> bullets;
@@ -233,13 +231,20 @@ int main() {
                 waveCounter++;
                 generateEnemies(enemies, waveCounter, arena);
             }
+            if (hero[0]->getKillCounter() == 20 && waveCounter == 2) {
+                waveCounter++;
+                generateBoss(boss, lifeBars);
+            }
 
             (hero[0]->getType() == CharacterType::spaceCadet) ?
-            update(bullets, hero, enemies, boss, deltaTime, arena, lifeBars, barrels, potions) : update(hero, enemies,
-                                                                                                        boss, deltaTime,
-                                                                                                        arena,
-                                                                                                        lifeBars,
-                                                                                                        barrels);
+            update(bullets, hero, enemies, boss, deltaTime, arena, lifeBars, barrels, potions, numArena) : update(hero,
+                                                                                                                  enemies,
+                                                                                                                  boss,
+                                                                                                                  deltaTime,
+                                                                                                                  arena,
+                                                                                                                  lifeBars,
+                                                                                                                  barrels,
+                                                                                                                  numArena);
 
             draw(bullets, hero, enemies, window, gameOver, arena, lifeBars, boss, barrels, potions);
 
@@ -341,7 +346,7 @@ void generateBoss(std::list<std::shared_ptr<Boss>> &boss, std::list<std::shared_
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, std::list<std::shared_ptr<Boss>> &boss, float deltaTime,
             Map &arena, std::list<std::shared_ptr<LifeBar>> &lifeBars, std::list<std::shared_ptr<Barrel>> &barrels,
-            std::list<std::shared_ptr<Potion>> &potions) {
+            std::list<std::shared_ptr<Potion>> &potions, int numArena) {
 
     //Bullets update
     for (auto bullet = bullets.begin(); bullet != bullets.end();) {
@@ -372,12 +377,12 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared
         else bullet++;
     }
 
-    update(hero, enemies, boss, deltaTime, arena, lifeBars, barrels);
+    update(hero, enemies, boss, deltaTime, arena, lifeBars, barrels, numArena);
 }
 
-void update(std::vector<std::shared_ptr<Player1>> hero,
-            std::list<std::shared_ptr<Enemy>> &enemies, std::list<std::shared_ptr<Boss>> &boss, float deltaTime,
-            Map &arena, std::list<std::shared_ptr<LifeBar>> &lifeBars, std::list<std::shared_ptr<Barrel>> &barrels) {
+void update(std::vector<std::shared_ptr<Player1>> hero, std::list<std::shared_ptr<Enemy>> &enemies,
+            std::list<std::shared_ptr<Boss>> &boss, float deltaTime, Map &arena,
+            std::list<std::shared_ptr<LifeBar>> &lifeBars, std::list<std::shared_ptr<Barrel>> &barrels, int numArena) {
     //Enemies update
     for (auto &enemy: enemies) {
         if (enemy->isLegalFight(&*hero[0])) {
@@ -425,7 +430,7 @@ void update(std::vector<std::shared_ptr<Player1>> hero,
     }
     for (auto &lifeBar: lifeBars)
         lifeBar->update();
-    arena.update();
+    arena.update(numArena);
 }
 
 void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,

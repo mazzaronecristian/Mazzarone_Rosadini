@@ -71,8 +71,8 @@ void Player1::unsubscribe(Observer *o) {
     observer = nullptr;
 }
 
-void Player1::notify() {
-    observer->update();
+void Player1::notify(int numArena) {
+    observer->update(numArena);
 }
 
 void Player1::usePotion() {

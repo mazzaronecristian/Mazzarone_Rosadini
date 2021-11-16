@@ -89,20 +89,14 @@ void Map::attach() {
     subject->subscribe(this);
 }
 
-void Map::update() {
-    if (subject->getKillCounter() == 20)
-        openExitTile();
-}
-
 Map::~Map() {
     detach();
 }
 
-void Map::update(bool life) {
-    if (!life)
+void Map::update(int numArena) {
+    if (numArena < 2 && subject->getKillCounter() == 20)
         openExitTile();
 }
-
 
 
 

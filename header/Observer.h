@@ -10,9 +10,7 @@ class Observer {
 public:
     virtual ~Observer() {};
 
-    virtual void update() = 0;
-
-    virtual void update(bool life) = 0;
+    virtual void update(int numArena) = 0;
 
     virtual void attach() = 0;
 

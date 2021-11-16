@@ -35,9 +35,7 @@ public:
 
     void attach() override;
 
-    void update() override;
-
-    void update(bool life) override;
+    void update(int numArena) override;
 
 private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
