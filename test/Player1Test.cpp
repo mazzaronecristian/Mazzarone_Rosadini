@@ -4,82 +4,72 @@
 #include "gtest/gtest.h"
 #include "../header/Player1.h"
 #include "../header/Enemy.h"
-#include "../header/MeleeAttack.h"
 #include "../header/Bullet.h"
 #include "../header/BulletsFactory.h"
+#include "../header/MapFactory.h"
+#include "../header/PlayersFactory.h"
 
 
 TEST(Player1, TestMoveDown) {
-    std::ifstream matrix("./matrix1.txt");
-    Map arena;
-    arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
-    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
-    p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
+    PlayersFactory pFactory;
+    MapFactory mFactory;
+    Player1 p = pFactory.createHero(CharacterType::spaceCadet);
+    Map arena = mFactory.createMap(1, p);
     p.movement(sf::Vector2f(0, 1), arena);
-    EXPECT_EQ(100, p.getPosition().x);
-    EXPECT_FLOAT_EQ(100.3, p.getPosition().y);
+    EXPECT_EQ(50, p.getPosition().x);
+    EXPECT_FLOAT_EQ(270.5, p.getPosition().y);
 }
 
 TEST(Player1, TestMoveUp) {
-    std::ifstream matrix("./matrix1.txt");
-    Map arena;
-    arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
-    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
-    p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
+    PlayersFactory pFactory;
+    MapFactory mFactory;
+    Player1 p = pFactory.createHero(CharacterType::spaceCadet);
+    Map arena = mFactory.createMap(1, p);
     p.movement(sf::Vector2f(0, -1), arena);
-    EXPECT_EQ(100, p.getPosition().x);
-    EXPECT_FLOAT_EQ(99.7, p.getPosition().y);
+    EXPECT_EQ(50, p.getPosition().x);
+    EXPECT_FLOAT_EQ(269.5, p.getPosition().y);
 }
 
 TEST(Player1, TestMoveRight) {
-    std::ifstream matrix("./matrix1.txt");
-    Map arena;
-    arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
-    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
-    p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
+    PlayersFactory pFactory;
+    MapFactory mFactory;
+    Player1 p = pFactory.createHero(CharacterType::spaceCadet);
+    Map arena = mFactory.createMap(1, p);
     p.movement(sf::Vector2f(1, 0), arena);
-    EXPECT_FLOAT_EQ(100.3, p.getPosition().x);
-    EXPECT_EQ(100, p.getPosition().y);
+    EXPECT_FLOAT_EQ(50.5, p.getPosition().x);
+    EXPECT_EQ(270, p.getPosition().y);
 }
 
 TEST(Player1, TestMoveLeft) {
-    std::ifstream matrix("./matrix1.txt");
-    Map arena;
-    arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
-    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
-    p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
+    PlayersFactory pFactory;
+    MapFactory mFactory;
+    Player1 p = pFactory.createHero(CharacterType::spaceCadet);
+    Map arena = mFactory.createMap(1, p);
     p.movement(sf::Vector2f(-1, 0), arena);
-    EXPECT_FLOAT_EQ(99.7, p.getPosition().x);
-    EXPECT_EQ(100, p.getPosition().y);
+    EXPECT_FLOAT_EQ(49.5, p.getPosition().x);
+    EXPECT_EQ(270, p.getPosition().y);
 }
 
 TEST(Player1, TestMeleeAttack) {
-    std::ifstream matrix("./matrix1.txt");
-    Map arena;
-    arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
-    Player1 p(CharacterType::ghoul, 150, 60, std::make_shared<MeleeAttack>());
-    p.load("./tileSets/characters/ghoul.png", sf::Vector2f(100, 100));
-    Enemy e(CharacterType::ghoul);
-    e.load("./tileSets/characters/ghoul.png", sf::Vector2f(116, 100));
-    while (p.getSource().x < 7) {
-        p.fight(e);
-        p.setSourceX(p.getSource().x + 1);
-    }
-    EXPECT_EQ(40, e.getHp());
+    PlayersFactory pFactory;
+    MapFactory mFactory;
+    Player1 p = pFactory.createHero(CharacterType::adventurer);
+    Map arena = mFactory.createMap(1, p);
+    Enemy e = pFactory.createEnemy(CharacterType::ghoul, sf::Vector2f(66, 270), arena);
+    p.fight(e);
+    EXPECT_EQ(50, e.getHp());
 }
 
 //Test colpo a vuoto
 TEST(Player1, TestRangedAttack) {
-    std::ifstream matrix("./matrix1.txt");
-    Map arena;
-    BulletsFactory factory;
-    arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
-    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
-    p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
-    Enemy e(CharacterType::ghoul);
-    e.load("./tileSets/characters/ghoul.png", sf::Vector2f(100, 100));
-    Bullet bullet = factory.createBullet(BulletType::bullet, 1, p.getPosition(), sf::Vector2i());
-    bullet.movement();
+    PlayersFactory pFactory;
+    MapFactory mFactory;
+    Player1 p = pFactory.createHero(CharacterType::spaceCadet);
+    Map arena = mFactory.createMap(1, p);
+    Enemy *e;
+    e = new Enemy(pFactory.createEnemy(CharacterType::ghoul, sf::Vector2f(60, 270), arena));
+    Bullet bullet = BulletsFactory::createBullet(BulletType::bullet, 1, p.getPosition(), sf::Vector2i(32, 3));
+    bullet.movement(arena);
     bool c = bullet.isCollide(e);
     EXPECT_EQ(false, c);
 }

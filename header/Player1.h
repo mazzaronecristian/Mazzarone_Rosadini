@@ -25,7 +25,7 @@ public:
                      std::shared_ptr<AttackStrategy> attackStrategy = std::make_shared<RangedAttack>(),
                      int killCounter = 0, int width = 32, int height = 32);
 
-    Player1(CharacterType type, int hp, int damage, float speed = 0.7,
+    Player1(CharacterType type, int hp, float speed = 0.7,
             std::shared_ptr<AttackStrategy> attackStrategy = std::make_shared<MeleeAttack>(),
             int killCounter = 0, int width = 32, int height = 32);
 
@@ -42,6 +42,8 @@ public:
     int getKillCounter() const;
 
     void increaseKillCounter();
+
+    void setKillCounter(int value);
 
     bool pickPotion(const std::shared_ptr<Potion> &potion);
 

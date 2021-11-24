@@ -51,7 +51,8 @@ bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>
 
 int main() {
     bool restart = false, finish = false;
-    short int numArena = 2;
+    short int numArena = 1;
+
     //scelta personaggio
     sf::RenderWindow choice(sf::VideoMode(960, 740), "Choose your hero");
     sf::Texture choiceBackground;
@@ -133,6 +134,7 @@ int main() {
         lifeBars.push_back(std::make_shared<LifeBar>(lifeBar));
 
         Map arena = mapFactory.createMap(numArena, *hero[0]);
+
         if (numArena == 2)
             hero[0]->setHp(hpHero);
         //enemies
@@ -160,8 +162,8 @@ int main() {
                 if (e.type == sf::Event::Closed) {
                     window.close();
                 }
-                if (e.type == sf::Event::KeyReleased) {
-                    if (e.key.code == sf::Keyboard::Enter && hero[0]->getType() == CharacterType::spaceCadet) {
+                if (e.type == sf::Event::KeyReleased && e.key.code == sf::Keyboard::Enter) {
+                    if (hero[0]->getType() == CharacterType::spaceCadet) {
                         short int bulletDirection;
                         hero[0]->setSourceY(4 + (hero[0]->getSource().y % 2));
                         bulletDirection = (hero[0]->getSource().y % 2 == 0) ? 1 : -1;
@@ -172,7 +174,7 @@ int main() {
                         hero[0]->setAnim(8, 0.06);
                         shot->setAnim(3, 0.3);
                         bullets.push_back(shot);
-                    } else if (e.key.code == sf::Keyboard::Enter) {
+                    } else {
                         if (hero[0]->getSource().y % 2 == 0)
                             hero[0]->setAnim(8, 0.04, 4);
                         else hero[0]->setAnim(8, 0.04, 5);
@@ -193,7 +195,6 @@ int main() {
                                 attacked = true;
                             } else bos++;
                         }
-
                         for (auto &barrel: barrels)
                             if (hero[0]->isLegalFight(&(*barrel)))
                                 newPotion(potions, *barrel);
@@ -231,7 +232,7 @@ int main() {
                 waveCounter++;
                 generateEnemies(enemies, waveCounter, arena);
             }
-            if (hero[0]->getKillCounter() == 20 && waveCounter == 2) {
+            if (waveCounter == 2 && numArena == 2) {
                 waveCounter++;
                 generateBoss(boss, lifeBars);
             }

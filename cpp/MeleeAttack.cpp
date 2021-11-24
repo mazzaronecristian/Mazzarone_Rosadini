@@ -5,5 +5,5 @@
 #include "../header/MeleeAttack.h"
 
 void MeleeAttack::fight(Character *hero, Character &enemy) {
-    enemy.receiveDamage(hero->getDamage());
+    enemy.receiveDamage(hero->getDamage() + 10);
 }

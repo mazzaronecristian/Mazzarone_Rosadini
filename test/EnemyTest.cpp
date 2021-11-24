@@ -8,11 +8,12 @@
 
 TEST(Enemy, TestMoveDown) {
     std::ifstream matrix("./matrix1.txt");
-    Map arena;
-    arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
+    std::ifstream matrix1("./shades1.txt");
     Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
-    Enemy e(CharacterType::ghoul, std::make_shared<Follow>());
+    Map arena(&p);
+    Enemy e(CharacterType::ghoul);
+    e.setMoveStrategy(std::make_shared<Follow>());
     e.load("./tileSets/characters/ghoul.png", sf::Vector2f(100, 50));
     e.movement(p.getPosition(), arena);
     EXPECT_EQ(100, e.getPosition().x);
@@ -21,11 +22,12 @@ TEST(Enemy, TestMoveDown) {
 
 TEST(Enemy, TestMoveUp) {
     std::ifstream matrix("./matrix1.txt");
-    Map arena;
-    arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
+    std::ifstream matrix1("./shades1.txt");
     Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
-    Enemy e(CharacterType::ghoul, std::make_shared<Follow>());
+    Map arena(&p);
+    Enemy e(CharacterType::ghoul);
+    e.setMoveStrategy(std::make_shared<Follow>());
     e.load("./tileSets/characters/ghoul.png", sf::Vector2f(100, 150));
     e.movement(p.getPosition(), arena);
     EXPECT_EQ(100, e.getPosition().x);
@@ -34,11 +36,12 @@ TEST(Enemy, TestMoveUp) {
 
 TEST(Enemy, TestMoveRight) {
     std::ifstream matrix("./matrix1.txt");
-    Map arena;
-    arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
+    std::ifstream matrix1("./shades1.txt");
     Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
-    Enemy e(CharacterType::ghoul, std::make_shared<Follow>());
+    Map arena(&p);
+    Enemy e(CharacterType::ghoul);
+    e.setMoveStrategy(std::make_shared<Follow>());
     e.load("./tileSets/characters/ghoul.png", sf::Vector2f(50, 100));
     e.movement(p.getPosition(), arena);
     EXPECT_NEAR(50.1, e.getPosition().x, 0.001);
@@ -47,11 +50,12 @@ TEST(Enemy, TestMoveRight) {
 
 TEST(Enemy, TestMoveLeft) {
     std::ifstream matrix("./matrix1.txt");
-    Map arena;
-    arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
     Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
-    Enemy e(CharacterType::ghoul, std::make_shared<Follow>());
+    Map arena(&p);
+    p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
+    Enemy e(CharacterType::ghoul);
+    e.setMoveStrategy(std::make_shared<Follow>());
     e.load("./tileSets/characters/ghoul.png", sf::Vector2f(150, 100));
     e.movement(p.getPosition(), arena);
     EXPECT_NEAR(149.9, e.getPosition().x, 0.001);
@@ -80,11 +84,10 @@ TEST(Enemy, TestFightRight) {
 
 TEST(Enemy, TestEnemyStay) {
     std::ifstream matrix("./matrix1.txt");
-    Map arena;
-    arena.load("./tileSets/map/background.png", "./tileSets/map/map.png", sf::Vector2u(32, 32), matrix);
-    Enemy e(CharacterType::ghoul);
     Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
+    Map arena(&p);
+    Enemy e(CharacterType::ghoul);
     e.load("./tileSets/characters/ghoul.png", sf::Vector2f(100, 100));
     e.movement(p.getPosition(), arena);
     EXPECT_EQ(100, e.getPosition().x);

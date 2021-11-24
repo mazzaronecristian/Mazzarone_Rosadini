@@ -5,5 +5,5 @@
 #include "../header/RangedAttack.h"
 
 void RangedAttack::fight(Character *hero, Character &enemy) {
-    enemy.receiveDamage(hero->getDamage());
+    enemy.receiveDamage(hero->getDamage() - 5);
 }

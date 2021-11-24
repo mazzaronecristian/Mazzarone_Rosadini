@@ -94,8 +94,13 @@ Map::~Map() {
 }
 
 void Map::update(int numArena) {
-    if (numArena < 2 && subject->getKillCounter() == 20)
+    if (numArena < 2 && subject->getKillCounter() == 20) {
         openExitTile();
+    }
+}
+
+Tile Map::getTile(int i) {
+    return tiles[i];
 }
 
 

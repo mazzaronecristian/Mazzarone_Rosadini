@@ -45,6 +45,10 @@ public:
 
     const sf::Vector2f &getTilePosition() const;
 
+    int getCodeX() const;
+
+    int getCodeY() const;
+
 private:
     sf::Vector2f position;
     bool walkable;

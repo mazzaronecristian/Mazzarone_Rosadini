@@ -72,3 +72,7 @@ void Boss::moveLaser(const Map &arena) {
         else laser++;
     }
 }
+
+const std::shared_ptr<BossStrategy> &Boss::getAttackStrategy() const {
+    return attackStrategy;
+}

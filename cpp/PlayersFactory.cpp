@@ -20,7 +20,7 @@ Player1 PlayersFactory::createHero(CharacterType type) {
     if (type == CharacterType::spaceCadet)
         result = new Player1(type);
     else
-        result = new Player1(type, 150, 60);
+        result = new Player1(type, 150);
     result->load(setBitMap(type), sf::Vector2f(50, 270));
     return *result;
 }

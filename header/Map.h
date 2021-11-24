@@ -28,6 +28,8 @@ public:
 
     Tile getTile(sf::Vector2i source);
 
+    Tile getTile(int i);
+
     void openExitTile();
 
     //Observer methods

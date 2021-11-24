@@ -3,7 +3,7 @@ add_subdirectory(./lib/googletest/)
 set(gtest_SOURCE_DIR, ./lib/googletest/)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-set(TEST_SOURCE_FILES runAllTests.cpp TileTest.cpp Player1Test.cpp BulletTest.cpp EnemyTest.cpp ChoiceTest.cpp)
+set(TEST_SOURCE_FILES runAllTests.cpp TileTest.cpp Player1Test.cpp BulletTest.cpp EnemyTest.cpp ChoiceTest.cpp LifeBarTest.cpp PotionTest.cpp BossTest.cpp MapTest.cpp)
 
 add_executable(runAllGameTests ${TEST_SOURCE_FILES})
 

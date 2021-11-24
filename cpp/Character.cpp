@@ -6,7 +6,7 @@
 #include <cmath>
 
 
-Character::Character(CharacterType type, int width, int height, int hp, int damage, float speed, bool isAttacking,
+Character::Character(CharacterType type, int width, int height, int hp, float speed, int damage, bool isAttacking,
                      bool isDying) : hp(hp), damage(damage), speed(speed), attacking(isAttacking), dying(isDying),
                                      type(type),
                                      Entity(sf::Vector2i(width, height)) {}
@@ -69,5 +69,9 @@ bool Character::isLegalFight(const Entity *entity) {
     if (thisBox.intersects(box))
         return true;
     return false;
+}
+
+float Character::getSpeed() const {
+    return speed;
 }
 

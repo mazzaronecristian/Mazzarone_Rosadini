@@ -11,10 +11,10 @@ Player1::Player1(CharacterType type, std::shared_ptr<AttackStrategy> attackStrat
         std::move(attackStrategy)), killCounter(killCounter), Character(type, width, height) {
 }
 
-Player1::Player1(CharacterType type, int hp, int damage, float speed, std::shared_ptr<AttackStrategy> attackStrategy,
+Player1::Player1(CharacterType type, int hp, float speed, std::shared_ptr<AttackStrategy> attackStrategy,
                  int killCounter, int width, int height)
         : attackStrategy(
-        std::move(attackStrategy)), killCounter(killCounter), Character(type, width, height, hp, damage, speed) {
+        std::move(attackStrategy)), killCounter(killCounter), Character(type, width, height, hp, speed) {
 }
 
 Player1::~Player1() = default;
@@ -92,4 +92,8 @@ bool Player1::pickPotion(const std::shared_ptr<Potion> &potion) {
         return true;
     }
     return false;
+}
+
+void Player1::setKillCounter(int value) {
+    killCounter = value;
 }

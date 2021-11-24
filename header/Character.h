@@ -15,7 +15,7 @@ enum class CharacterType {
 
 class Character : public Entity {
 public:
-    Character(CharacterType type, int width, int height, int hp = 120, int damage = 40, float speed = 0.5,
+    Character(CharacterType type, int width, int height, int hp = 120, float speed = 0.5, int damage = 40,
               bool isAttacking = false,
               bool isDying = false);
 
@@ -41,6 +41,8 @@ public:
     int getHp() const;
 
     int getDamage() const;
+
+    float getSpeed() const;
 
     //setter
     void setHp(int hp);
