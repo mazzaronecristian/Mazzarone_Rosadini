@@ -50,6 +50,23 @@ bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>
 
 
 int main() {
+    //Start Window
+    sf::RenderWindow start(sf::VideoMode(960, 495), "Rage Arena");
+    sf::Texture startBackground;
+    startBackground.loadFromFile("./tileSets/userInterface/presentation.png");
+    sf::Sprite startSprite(startBackground);
+    while (start.isOpen()) {
+        sf::Event e;
+        while (start.pollEvent(e)) {
+            if (e.type == sf::Event::Closed)
+                return 0;
+            else if (e.type == sf::Event::KeyPressed)
+                start.close();
+        }
+        start.clear();
+        start.draw(startSprite);
+        start.display();
+    }
     bool restart = false, finish = false;
     short int numArena = 1;
 
@@ -263,6 +280,11 @@ int main() {
         sf::Sprite endSprite(endBackground);
 
         while (end.isOpen()) {
+            sf::Event e{};
+            while (end.pollEvent(e)) {
+                if (e.type == sf::Event::Closed)
+                    end.close();
+            }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
                 end.close();
             end.clear();
@@ -484,9 +506,8 @@ bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>
         numArena = 2;
         window.close();
     }
-    for (const auto &bos: boss) {
-        finish = !bos->isLife();
-    }
+    for (auto bos = boss.begin(); bos != boss.end(); bos++)
+        finish = !bos->get()->isLife();
     if (finish)
         window.close();
     return restart;
