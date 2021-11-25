@@ -12,5 +12,4 @@ public:
     void fight(Character *hero, Character &enemy) override;
 };
 
-
 #endif //MAZZARONE_ROSADINI_RANGEDATTACK_H

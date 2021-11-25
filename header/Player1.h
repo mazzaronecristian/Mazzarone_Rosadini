@@ -31,7 +31,7 @@ public:
 
     void update(float deltaTime) override;
 
-    virtual ~Player1();
+    ~Player1() override;
 
     void movement(sf::Vector2f direction, const Map &map) override;
 
@@ -45,7 +45,7 @@ public:
 
     void setKillCounter(int value);
 
-    bool pickPotion(const std::shared_ptr<Potion> &potion);
+    bool pickPotion(const std::shared_ptr<Potion> &pot);
 
     //Subject methods
     void subscribe(Observer *o) override;
@@ -61,7 +61,6 @@ private:
     std::shared_ptr<AttackStrategy> attackStrategy;
     int killCounter;
     Observer *observer = nullptr;
-
 };
 
 

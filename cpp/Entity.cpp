@@ -4,6 +4,8 @@
 
 #include "../header/Entity.h"
 
+Entity::~Entity() = default;
+
 Entity::Entity(sf::Vector2i dimension, const sf::Time &animTime) : anim(dimension),
                                                                    Elements(dimension.x, dimension.y) {
     life = true;
@@ -36,9 +38,6 @@ void Entity::setAnim(int nFrame, float switchTime, int action) {
 
 sf::Vector2f Entity::getPosition() {
     return sprite.getPosition();
-}
-
-Entity::~Entity() {
 }
 
 void Entity::load(const std::string &tileSet, sf::Vector2f position) {

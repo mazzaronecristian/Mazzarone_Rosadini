@@ -16,7 +16,7 @@ class Entity : public Elements {
 public:
     explicit Entity(sf::Vector2i dimension, const sf::Time &animTime = sf::milliseconds(60));
 
-    virtual ~Entity() = 0;
+    ~Entity() override = 0;
 
     virtual void update(float deltaTime);
 

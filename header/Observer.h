@@ -8,7 +8,7 @@
 
 class Observer {
 public:
-    virtual ~Observer() {};
+    virtual ~Observer() = default;;
 
     virtual void update(int numArena) = 0;
 
@@ -16,6 +16,5 @@ public:
 
     virtual void detach() = 0;
 };
-
 
 #endif //MAZZARONE_ROSADINI_OBSERVER_H

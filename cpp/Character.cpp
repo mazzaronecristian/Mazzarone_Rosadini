@@ -21,12 +21,12 @@ int Character::getDamage() const {
 }
 
 //setter
-void Character::setHp(int hp) {
-    Character::hp = hp;
+void Character::setHp(int hitpoints) {
+    Character::hp = hitpoints;
 }
 
-void Character::receiveDamage(int damage) {
-    Character::hp -= damage;
+void Character::receiveDamage(int dmg) {
+    Character::hp -= dmg;
 }
 
 void Character::kill() {
@@ -40,11 +40,6 @@ void Character::kill() {
 void Character::fight(Character &character) {
     attacking = true;
 }
-
-void Character::setIsFighting(bool isAttacking) {
-    Character::attacking = isAttacking;
-}
-
 
 CharacterType Character::getType() const {
     return type;
@@ -70,8 +65,3 @@ bool Character::isLegalFight(const Entity *entity) {
         return true;
     return false;
 }
-
-float Character::getSpeed() const {
-    return speed;
-}
-

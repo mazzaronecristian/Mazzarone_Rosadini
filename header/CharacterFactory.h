@@ -26,7 +26,7 @@ public:
     virtual Boss createBoss(CharacterType type) = 0;
 
 protected:
-    std::string setBitMap(CharacterType type);
+    static std::string setBitMap(CharacterType type);
 
 };
 

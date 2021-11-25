@@ -10,20 +10,16 @@
 #include "Gif.h"
 #include "Character.h"
 
-enum class UserInterfaceType {
-    lifeBar, gif
-};
-
 class UserInterfaceFactory {
 public:
-    LifeBar createLifeBar(Character *character, sf::Vector2f position, LifeBarType type);
+    static LifeBar createLifeBar(Character *character, sf::Vector2f position, LifeBarType type);
 
-    Gif createGif(CharacterType type, sf::Vector2f position);
+    static Gif createGif(CharacterType type, sf::Vector2f position);
 
 private:
-    std::string setBitMap(LifeBarType type);
+    static std::string setBitMap(LifeBarType type);
 
-    std::string setBitMap(CharacterType type);
+    static std::string setBitMap(CharacterType type);
 };
 
 

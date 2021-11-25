@@ -16,18 +16,17 @@ void Map::load(const std::string &background, const std::string &tileSet, sf::Ve
     //load background image
     bg.loadFromFile(background);
     // load the tileset texture
-    m_tileset.loadFromFile(tileSet);
+    m_tileSet.loadFromFile(tileSet);
 
-    setTilesCode(matrix, tileSize, tiles);
-    setTilesCode(shades, tileSize, tilesShades);
-
+    setTilesCode(matrix, tileSize, false);
+    setTilesCode(shades, tileSize, true);
 }
 void Map::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 
     sf::Sprite background(bg);
     target.draw(background);
-    drawTiles(target, tilesShades);
-    drawTiles(target, tiles);
+    drawTiles(target, true);
+    drawTiles(target, false);
 }
 
 Tile Map::getTile(sf::Vector2i source) {
@@ -37,34 +36,37 @@ Tile Map::getTile(sf::Vector2i source) {
 void Map::openExitTile() {
 
     Tile tile(2, 4, false, tiles[239].getTilePosition());
-    tile.load(m_tileset);
+    tile.load(m_tileSet);
     tiles[239] = tile;
 
     tile = Tile(2, 5, false, tiles[269].getTilePosition());
-    tile.load(m_tileset);
+    tile.load(m_tileSet);
     tiles[269] = tile;
 
     tile = Tile(8, 5, true, tiles[299].getTilePosition());
-    tile.load(m_tileset);
+    tile.load(m_tileSet);
     tiles[299] = tile;
 
     tile = Tile(2, 6, false, tiles[329].getTilePosition());
-    tile.load(m_tileset);
+    tile.load(m_tileSet);
     tiles[329] = tile;
 
     tile = Tile(2, 7, false, tiles[359].getTilePosition());
-    tile.load(m_tileset);
+    tile.load(m_tileSet);
     tiles[359] = tile;
 
 }
 
-void Map::drawTiles(sf::RenderTarget &target, std::vector<Tile> tiles) const {
-    for (int i = 0; i < width * height; i++)
-        target.draw(tiles[i]);
+void Map::drawTiles(sf::RenderTarget &target, bool shades) const {
+    for (int i = 0; i < width * height; i++) {
+        if (shades)
+            target.draw(tilesShades[i]);
+        else
+            target.draw(tiles[i]);
+    }
 }
 
-void Map::setTilesCode(std::ifstream &matrix, sf::Vector2u tileSize, std::vector<Tile> &tiles) {
-
+void Map::setTilesCode(std::ifstream &matrix, sf::Vector2u tileSize, bool shades) {
     int codeX, codeY;
     bool walkable;
     for (int y = 0; y < height; y++)
@@ -73,13 +75,14 @@ void Map::setTilesCode(std::ifstream &matrix, sf::Vector2u tileSize, std::vector
             matrix >> codeY;
             walkable = (codeX == 8 &&
                         codeY == 5); //set a tile walkable or not walkable. code=(8,5) corresponds to ground.
-            Tile tile(codeX, codeY, walkable, sf::Vector2f(x * tileSize.x, y * tileSize.y));
-            tile.load(m_tileset);
-            tiles.push_back(tile);
+            Tile tile(codeX, codeY, walkable, sf::Vector2f((float) (x * tileSize.x), (float) (y * tileSize.y)));
+            tile.load(m_tileSet);
+            if (shades)
+                tilesShades.push_back(tile);
+            else
+                tiles.push_back(tile);
         }
-
 }
-
 //Observer methods
 void Map::detach() {
     subject->unsubscribe(this);
@@ -102,7 +105,3 @@ void Map::update(int numArena) {
 Tile Map::getTile(int i) {
     return tiles[i];
 }
-
-
-
-

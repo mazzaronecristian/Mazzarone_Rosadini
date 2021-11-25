@@ -19,7 +19,7 @@ class Player1;
 
 class Map : public Observer, public sf::Drawable, public sf::Transformable {
 public:
-    virtual ~Map();
+    ~Map() override;
 
     explicit Map(Player1 *subject, int width = 30, int height = 20);
 
@@ -42,18 +42,16 @@ public:
 private:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-    void drawTiles(sf::RenderTarget &target, std::vector<Tile> tiles) const;
+    void drawTiles(sf::RenderTarget &target, bool shades) const;
 
-    void setTilesCode(std::ifstream &matrix, sf::Vector2u tileSize, std::vector<Tile> &tiles);
+    void setTilesCode(std::ifstream &matrix, sf::Vector2u tileSize, bool shades);
 
 private:
     int width, height;
     sf::Texture bg;
-    sf::VertexArray m_vertices;
-    sf::Texture m_tileset;
+    sf::Texture m_tileSet;
     std::vector<Tile> tiles;
     std::vector<Tile> tilesShades;
-
     Player1 *subject;
 };
 

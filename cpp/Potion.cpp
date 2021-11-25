@@ -7,7 +7,7 @@
 
 Potion::Potion(PotionType type) : type(type), Entity(sf::Vector2i(32, 32)) {}
 
-Potion::~Potion() {}
+Potion::~Potion() = default;
 
 int Potion::use(int result) {
     int increment = static_cast<int>(type);

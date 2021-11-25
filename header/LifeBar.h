@@ -26,5 +26,4 @@ private:
 
 };
 
-
 #endif //MAZZARONE_ROSADINI_LIFEBAR_H

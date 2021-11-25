@@ -6,7 +6,7 @@
 
 Bullet
 BulletsFactory::createBullet(BulletType type, short int direction, sf::Vector2f position, sf::Vector2i dimension) {
-    Bullet *result = new Bullet(direction, dimension);
+    auto *result = new Bullet(direction, dimension);
     position.y += 16;
     position.x += (40 * (float) direction);
     result->load(setBitmap(type), position);

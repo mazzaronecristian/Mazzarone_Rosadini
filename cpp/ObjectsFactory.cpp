@@ -4,8 +4,7 @@
 
 #include "../header/ObjectsFactory.h"
 
-ObjectsFactory::ObjectsFactory() {
-}
+ObjectsFactory::ObjectsFactory() = default;
 
 Barrel ObjectsFactory::createBarrel(PotionType type, sf::Vector2f position) {
     auto *barrel = new Barrel(type);
@@ -14,7 +13,7 @@ Barrel ObjectsFactory::createBarrel(PotionType type, sf::Vector2f position) {
 }
 
 Potion ObjectsFactory::createPotion(PotionType type, sf::Vector2f position) {
-    Potion *potion = new Potion(type);
+    auto *potion = new Potion(type);
     potion->load(setBitmap(type), position);
     return *potion;
 }

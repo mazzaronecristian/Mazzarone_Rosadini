@@ -8,10 +8,9 @@ Tile::Tile(int codeX, int codeY, bool walkable, sf::Vector2f position) : codeX(c
                                                                          position(position) {
 }
 
-void Tile::load(const sf::Texture &tileset) {
-    sprite.setTexture(tileset);
+void Tile::load(const sf::Texture &tileSet) {
+    sprite.setTexture(tileSet);
     sprite.setPosition(position);
-    //sprite.setOrigin(16,16);
     sprite.setTextureRect(sf::IntRect(codeX * 32, codeY * 32, 32, 32));
 }
 

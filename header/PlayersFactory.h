@@ -7,7 +7,6 @@
 
 #include "CharacterFactory.h"
 
-
 class PlayersFactory : public CharacterFactory {
 public:
     Enemy createEnemy(CharacterType type, sf::Vector2f position, Map arena) override;
@@ -15,7 +14,6 @@ public:
     Player1 createHero(CharacterType type) override;
 
     Boss createBoss(CharacterType type) override;
-
 };
 
 #endif //MAZZARONE_ROSADINI_PLAYERSFACTORY_H

@@ -15,11 +15,9 @@ class UserInterface : public Elements {
 public:
     UserInterface(int width, int height);
 
-    virtual ~UserInterface() = 0;
+    ~UserInterface() override = 0;
 
     virtual void update() = 0;
-
-
 };
 
 

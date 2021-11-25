@@ -12,5 +12,4 @@ public:
     void fight(Character &hero, Boss *boss) override;
 };
 
-
 #endif //MAZZARONE_ROSADINI_MELEEBOSSATTACK_H

@@ -4,7 +4,7 @@
 
 #include "../header/CharacterFactory.h"
 
-CharacterFactory::CharacterFactory() {}
+CharacterFactory::CharacterFactory() = default;
 
 std::string CharacterFactory::setBitMap(CharacterType type) {
     std::string result;

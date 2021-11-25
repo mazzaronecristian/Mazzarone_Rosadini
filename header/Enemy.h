@@ -28,7 +28,7 @@ public:
 
     void fight(Character &character) override;
 
-    void setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrategy);
+    void setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrat);
 
     void setMoveStrategy(sf::Vector2f position, const Map &arena);
 

@@ -27,11 +27,9 @@ public:
 
     float getAttackTimer() const;
 
-    void setAttackTimer(float attackTimer);
+    void setAttackTimer(float timer);
 
     const std::list<std::shared_ptr<Bullet>> &getLasers() const;
-
-    const std::shared_ptr<BossStrategy> &getAttackStrategy() const;
 
 private:
     int laserDamage;

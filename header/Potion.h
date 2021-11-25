@@ -16,7 +16,7 @@ class Potion : public Entity {
 public:
     explicit Potion(PotionType type = PotionType::regular);
 
-    virtual ~Potion();
+    ~Potion() override;
 
     int use(int result);
 

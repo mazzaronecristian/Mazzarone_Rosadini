@@ -33,7 +33,7 @@ public:
 
     bool isLegalFight(const Entity *entity);
 
-    void receiveDamage(int damage);
+    void receiveDamage(int dmg);
 
     //getter
     bool isDying() const;
@@ -42,19 +42,15 @@ public:
 
     int getDamage() const;
 
-    float getSpeed() const;
-
     //setter
-    void setHp(int hp);
-
-    void setIsFighting(bool isAttacking);
+    void setHp(int hitpoints);
 
 protected:
     bool attacking, dying;
     int hp, damage;
     float speed;
     enum action {
-        stayR = 0, stayL = 1, right = 2, left = 3, attackR = 4, attackL = 5, stay = 6, die = 7
+        stayR = 0, right = 2, left = 3, attackR = 4, attackL = 5, die = 7
     };
     CharacterType type;
 };

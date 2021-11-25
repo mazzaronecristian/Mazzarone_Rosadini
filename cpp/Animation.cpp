@@ -27,20 +27,13 @@ void Animation::applyToSprite(sf::Sprite &sprite) {
     sprite.setTextureRect(rect);
 }
 
-void Animation::setNFrame(int nFrame) {
-    Animation::nFrame = nFrame;
+void Animation::setNFrame(int frames) {
+    Animation::nFrame = frames;
 }
 
-void Animation::setAnimTime(float animTime) {
-    Animation::animTime = animTime;
+void Animation::setSwitchTime(float time) {
+    Animation::switchTime = time;
 }
 
-void Animation::setSwitchTime(float switchTime) {
-    Animation::switchTime = switchTime;
-}
-
-void Animation::setFrameSize(sf::Vector2i dim) {
-    rect = sf::IntRect(0, 0, dim.x, dim.y);
-}
 
 

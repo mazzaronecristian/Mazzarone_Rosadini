@@ -4,14 +4,13 @@
 
 #include "../header/Elements.h"
 
-Elements::~Elements() {
-}
+Elements::~Elements() = default;
 
 Elements::Elements(int width, int height) : width(width), height(height) {
 }
 
-void Elements::load(const std::string &tileSet, sf::Vector2f position) {
-    Elements::tileSet.loadFromFile(tileSet);
+void Elements::load(const std::string &tiles, sf::Vector2f position) {
+    Elements::tileSet.loadFromFile(tiles);
     sprite.setTexture(Elements::tileSet);
     sprite.setPosition(position);
     sprite.scale(1.4, 1.4);
@@ -22,8 +21,8 @@ void Elements::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(sprite);
 }
 
-void Elements::setTileSet(const sf::Texture &tileSet) {
-    Elements::tileSet = tileSet;
+void Elements::setTileSet(const sf::Texture &tiles) {
+    Elements::tileSet = tiles;
 }
 
 const sf::Vector2i &Elements::getSource() const {

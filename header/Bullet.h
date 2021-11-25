@@ -21,7 +21,7 @@ public:
 
     void update(float deltaTime) override;
 
-    virtual ~Bullet();
+    ~Bullet() override;
 
 private:
     float speed;

@@ -14,5 +14,4 @@ public:
     virtual sf::Vector2f movement(sf::Vector2f direction, sf::Sprite &sprite) = 0;
 };
 
-
 #endif //MAZZARONE_ROSADINI_MOVESTRATEGY_H

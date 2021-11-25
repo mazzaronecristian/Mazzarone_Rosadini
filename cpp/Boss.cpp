@@ -52,8 +52,8 @@ float Boss::getAttackTimer() const {
     return attackTimer;
 }
 
-void Boss::setAttackTimer(float attackTimer) {
-    Boss::attackTimer = attackTimer;
+void Boss::setAttackTimer(float timer) {
+    Boss::attackTimer = timer;
 }
 
 const std::list<std::shared_ptr<Bullet>> &Boss::getLasers() const {
@@ -73,6 +73,3 @@ void Boss::moveLaser(const Map &arena) {
     }
 }
 
-const std::shared_ptr<BossStrategy> &Boss::getAttackStrategy() const {
-    return attackStrategy;
-}

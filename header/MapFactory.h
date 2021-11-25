@@ -9,12 +9,12 @@
 
 class MapFactory {
 public:
-    Map createMap(short int numArena, Player1 &subject);
+    static Map createMap(short int numArena, Player1 &subject);
 
 private:
-    std::ifstream setMatrix(short int numArena);
+    static std::ifstream setMatrix(short int numArena);
 
-    std::ifstream setShadesMatrix(short int numArena);
+    static std::ifstream setShadesMatrix(short int numArena);
 
 };
 

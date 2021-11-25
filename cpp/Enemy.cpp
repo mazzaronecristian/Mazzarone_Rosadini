@@ -53,8 +53,8 @@ bool Enemy::isLegalMove(sf::Vector2f position, const Map &arena) {
     return isLegalDirection(direction, arena);
 }
 
-void Enemy::setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrategy) {
-    Enemy::moveStrategy = moveStrategy;
+void Enemy::setMoveStrategy(const std::shared_ptr<MoveStrategy> &moveStrat) {
+    Enemy::moveStrategy = moveStrat;
 }
 
 void Enemy::setMoveStrategy(sf::Vector2f position, const Map &arena) {

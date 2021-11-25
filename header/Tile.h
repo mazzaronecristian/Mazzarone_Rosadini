@@ -10,34 +10,11 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 
-enum class WalkableTiles {
-    groundX = 8,
-    groundY = 5
-};
-
-enum class ShootableTiles {
-    groundX = 8,
-    groundY = 5,
-
-    //W is water
-    W1X = 10,
-    W1Y = 8,
-
-    W2X = 11,
-    W2Y = 8,
-
-    W3X = 10,
-    W3Y = 9,
-
-    W4X = 11,
-    W4Y = 9
-};
-
 class Tile : public sf::Drawable, public sf::Transformable {
 public:
     Tile(int codeX, int codeY, bool walkable, sf::Vector2f position);
 
-    void load(const sf::Texture &tileset);
+    void load(const sf::Texture &tileSet);
 
     sf::Sprite &getSprite();
 

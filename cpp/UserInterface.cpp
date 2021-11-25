@@ -6,6 +6,6 @@
 
 UserInterface::UserInterface(int width, int height) : Elements(width, height) {}
 
-UserInterface::~UserInterface() {}
+UserInterface::~UserInterface() = default;
 
 

@@ -13,7 +13,6 @@
 #include "../header/MapFactory.h"
 #include "../header/ObjectsFactory.h"
 
-
 #include <cmath>
 #include <list>
 #include <memory>
@@ -23,6 +22,12 @@ void generateBarrels(std::list<std::shared_ptr<Barrel>> &barrels, const Map &are
 void newPotion(std::list<std::shared_ptr<Potion>> &potions, Barrel &barrel);
 
 sf::Vector2f rightPosition(Map arena);
+
+void
+heroAction(std::vector<std::shared_ptr<Player1>> hero, const Map &arena, std::list<std::shared_ptr<Potion>> &potions);
+
+void enemiesMovement(std::vector<std::shared_ptr<Player1>> hero, std::list<std::shared_ptr<Enemy>> &enemies);
+
 
 void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter,
                      const Map &arena); //generates waves of enemies
@@ -35,10 +40,6 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared
             Map &arena, std::list<std::shared_ptr<LifeBar>> &lifeBars, std::list<std::shared_ptr<Barrel>> &barrels,
             std::list<std::shared_ptr<Potion>> &potions, int numArena);
 
-void update(std::vector<std::shared_ptr<Player1>> hero, std::list<std::shared_ptr<Enemy>> &enemies,
-            std::list<std::shared_ptr<Boss>> &boss, float deltaTime, Map &arena,
-            std::list<std::shared_ptr<LifeBar>> &lifeBars, std::list<std::shared_ptr<Barrel>> &barrels, int numArena);
-
 void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
           const std::list<std::shared_ptr<Enemy>> &enemies, sf::RenderWindow &window, sf::RenderTexture &gameOver,
           Map &arena,
@@ -48,7 +49,6 @@ void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::sh
 bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>> hero,
                   const std::list<std::shared_ptr<Boss>> &boss, short int &numArena, bool &finish);
 
-
 int main() {
     //Start Window
     sf::RenderWindow start(sf::VideoMode(960, 495), "Rage Arena");
@@ -56,7 +56,7 @@ int main() {
     startBackground.loadFromFile("./tileSets/userInterface/presentation.png");
     sf::Sprite startSprite(startBackground);
     while (start.isOpen()) {
-        sf::Event e;
+        sf::Event e{};
         while (start.pollEvent(e)) {
             if (e.type == sf::Event::Closed)
                 return 0;
@@ -70,49 +70,55 @@ int main() {
     bool restart = false, finish = false;
     short int numArena = 1;
 
-    //scelta personaggio
+    //Hero choice
     sf::RenderWindow choice(sf::VideoMode(960, 740), "Choose your hero");
     sf::Texture choiceBackground;
-    UserInterfaceFactory choiceFactory;
     choiceBackground.loadFromFile("./tileSets/userInterface/choiceBackground.png");
     sf::Sprite choiceSprite(choiceBackground);
     choiceSprite.setPosition(0, 0);
     std::vector<std::shared_ptr<Gif>> heroesGif;
-    Gif heroGif1 = choiceFactory.createGif(CharacterType::spaceCadet, sf::Vector2f(200, 130));
-    Gif heroGif2 = choiceFactory.createGif(CharacterType::adventurer, sf::Vector2f(500, 130));
-    Gif heroGif3 = choiceFactory.createGif(CharacterType::dwarf, sf::Vector2f(200, 380));
-    Gif heroGif4 = choiceFactory.createGif(CharacterType::gladiator, sf::Vector2f(500, 380));
+    Gif heroGif1 = UserInterfaceFactory::createGif(CharacterType::spaceCadet, sf::Vector2f(200, 130));
+    Gif heroGif2 = UserInterfaceFactory::createGif(CharacterType::adventurer, sf::Vector2f(500, 130));
+    Gif heroGif3 = UserInterfaceFactory::createGif(CharacterType::dwarf, sf::Vector2f(200, 380));
+    Gif heroGif4 = UserInterfaceFactory::createGif(CharacterType::gladiator, sf::Vector2f(500, 380));
     heroesGif.push_back(std::make_shared<Gif>(heroGif1));
     heroesGif.push_back(std::make_shared<Gif>(heroGif2));
     heroesGif.push_back(std::make_shared<Gif>(heroGif3));
     heroesGif.push_back(std::make_shared<Gif>(heroGif4));
-    float deltaTimeChoice;
     sf::Clock clockChoice;
     CharacterType heroType;
 
     while (choice.isOpen()) {
-        deltaTimeChoice = clockChoice.restart().asSeconds();
-        sf::Event e;
+        float deltaTimeChoice = clockChoice.restart().asSeconds();
+        sf::Event e{};
         while (choice.pollEvent(e)) {
-            if (e.type == sf::Event::Closed)
-                return 0;
+            switch (e.type) {
+                case sf::Event::Closed:
+                    return 0;
+                    break;
+                case sf::Event::KeyPressed:
+                    if (e.key.code == sf::Keyboard::Num1) {
+                        heroType = heroesGif[0]->getType();
+                        choice.close();
+                    }
+                    if (e.key.code == sf::Keyboard::Num2) {
+                        heroType = heroesGif[1]->getType();
+                        choice.close();
+                    }
+                    if (e.key.code == sf::Keyboard::Num3) {
+                        heroType = heroesGif[2]->getType();
+                        choice.close();
+                    }
+                    if (e.key.code == sf::Keyboard::Num4) {
+                        heroType = heroesGif[3]->getType();
+                        choice.close();
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
-            heroType = heroesGif[0]->getType();
-            choice.close();
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
-            heroType = heroesGif[1]->getType();
-            choice.close();
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) {
-            heroType = heroesGif[2]->getType();
-            choice.close();
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) {
-            heroType = heroesGif[3]->getType();
-            choice.close();
-        }
+
         choice.clear();
         choice.draw(choiceSprite);
         for (const auto &i: heroesGif) {
@@ -137,20 +143,17 @@ int main() {
         gameOver.display();
 
         PlayersFactory factory;
-        UserInterfaceFactory userFactory;
-        MapFactory mapFactory;
 
         std::vector<std::shared_ptr<Player1>> hero;
-
         hero.push_back(std::make_shared<Player1>(factory.createHero(heroType)));
 
         std::list<std::shared_ptr<LifeBar>> lifeBars;
 
-        LifeBar lifeBar = userFactory.createLifeBar(hero[0].get(), sf::Vector2f(10, 680), LifeBarType::hero);
+        LifeBar lifeBar = UserInterfaceFactory::createLifeBar(hero[0].get(), sf::Vector2f(10, 680), LifeBarType::hero);
 
         lifeBars.push_back(std::make_shared<LifeBar>(lifeBar));
 
-        Map arena = mapFactory.createMap(numArena, *hero[0]);
+        Map arena = MapFactory::createMap(numArena, *hero[0]);
 
         if (numArena == 2)
             hero[0]->setHp(hpHero);
@@ -163,7 +166,6 @@ int main() {
         std::list<std::shared_ptr<Boss>> boss;
 
         sf::Clock clock;
-        float deltaTime;
         std::list<std::shared_ptr<Bullet>> bullets;
 
         //Barrels
@@ -173,8 +175,8 @@ int main() {
 
         //main loop
         while (window.isOpen()) {
-            deltaTime = clock.restart().asSeconds();
-            sf::Event e;
+            float deltaTime = clock.restart().asSeconds();
+            sf::Event e{};
             while (window.pollEvent(e)) {
                 if (e.type == sf::Event::Closed) {
                     window.close();
@@ -219,31 +221,8 @@ int main() {
                 }
             }
 
-
-            //hero actions
-            if (!hero[0]->isDying()) {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-                    hero[0]->movement(sf::Vector2f(0, -1), arena);
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-                    hero[0]->movement(sf::Vector2f(-1, 0), arena);
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-                    hero[0]->movement(sf::Vector2f(0, 1), arena);
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-                    hero[0]->movement(sf::Vector2f(1, 0), arena);
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
-                    for (auto i = potions.begin(); i != potions.end();)
-                        hero[0]->pickPotion(*i) ? (i = potions.erase(i)) : i++;
-                    hero[0]->usePotion();
-                }
-            }
-
-            //Enemies movement
-            for (auto &enemy: enemies) {
-                if (std::abs(hero[0]->getPosition().x - enemy->getPosition().x) <= 300
-                    && std::abs(hero[0]->getPosition().y - enemy->getPosition().y) <= 300) {
-                    enemy->setMoveStrategy(std::make_shared<Follow>());
-                } else enemy->setMoveStrategy(std::make_shared<Patrol>());
-            }
+            heroAction(hero, arena, potions);
+            enemiesMovement(hero, enemies);
 
             if (hero[0]->getKillCounter() == 10 && waveCounter < 2) {
                 waveCounter++;
@@ -254,15 +233,7 @@ int main() {
                 generateBoss(boss, lifeBars);
             }
 
-            (hero[0]->getType() == CharacterType::spaceCadet) ?
-            update(bullets, hero, enemies, boss, deltaTime, arena, lifeBars, barrels, potions, numArena) : update(hero,
-                                                                                                                  enemies,
-                                                                                                                  boss,
-                                                                                                                  deltaTime,
-                                                                                                                  arena,
-                                                                                                                  lifeBars,
-                                                                                                                  barrels,
-                                                                                                                  numArena);
+            update(bullets, hero, enemies, boss, deltaTime, arena, lifeBars, barrels, potions, numArena);
 
             draw(bullets, hero, enemies, window, gameOver, arena, lifeBars, boss, barrels, potions);
 
@@ -302,7 +273,7 @@ void generateBarrels(std::list<std::shared_ptr<Barrel>> &barrels, const Map &are
     for (int i = 0; i < 3; i++) {
         sf::Vector2f position = rightPosition(arena);
         std::shared_ptr<Barrel> barrel = (std::make_shared<Barrel>(
-                barrelFactory.createBarrel(T[random() % 3], position)));
+                ObjectsFactory::createBarrel(T[random() % 3], position)));
         barrels.push_back(barrel);
     }
 
@@ -333,7 +304,7 @@ void newPotion(std::list<std::shared_ptr<Potion>> &potions, Barrel &barrel) {
     if (barrel.kill(type)) {
         ObjectsFactory factory;
         std::shared_ptr<Potion> potion;
-        potion = std::make_shared<Potion>(factory.createPotion(type, barrel.getPosition()));
+        potion = std::make_shared<Potion>(ObjectsFactory::createPotion(type, barrel.getPosition()));
         potions.push_back(potion);
     }
 }
@@ -351,20 +322,46 @@ sf::Vector2f rightPosition(Map arena) {
     return position;
 }
 
+void
+heroAction(std::vector<std::shared_ptr<Player1>> hero, const Map &arena, std::list<std::shared_ptr<Potion>> &potions) {
+    if (!hero[0]->isDying()) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+            hero[0]->movement(sf::Vector2f(0, -1), arena);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+            hero[0]->movement(sf::Vector2f(-1, 0), arena);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+            hero[0]->movement(sf::Vector2f(0, 1), arena);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            hero[0]->movement(sf::Vector2f(1, 0), arena);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+            for (auto i = potions.begin(); i != potions.end();)
+                hero[0]->pickPotion(*i) ? (i = potions.erase(i)) : i++;
+            hero[0]->usePotion();
+        }
+    }
+}
+
+void enemiesMovement(std::vector<std::shared_ptr<Player1>> hero, std::list<std::shared_ptr<Enemy>> &enemies) {
+    for (auto &enemy: enemies) {
+        if (std::abs(hero[0]->getPosition().x - enemy->getPosition().x) <= 300
+            && std::abs(hero[0]->getPosition().y - enemy->getPosition().y) <= 300) {
+            enemy->setMoveStrategy(std::make_shared<Follow>());
+        } else enemy->setMoveStrategy(std::make_shared<Patrol>());
+    }
+}
+
 void generateBoss(std::list<std::shared_ptr<Boss>> &boss, std::list<std::shared_ptr<LifeBar>> &lifeBars) {
     PlayersFactory factory;
-    UserInterfaceFactory userFactory;
     std::shared_ptr<Boss> b;
     b = std::make_shared<Boss>(factory.createBoss(CharacterType::cyclops));
     boss.push_back(b);
     for (auto &bos: boss) {
         bos->setMoveStrategy(std::make_shared<Follow>());
         std::shared_ptr<LifeBar> lifeBar = std::make_shared<LifeBar>(
-                userFactory.createLifeBar(bos.get(), sf::Vector2f(600, 680), LifeBarType::cyclops));
+                UserInterfaceFactory::createLifeBar(bos.get(), sf::Vector2f(600, 680), LifeBarType::cyclops));
         lifeBars.push_back(lifeBar);
     }
 }
-
 
 void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared_ptr<Player1>> hero,
             std::list<std::shared_ptr<Enemy>> &enemies, std::list<std::shared_ptr<Boss>> &boss, float deltaTime,
@@ -399,13 +396,6 @@ void update(std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::shared
             bullet = bullets.erase(bullet);
         else bullet++;
     }
-
-    update(hero, enemies, boss, deltaTime, arena, lifeBars, barrels, numArena);
-}
-
-void update(std::vector<std::shared_ptr<Player1>> hero, std::list<std::shared_ptr<Enemy>> &enemies,
-            std::list<std::shared_ptr<Boss>> &boss, float deltaTime, Map &arena,
-            std::list<std::shared_ptr<LifeBar>> &lifeBars, std::list<std::shared_ptr<Barrel>> &barrels, int numArena) {
     //Enemies update
     for (auto &enemy: enemies) {
         if (enemy->isLegalFight(&*hero[0])) {

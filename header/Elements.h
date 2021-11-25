@@ -13,23 +13,23 @@ class Elements : public sf::Drawable, public sf::Transformable {
 public:
     Elements(int width, int height);
 
-    virtual ~Elements() = 0;
+    ~Elements() override = 0;
 
-    virtual void load(const std::string &tileSet, sf::Vector2f position);
+    virtual void load(const std::string &tiles, sf::Vector2f position);
 
-    virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
     //Getter&Setter
 
     const sf::Sprite &getSprite() const;
 
-    void setTileSet(const sf::Texture &tileSet);
+    void setTileSet(const sf::Texture &tiles);
 
     const sf::Vector2i &getSource() const;
 
-    void setSourceY(const int y);
+    void setSourceY(int y);
 
-    void setSourceX(const int x);
+    void setSourceX(int x);
 
 protected:
     int width, height;

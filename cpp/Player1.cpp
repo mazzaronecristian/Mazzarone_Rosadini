@@ -84,11 +84,11 @@ void Player1::usePotion() {
     }
 }
 
-bool Player1::pickPotion(const std::shared_ptr<Potion> &potion) {
+bool Player1::pickPotion(const std::shared_ptr<Potion> &pot) {
     sf::FloatRect bulletBox = sprite.getGlobalBounds();
-    sf::FloatRect characterBox = potion->getSprite().getGlobalBounds();
+    sf::FloatRect characterBox = pot->getSprite().getGlobalBounds();
     if (bulletBox.intersects(characterBox) && Player1::potion == nullptr) {
-        Player1::potion = potion;
+        Player1::potion = pot;
         return true;
     }
     return false;
