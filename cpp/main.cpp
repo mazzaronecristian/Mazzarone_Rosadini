@@ -314,7 +314,7 @@ sf::Vector2f rightPosition(Map arena) {
     sf::Vector2f position;
     while (!legalPosition) {
         position = {(float) (random() % 450 + 300), (float) (random() % 450 + 100)};
-        sf::Vector2i source = {(int) round(position.x / 32), (int) round(position.y / 32)};
+        sf::Vector2i source = {(int) std::round(position.x / 32), (int) std::round(position.y / 32)};
         Tile tile = arena.getTile(source);
         if (tile.isWalkable())
             legalPosition = true;
