@@ -15,7 +15,7 @@ enum class CharacterType {
 
 class Character : public Entity {
 public:
-    Character(CharacterType type, int width, int height, int hp = 120, float speed = 0.5, int damage = 40,
+    Character(CharacterType type, int width, int height, int hp, float speed, int damage,
               bool isAttacking = false,
               bool isDying = false);
 
@@ -32,6 +32,8 @@ public:
     bool isLegalDirection(sf::Vector2f direction, Map map);
 
     bool isLegalFight(const Entity *entity);
+
+    void setAttacking(bool attack);
 
     void receiveDamage(int dmg);
 
@@ -50,7 +52,7 @@ protected:
     int hp, damage;
     float speed;
     enum action {
-        stayR = 0, right = 2, left = 3, attackR = 4, attackL = 5, die = 7
+        stayR = 0, stayL = 1, right = 2, left = 3, attackR = 4, attackL = 5, die = 7
     };
     CharacterType type;
 };

@@ -10,6 +10,8 @@ BulletsFactory::createBullet(BulletType type, short int direction, sf::Vector2f 
     position.y += 16;
     position.x += (40 * (float) direction);
     result->load(setBitmap(type), position);
+    if (type == BulletType::laser)
+        result->setSourceY((direction - 1) / (-2));
     return *result;
 }
 
@@ -18,3 +20,4 @@ std::string BulletsFactory::setBitmap(BulletType type) {
         return "./tileSets/bullets/laser.png";
     else return "./tileSets/bullets/bullet.png";
 }
+

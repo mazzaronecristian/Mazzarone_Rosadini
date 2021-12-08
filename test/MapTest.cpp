@@ -12,7 +12,7 @@ TEST(Map, openExitTile) {
     MapFactory mFactory;
     PlayersFactory pFactory;
     short int numarena = 1;
-    Player1 p(CharacterType::spaceCadet);
+    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>(), 120, 0.5);
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(943, 270));
     p.setKillCounter(20);
     Map arena = mFactory.createMap(numarena, p);

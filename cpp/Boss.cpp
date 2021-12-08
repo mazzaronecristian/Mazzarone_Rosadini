@@ -60,7 +60,7 @@ const std::list<std::shared_ptr<Bullet>> &Boss::getLasers() const {
     return lasers;
 }
 
-void Boss::addLaser(Bullet bullet) {
+void Boss::addLaser(const Bullet &bullet) {
     lasers.push_back(std::make_shared<Bullet>(bullet));
 }
 

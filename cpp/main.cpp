@@ -182,6 +182,7 @@ int main() {
                     window.close();
                 }
                 if (e.type == sf::Event::KeyReleased && e.key.code == sf::Keyboard::Enter) {
+                    hero[0]->setAttacking(true);
                     if (hero[0]->getType() == CharacterType::spaceCadet) {
                         short int bulletDirection;
                         hero[0]->setSourceY(4 + (hero[0]->getSource().y % 2));
@@ -223,7 +224,6 @@ int main() {
 
             heroAction(hero, arena, potions);
             enemiesMovement(hero, enemies);
-
             if (hero[0]->getKillCounter() == 10 && waveCounter < 2) {
                 waveCounter++;
                 generateEnemies(enemies, waveCounter, arena);

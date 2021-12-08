@@ -21,13 +21,8 @@
 
 class Player1 : public Character, public Subject {
 public:
-    explicit Player1(CharacterType type,
-                     std::shared_ptr<AttackStrategy> attackStrategy = std::make_shared<RangedAttack>(),
-                     int killCounter = 0, int width = 32, int height = 32);
-
-    Player1(CharacterType type, int hp, float speed = 0.7,
-            std::shared_ptr<AttackStrategy> attackStrategy = std::make_shared<MeleeAttack>(),
-            int killCounter = 0, int width = 32, int height = 32);
+    Player1(CharacterType type, std::shared_ptr<AttackStrategy> attackStrategy,
+            int hp, float speed, int damage = 40, int killCounter = 0, int width = 32, int height = 32);
 
     void update(float deltaTime) override;
 

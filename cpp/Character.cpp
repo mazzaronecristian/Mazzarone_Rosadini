@@ -65,3 +65,7 @@ bool Character::isLegalFight(const Entity *entity) {
         return true;
     return false;
 }
+
+void Character::setAttacking(bool attack) {
+    attacking = attack;
+}

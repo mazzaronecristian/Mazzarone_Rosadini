@@ -13,7 +13,7 @@
 TEST(Boss, MeleeAttack) {
     PlayersFactory factory;
     Boss b = factory.createBoss(CharacterType::cyclops);
-    Player1 p(CharacterType::spaceCadet);
+    Player1 p = factory.createHero(CharacterType::spaceCadet);
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(700, 270));
     b.setAttackTimer(1);
     while (b.getSource().x < 6) {
@@ -45,7 +45,7 @@ TEST(Boss, LaserAttack) {
 TEST(Boss, noLaserAttack) {
     PlayersFactory factory;
     Boss b = factory.createBoss(CharacterType::cyclops);
-    Player1 p(CharacterType::spaceCadet);
+    Player1 p = factory.createHero(CharacterType::spaceCadet);
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(50, 570));
     b.setAttackTimer(1);
     while (b.getSource().x < 6) {
@@ -65,7 +65,7 @@ TEST(Boss, noLaserAttack) {
 TEST(Boss, noMeleeAttack) {
     PlayersFactory factory;
     Boss b = factory.createBoss(CharacterType::cyclops);
-    Player1 p(CharacterType::spaceCadet);
+    Player1 p = factory.createHero(CharacterType::spaceCadet);
     b.setAttackTimer(1);
     while (b.getSource().x < 6) {
         b.fight(p);

@@ -9,7 +9,7 @@
 TEST(Enemy, TestMoveDown) {
     std::ifstream matrix("./matrix1.txt");
     std::ifstream matrix1("./shades1.txt");
-    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
+    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>(), 120, 0.5);
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
     Map arena(&p);
     Enemy e(CharacterType::ghoul);
@@ -23,7 +23,7 @@ TEST(Enemy, TestMoveDown) {
 TEST(Enemy, TestMoveUp) {
     std::ifstream matrix("./matrix1.txt");
     std::ifstream matrix1("./shades1.txt");
-    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
+    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>(), 120, 0.5);
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
     Map arena(&p);
     Enemy e(CharacterType::ghoul);
@@ -37,7 +37,7 @@ TEST(Enemy, TestMoveUp) {
 TEST(Enemy, TestMoveRight) {
     std::ifstream matrix("./matrix1.txt");
     std::ifstream matrix1("./shades1.txt");
-    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
+    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>(), 120, 0.5);
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
     Map arena(&p);
     Enemy e(CharacterType::ghoul);
@@ -50,7 +50,7 @@ TEST(Enemy, TestMoveRight) {
 
 TEST(Enemy, TestMoveLeft) {
     std::ifstream matrix("./matrix1.txt");
-    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
+    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>(), 120, 0.5);
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
     Map arena(&p);
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
@@ -64,7 +64,7 @@ TEST(Enemy, TestMoveLeft) {
 
 TEST(Enemy, TestFightLeft) {
     Enemy e(CharacterType::ghoul);
-    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
+    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>(), 120, 0.5);
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
     e.load("./tileSets/characters/ghoul.png", sf::Vector2f(101, 100));
     e.fight(p);
@@ -74,7 +74,7 @@ TEST(Enemy, TestFightLeft) {
 
 TEST(Enemy, TestFightRight) {
     Enemy e(CharacterType::ghoul);
-    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
+    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>(), 120, 0.5);
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
     e.load("./tileSets/characters/ghoul.png", sf::Vector2f(99, 100));
     e.fight(p);
@@ -84,7 +84,7 @@ TEST(Enemy, TestFightRight) {
 
 TEST(Enemy, TestEnemyStay) {
     std::ifstream matrix("./matrix1.txt");
-    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>());
+    Player1 p(CharacterType::spaceCadet, std::make_shared<RangedAttack>(), 120, 0.5);
     p.load("./tileSets/characters/spaceCadet.png", sf::Vector2f(100, 100));
     Map arena(&p);
     Enemy e(CharacterType::ghoul);

@@ -6,15 +6,11 @@
 
 #include <utility>
 
-Player1::Player1(CharacterType type, std::shared_ptr<AttackStrategy> attackStrategy, int killCounter, int width,
-                 int height) : attackStrategy(
-        std::move(attackStrategy)), killCounter(killCounter), Character(type, width, height) {
-}
+Player1::Player1(CharacterType type, std::shared_ptr<AttackStrategy> attackStrategy, int hp, float speed, int damage,
+                 int killCounter, int width, int height) : attackStrategy(std::move(attackStrategy)),
+                                                           killCounter(killCounter),
+                                                           Character(type, width, height, hp, speed, damage) {
 
-Player1::Player1(CharacterType type, int hp, float speed, std::shared_ptr<AttackStrategy> attackStrategy,
-                 int killCounter, int width, int height)
-        : attackStrategy(
-        std::move(attackStrategy)), killCounter(killCounter), Character(type, width, height, hp, speed) {
 }
 
 Player1::~Player1() = default;
@@ -24,7 +20,7 @@ void Player1::movement(sf::Vector2f direction, const Map &map) {
         if (direction.x == 0) {
             if (source.y == stayR)
                 source.y = right;
-            else
+            if (source.y == stayL)
                 source.y = left;
         } else {
             if (direction.x == 1)
@@ -97,3 +93,4 @@ bool Player1::pickPotion(const std::shared_ptr<Potion> &pot) {
 void Player1::setKillCounter(int value) {
     killCounter = value;
 }
+

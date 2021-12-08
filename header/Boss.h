@@ -21,7 +21,7 @@ public:
 
     void update(float deltaTime) override;
 
-    void addLaser(Bullet bullet);
+    void addLaser(const Bullet &bullet);
 
     void moveLaser(const Map &arena);
 
