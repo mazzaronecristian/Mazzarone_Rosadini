@@ -127,7 +127,10 @@ int main() {
         }
         choice.display();
     }
+
     int hpHero = 120;
+
+    //Objects initialization
     do {
         short int waveCounter = 0;
         sf::RenderWindow window(sf::VideoMode(960, 740), "GAME");
@@ -183,6 +186,7 @@ int main() {
                 }
                 if (e.type == sf::Event::KeyReleased && e.key.code == sf::Keyboard::Enter) {
                     hero[0]->setAttacking(true);
+                    //Bullets creation
                     if (hero[0]->getType() == CharacterType::spaceCadet) {
                         short int bulletDirection;
                         hero[0]->setSourceY(4 + (hero[0]->getSource().y % 2));

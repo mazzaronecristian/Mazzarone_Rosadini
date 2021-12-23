@@ -8,9 +8,7 @@
 
 void RangedBossAttack::fight(Character &hero, Boss *boss) {
     if (boss->getAttackTimer() < .8) return;
-    int numLaser = 0;
-    for (auto i = boss->getLasers().begin(); i != boss->getLasers().end(); i++)
-        numLaser++;
+    int numLaser = (int) boss->getLasers().size();
     if (numLaser < 3) {
         short int direction;
         if (hero.getPosition().x < boss->getPosition().x) {

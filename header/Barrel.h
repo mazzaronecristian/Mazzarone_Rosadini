@@ -17,7 +17,8 @@ public:
     bool kill(PotionType &type);
 
 private:
-    Potion *potion;
+    //FIXME
+    std::shared_ptr<Potion> potion;
 };
 
 

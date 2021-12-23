@@ -4,7 +4,7 @@
 
 #include "../header/Barrel.h"
 
-Barrel::Barrel(PotionType type) : potion(new Potion(type)), Entity(sf::Vector2i(32, 32)) {
+Barrel::Barrel(PotionType type) : potion(std::make_shared<Potion>(Potion(type))), Entity(sf::Vector2i(32, 32)) {
 }
 
 void Barrel::update(float deltaTime) {
