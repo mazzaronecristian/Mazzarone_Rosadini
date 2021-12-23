@@ -159,22 +159,17 @@ int main() {
                         if (hero[0]->getSource().y % 2 == 0)
                             hero[0]->setAnim(8, 0.04, 4);
                         else hero[0]->setAnim(8, 0.04, 5);
-                        auto enemy = enemies.begin();
-                        bool attacked = false;
-                        while (!attacked &&
-                               enemy != enemies.end()) {
-                            if (hero[0]->isLegalFight(&(**enemy))) {
-                                hero[0]->fight(**enemy);
-                                attacked = true;
-                            } else enemy++;
+                        for (auto &enemie: enemies) {
+                            if (hero[0]->isLegalFight(&(*enemie))) {
+                                hero[0]->fight(*enemie);
+                                break;
+                            }
                         }
-                        auto bos = boss.begin();
-                        attacked = false;
-                        while (!attacked && bos != boss.end()) {
-                            if (hero[0]->isLegalFight(&(**bos))) {
-                                hero[0]->fight(**bos);
-                                attacked = true;
-                            } else bos++;
+                        for (auto &bos: boss) {
+                            if (hero[0]->isLegalFight(&(*bos))) {
+                                hero[0]->fight(*bos);
+                                break;
+                            }
                         }
                         for (auto &barrel: barrels)
                             if (hero[0]->isLegalFight(&(*barrel)))
@@ -182,7 +177,6 @@ int main() {
                     }
                 }
             }
-
             heroAction(hero, arena, potions);
             enemiesMovement(hero, enemies);
             if (hero[0]->getKillCounter() == 10 && waveCounter < 2) {

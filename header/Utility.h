@@ -51,7 +51,6 @@ void draw(const std::list<std::shared_ptr<Bullet>> &bullets, std::vector<std::sh
 bool checkRestart(sf::RenderWindow &window, std::vector<std::shared_ptr<Player1>> hero,
                   const std::list<std::shared_ptr<Boss>> &boss, short int &numArena, bool &finish);
 
-
 void generateBarrels(std::list<std::shared_ptr<Barrel>> &barrels, const Map &arena) {
     PotionType T[3] = {PotionType::regular, PotionType::super, PotionType::max};
     for (int i = 0; i < 3; i++) {
@@ -60,7 +59,6 @@ void generateBarrels(std::list<std::shared_ptr<Barrel>> &barrels, const Map &are
                 ObjectsFactory::createBarrel(T[random() % 3], position)));
         barrels.push_back(barrel);
     }
-
 }
 
 void generateEnemies(std::list<std::shared_ptr<Enemy>> &enemies, short int waveCounter, const Map &arena) {
