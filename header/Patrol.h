@@ -6,7 +6,6 @@
 #define MAZZARONE_ROSADINI_PATROL_H
 
 #include "MoveStrategy.h"
-#include <cmath>
 
 class Patrol : public MoveStrategy {
 public:

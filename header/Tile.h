@@ -5,7 +5,6 @@
 #ifndef MAZZARONE_ROSADINI_TILE_H
 #define MAZZARONE_ROSADINI_TILE_H
 
-#include "iostream"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>

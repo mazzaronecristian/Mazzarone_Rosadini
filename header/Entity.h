@@ -5,10 +5,6 @@
 #ifndef MAZZARONE_ROSADINI_ENTITY_H
 #define MAZZARONE_ROSADINI_ENTITY_H
 
-#include "SFML/Graphics.hpp"
-#include "SFML/Window.hpp"
-#include "SFML/System.hpp"
-
 #include "Animation.h"
 #include "Elements.h"
 

@@ -11,8 +11,6 @@
 #include "AdaptHorizontal.h"
 #include "AdaptVertical.h"
 #include "Follow.h"
-#include <memory>
-
 
 class Enemy : public Character {
 public:

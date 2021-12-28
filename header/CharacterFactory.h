@@ -5,15 +5,12 @@
 #ifndef MAZZARONE_ROSADINI_CHARACTERFACTORY_H
 #define MAZZARONE_ROSADINI_CHARACTERFACTORY_H
 
-#include <memory>
 #include "Player1.h"
 #include "Enemy.h"
 #include "RangedAttack.h"
 #include "MeleeAttack.h"
 #include "Patrol.h"
 #include "Boss.h"
-
-#include <random>
 
 class CharacterFactory {
 public:

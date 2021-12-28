@@ -5,7 +5,6 @@
 #ifndef MAZZARONE_ROSADINI_BULLET_H
 #define MAZZARONE_ROSADINI_BULLET_H
 
-#include <list>
 #include "Entity.h"
 #include "Map.h"
 

@@ -69,3 +69,13 @@ bool Character::isLegalFight(const Entity *entity) {
 void Character::setAttacking(bool attack) {
     attacking = attack;
 }
+
+//Character::Character(Character *character): Character(character->getType(), 32,32, character->getHp(), character->getSpeed(), character->getDamage()) {}
+
+float Character::getSpeed() const {
+    return speed;
+}
+
+void Character::setSpeed(float speed) {
+    Character::speed = speed;
+}

@@ -7,7 +7,6 @@
 
 #include "BossStrategy.h"
 
-
 class RangedBossAttack : public BossStrategy {
 public:
     void fight(Character &hero, Boss *boss) override;

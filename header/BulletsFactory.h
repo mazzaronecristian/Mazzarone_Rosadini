@@ -6,7 +6,6 @@
 #define MAZZARONE_ROSADINI_BULLETSFACTORY_H
 
 #include "Bullet.h"
-#include "Character.h"
 
 enum class BulletType {
     bullet, laser

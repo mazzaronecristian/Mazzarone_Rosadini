@@ -6,7 +6,6 @@
 #define MAZZARONE_ROSADINI_MELEEATTACK_H
 
 #include "AttackStrategy.h"
-#include "Barrel.h"
 
 class MeleeAttack : public AttackStrategy {
 public:

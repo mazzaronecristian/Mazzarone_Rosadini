@@ -5,6 +5,7 @@
 #ifndef MAZZARONE_ROSADINI_BOSS_H
 #define MAZZARONE_ROSADINI_BOSS_H
 
+#include <list>
 #include "Enemy.h"
 #include "BossStrategy.h"
 #include "MeleeBossAttack.h"

@@ -5,7 +5,6 @@
 #ifndef MAZZARONE_ROSADINI_GIF_H
 #define MAZZARONE_ROSADINI_GIF_H
 
-#include "Entity.h"
 #include "Character.h"
 
 class Gif : public Entity {

@@ -5,11 +5,6 @@
 #ifndef MAZZARONE_ROSADINI_PLAYER1_H
 #define MAZZARONE_ROSADINI_PLAYER1_H
 
-
-#include "SFML/Graphics.hpp"
-#include "SFML/Window.hpp"
-#include "SFML/System.hpp"
-
 #include <memory>
 
 #include "AttackStrategy.h"

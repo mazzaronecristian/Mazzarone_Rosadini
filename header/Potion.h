@@ -5,7 +5,6 @@
 #ifndef MAZZARONE_ROSADINI_POTION_H
 #define MAZZARONE_ROSADINI_POTION_H
 
-#include <iostream>
 #include "Entity.h"
 
 enum class PotionType {
