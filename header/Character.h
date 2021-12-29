@@ -19,7 +19,6 @@ public:
               bool isAttacking = false,
               bool isDying = false);
 
-//    explicit Character(Character *character);
 
     virtual void movement(sf::Vector2f direction, const Map &map) = 0;
 
