@@ -37,7 +37,39 @@ Il gioco è sviluppato in c++11 e basato sulle [librerie SFML](www.sfml-dev.org)
 Tutti gli oggetti (eroi, nemici, proiettili...) vengono creati attraverso delle Factory dato che hanno bisogno di essere preparati prima di essere utilizzati. 
 I nemici usano uno Strategy Pattern **"MoveStrategy"** per cambiare il comportamento a runtime a seconda della distanza tra loro e l'eroe, il quale può essere seguito (**Follow**), oppure no (**Patrol**).
 
-# VideoClip
+# VideoClips
+
+## BENVENUTO IN RAGE ARENA!
+![alt text](ReadmeContent/presentation.png)
+
+Questi quattro potenti eroi sono al tuo servizio, **scegli il tuo preferito!**
+![alt text](ReadmeContent/gifScelta.gif)
+
+Sei un tipo meticoloso? Scegli Terence, lo Space Cadet, e fai fuori i nemici da lontano.
+
+Sei un tipo impulsivo? Con gli altri tre personaggi puoi confrontarti faccia a faccia con i tuoi nemici!
+
+![alt text](ReadmeContent/spaceCadet.gif)
+![alt text](ReadmeContent/adventurer.gif)
+![alt text](ReadmeContent/dwarf.gif)
+![alt text](ReadmeContent/gladiator.gif)
+
+Distruggi tutti i barili! All'interno troverai delle pozioni per curare le tue ferite!
+
+![alt text](ReadmeContent/gif2.gif)
+
+Questo è il boss finale, un antico Ciclope infuriato, sarai capace di sconfiggerlo?
+
+![alt text](ReadmeContent/gif3.gif)
+
+Solo se batterai il Ciclope potrai tornare a casa sano e salvo! Fai del tuo meglio!
+
+![alt text](ReadmeContent/end.png)
+
+
+
+
+
 
 
 
