@@ -66,6 +66,9 @@ Solo se batterai il Ciclope potrai tornare a casa sano e salvo! Fai del tuo megl
 
 ![alt text](ReadmeContent/end.png)
 
+# Credits
+Tutte le sprite sono state realizzate da Elthen. Ecco il link al suo patreon: [patreon/Elthen](https://www.patreon.com/elthen)
+
 
 
 
